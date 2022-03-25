@@ -1,10 +1,14 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+const uiComponents = ['grid'] as const;
+type UIComponent = typeof uiComponents[number];
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
-  title = 'kendoui';
+  uiComponents = [...uiComponents];
+  selectedUiComponent: UIComponent = 'grid';
 }
