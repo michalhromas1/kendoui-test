@@ -1,11 +1,11 @@
 Select component:
-<!-- <p-dropdown
-  [options]="uiComponents"
+<kendo-dropdownlist
+  [data]="uiComponents"
   [(ngModel)]="selectedUiComponent"
-></p-dropdown> -->
+></kendo-dropdownlist>
 
 <hr />
 
 <ng-container [ngSwitch]="selectedUiComponent">
-  <!-- <app-table *ngSwitchCase="'grid'"></app-table> -->
+  <app-grid *ngSwitchCase="'grid'"></app-grid>
 </ng-container>
