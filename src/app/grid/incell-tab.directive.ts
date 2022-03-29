@@ -22,6 +22,7 @@ export class InCellTabDirective implements OnInit, OnDestroy {
   @Input() wrap = true;
 
   private unsubKeydown!: () => void;
+  private unsubKeyup!: () => void;
 
   constructor(
     private el: ElementRef,
@@ -35,10 +36,17 @@ export class InCellTabDirective implements OnInit, OnDestroy {
       'keydown',
       (e) => this.onKeydown(e)
     );
+
+    this.unsubKeyup = this.renderer.listen(
+      this.el.nativeElement,
+      'keyup',
+      (e) => this.onKeyup(e)
+    );
   }
 
   ngOnDestroy(): void {
     this.unsubKeydown();
+    this.unsubKeyup();
   }
 
   private onKeydown(e: KeyboardEvent): void {
@@ -47,8 +55,16 @@ export class InCellTabDirective implements OnInit, OnDestroy {
       return;
     }
 
+    // if (e.key === 'Enter') {
+    //   this.handleEnter(e);
+    //   return;
+    // }
+  }
+
+  private onKeyup(e: KeyboardEvent): void {
     if (e.key === 'Enter') {
       this.handleEnter(e);
+      return;
     }
   }
 
@@ -94,18 +110,56 @@ export class InCellTabDirective implements OnInit, OnDestroy {
     const isOnEditableRow = this.grid.activeRow?.dataItem;
     if (!isOnEditableRow) {
       return;
-    }
+    } else if (this.grid.activeCell.focusGroup?.isActive) {
+      const cellToFocus = this.grid.activeCell;
 
-    const isContentValid = !this.grid.isEditingCell() || this.grid.closeCell();
-    if (!isContentValid) {
-      e.preventDefault();
+      if (!cellToFocus) {
+        return;
+      }
+
+      const dataItem = cellToFocus.dataItem;
+      if (!dataItem) {
+        return;
+      }
+
+      const formGroup = this.createFormGroup({
+        dataItem,
+      } as CreateFormGroupArgs);
+
+      this.grid.editCell(
+        cellToFocus.dataRowIndex,
+        cellToFocus.colIndex,
+        formGroup
+      );
+
       return;
     }
 
-    if (!this.grid.activeCell.focusGroup?.isActive) {
+    console.log('e');
+
+    e.preventDefault();
+
+    const cellToFocus = this.grid.focusNextCell(this.wrap);
+
+    if (!cellToFocus) {
       return;
     }
 
-    console.log(e);
+    const dataItem = cellToFocus.dataItem;
+    if (!dataItem) {
+      return;
+    }
+
+    const formGroup = this.createFormGroup({
+      dataItem,
+    } as CreateFormGroupArgs);
+
+    this.grid.editCell(
+      cellToFocus.dataRowIndex,
+      cellToFocus.colIndex,
+      formGroup
+    );
+
+    console.log(formGroup);
   }
 }

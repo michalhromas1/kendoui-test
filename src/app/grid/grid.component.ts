@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { CreateFormGroupArgs } from '@progress/kendo-angular-grid';
-import { getProducts } from '../mocks';
+import { CreateFormGroupArgs, GridItem } from '@progress/kendo-angular-grid';
+import { getProducts, Product } from '../mocks';
 
 @Component({
   selector: 'app-grid',
@@ -25,4 +25,9 @@ export class GridComponent {
       UnitsInStock,
     });
   };
+
+  trackBy(_index: number, item: GridItem): number {
+    const product = item.data as Product;
+    return product.ProductID;
+  }
 }
