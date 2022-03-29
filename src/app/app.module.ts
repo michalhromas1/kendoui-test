@@ -3,12 +3,11 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
-import { GridModule } from '@progress/kendo-angular-grid';
 import { AppComponent } from './app.component';
-import { GridComponent } from './grid/grid.component';
+import { GridModule } from './grid/grid.module';
 
 @NgModule({
-  declarations: [AppComponent, GridComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
