@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { CreateFormGroupArgs } from '@progress/kendo-angular-grid';
 import { getProducts } from '../mocks';
 
 @Component({
@@ -12,7 +13,7 @@ export class GridComponent {
 
   constructor(private formBuilder: FormBuilder) {}
 
-  createFormGroup = (args: any): FormGroup => {
+  createFormGroup = (args: CreateFormGroupArgs): FormGroup => {
     const { ProductID, ProductName, UnitPrice, UnitsInStock, Discontinued } =
       args.dataItem;
 
