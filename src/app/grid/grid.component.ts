@@ -9,7 +9,6 @@ import { getProducts } from '../mocks';
 })
 export class GridComponent {
   products = getProducts().slice(0, 10);
-  formGroup!: FormGroup;
 
   constructor(private formBuilder: FormBuilder) {}
 
@@ -17,14 +16,12 @@ export class GridComponent {
     const { ProductID, ProductName, UnitPrice, UnitsInStock, Discontinued } =
       args.dataItem;
 
-    this.formGroup = this.formBuilder.group({
+    return this.formBuilder.group({
       ProductID,
       UnitPrice,
       Discontinued,
       ProductName,
       UnitsInStock,
     });
-
-    return this.formGroup;
   };
 }
