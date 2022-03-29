@@ -1,5 +1,9 @@
 <!-- [inCellTab]="createFormGroup" -->
-<kendo-grid [data]="products" [kendoGridInCellEditing]="createFormGroup">
+<kendo-grid
+  [data]="products"
+  [kendoGridInCellEditing]="createFormGroup"
+  [navigable]="true"
+>
   <kendo-grid-column
     field="ProductName"
     title="Product Name"
