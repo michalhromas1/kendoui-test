@@ -41,11 +41,18 @@ export class InCellTabDirective implements OnInit, OnDestroy {
     this.unsubKeydown();
   }
 
-  onKeydown(e: KeyboardEvent): void {
-    if (e.key !== 'Tab') {
+  private onKeydown(e: KeyboardEvent): void {
+    if (e.key === 'Tab') {
+      this.handleTab(e);
       return;
     }
 
+    if (e.key === 'Enter') {
+      this.handleEnter(e);
+    }
+  }
+
+  private handleTab(e: KeyboardEvent): void {
     const isOnEditableRow = this.grid.activeRow?.dataItem;
     if (!isOnEditableRow) {
       return;
@@ -81,5 +88,24 @@ export class InCellTabDirective implements OnInit, OnDestroy {
       cellToFocus.colIndex,
       formGroup
     );
+  }
+
+  private handleEnter(e: KeyboardEvent): void {
+    const isOnEditableRow = this.grid.activeRow?.dataItem;
+    if (!isOnEditableRow) {
+      return;
+    }
+
+    const isContentValid = !this.grid.isEditingCell() || this.grid.closeCell();
+    if (!isContentValid) {
+      e.preventDefault();
+      return;
+    }
+
+    if (!this.grid.activeCell.focusGroup?.isActive) {
+      return;
+    }
+
+    console.log(e);
   }
 }
