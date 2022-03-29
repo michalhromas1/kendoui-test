@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { getProducts } from '../mocks';
 
 @Component({
@@ -7,5 +8,23 @@ import { getProducts } from '../mocks';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GridComponent {
-  products = getProducts();
+  products = getProducts().slice(0, 10);
+  formGroup!: FormGroup;
+
+  constructor(private formBuilder: FormBuilder) {}
+
+  createFormGroup = (args: any): FormGroup => {
+    const { ProductID, ProductName, UnitPrice, UnitsInStock, Discontinued } =
+      args.dataItem;
+
+    this.formGroup = this.formBuilder.group({
+      ProductID,
+      UnitPrice,
+      Discontinued,
+      ProductName,
+      UnitsInStock,
+    });
+
+    return this.formGroup;
+  };
 }
