@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { getProducts } from '../products';
+import { getProducts } from '../mocks';
 
 @Component({
   selector: 'app-grid',
