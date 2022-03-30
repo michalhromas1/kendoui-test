@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { AppComponent } from './app.component';
 import { GridCellEditModule } from './grid-cell-edit/grid-cell-edit.module';
+import { GridRowEditModule } from './grid-row-edit/grid-row-edit.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -13,6 +14,7 @@ import { GridCellEditModule } from './grid-cell-edit/grid-cell-edit.module';
     BrowserAnimationsModule,
     FormsModule,
     GridCellEditModule,
+    GridRowEditModule,
     DropDownsModule,
   ],
   providers: [],
