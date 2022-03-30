@@ -3,8 +3,8 @@
   [data]="products"
   [trackBy]="trackBy"
   [navigable]="true"
-  (cancel)="cancelHandler($event)"
   (keydown.enter)="onEnter($event, grid)"
+  (keydown.escape)="onEscape($event, grid)"
 >
   <kendo-grid-column
     field="ProductName"

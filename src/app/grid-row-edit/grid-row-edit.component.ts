@@ -20,14 +20,7 @@ export class GridRowEditComponent {
     return product.ProductID;
   }
 
-  cancelHandler({ sender, rowIndex }: any) {
-    sender.closeRow(rowIndex);
-  }
-
   onEnter(e: Event, grid: GridComponent): void {
-    e.preventDefault();
-    e.stopPropagation();
-
     const activeRow = grid.activeRow;
     const product = activeRow?.dataItem as Product | undefined;
     const rowIndex = activeRow?.dataRowIndex;
@@ -37,6 +30,9 @@ export class GridRowEditComponent {
       return;
     }
 
+    e.preventDefault();
+    e.stopPropagation();
+
     if (shouldStartEditing) {
       const rowFormGroup = this.startRowEdit(grid, rowIndex, product);
       this.currentlyEditingFormGroup = rowFormGroup;
@@ -45,6 +41,20 @@ export class GridRowEditComponent {
 
     this.saveRowEdit(grid, rowIndex, this.currentlyEditingFormGroup!.value);
     this.currentlyEditingFormGroup = undefined;
+  }
+
+  onEscape(e: Event, grid: GridComponent): void {
+    const isEditingRow = grid.isEditing();
+    const rowIndex = grid.activeRow?.dataRowIndex;
+
+    if (!isEditingRow) {
+      return;
+    }
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    this.cancelRowEdit(grid, rowIndex);
   }
 
   private startRowEdit(
@@ -67,6 +77,10 @@ export class GridRowEditComponent {
       p.ProductID === updatedProduct.ProductID ? { ...p, ...updatedProduct } : p
     );
 
+    grid.closeRow(rowIndex);
+  }
+
+  private cancelRowEdit(grid: GridComponent, rowIndex: number): void {
     grid.closeRow(rowIndex);
   }
 
