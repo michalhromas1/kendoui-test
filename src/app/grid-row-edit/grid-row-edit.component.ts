@@ -34,13 +34,12 @@ export class GridRowEditComponent {
     e.stopPropagation();
 
     if (shouldStartEditing) {
-      const rowFormGroup = this.startRowEdit(grid, rowIndex, product);
-      this.currentlyEditingFormGroup = rowFormGroup;
+      this.startRowEdit(grid, rowIndex, product);
       return;
     }
 
     this.saveRowEdit(grid, rowIndex, this.currentlyEditingFormGroup!.value);
-    this.currentlyEditingFormGroup = undefined;
+    this.editNextRow(grid, rowIndex);
   }
 
   onEscape(e: Event, grid: GridComponent): void {
@@ -61,11 +60,11 @@ export class GridRowEditComponent {
     grid: GridComponent,
     rowIndex: number,
     product: Product
-  ): FormGroup {
+  ): void {
     const productFormGroup = this.createProductFormGroup(product);
 
     grid.editRow(rowIndex, productFormGroup);
-    return productFormGroup;
+    this.currentlyEditingFormGroup = productFormGroup;
   }
 
   private saveRowEdit(
@@ -78,6 +77,7 @@ export class GridRowEditComponent {
     );
 
     grid.closeRow(rowIndex);
+    this.currentlyEditingFormGroup = undefined;
   }
 
   private cancelRowEdit(grid: GridComponent, rowIndex: number): void {
@@ -96,4 +96,22 @@ export class GridRowEditComponent {
       UnitsInStock,
     });
   };
+
+  private editNextRow(grid: GridComponent, currentRowIndex: number): void {
+    let nextRowIndex = currentRowIndex;
+
+    while (nextRowIndex === currentRowIndex) {
+      const cell = grid.focusNextCell();
+      nextRowIndex = cell?.dataRowIndex;
+    }
+
+    const nextRow = grid.activeRow;
+    const nextRowProduct = nextRow?.dataItem as Product | undefined;
+
+    if (!nextRow || !nextRowProduct) {
+      return;
+    }
+
+    this.startRowEdit(grid, nextRowIndex, nextRowProduct);
+  }
 }
