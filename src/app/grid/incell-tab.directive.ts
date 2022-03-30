@@ -22,7 +22,6 @@ export class InCellTabDirective implements OnInit, OnDestroy {
   @Input() wrap = true;
 
   private unsubKeydown!: () => void;
-  private unsubKeyup!: () => void;
 
   constructor(
     private el: ElementRef,
@@ -31,14 +30,12 @@ export class InCellTabDirective implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // this.grid.cellClick.pipe().subscribe((e) => console.log('cellClick', e));
     this.grid.cellClose.pipe().subscribe((e) => {
-      if ((e.originalEvent as KeyboardEvent).key !== 'Enter') {
+      if ((e.originalEvent as KeyboardEvent)?.key !== 'Enter') {
         return;
       }
 
-      const cellToFocus = this.grid.focusNextCell(this.wrap);
-      console.log(cellToFocus);
+      this.grid.focusNextCell(this.wrap);
     });
 
     this.unsubKeydown = this.renderer.listen(
@@ -46,17 +43,10 @@ export class InCellTabDirective implements OnInit, OnDestroy {
       'keydown',
       (e) => this.onKeydown(e)
     );
-
-    this.unsubKeyup = this.renderer.listen(
-      this.el.nativeElement,
-      'keyup',
-      (e) => this.onKeyup(e)
-    );
   }
 
   ngOnDestroy(): void {
     this.unsubKeydown();
-    this.unsubKeyup();
   }
 
   private onKeydown(e: KeyboardEvent): void {
@@ -64,18 +54,6 @@ export class InCellTabDirective implements OnInit, OnDestroy {
       this.handleTab(e);
       return;
     }
-
-    // if (e.key === 'Enter') {
-    //   this.handleEnter(e);
-    //   return;
-    // }
-  }
-
-  private onKeyup(e: KeyboardEvent): void {
-    // if (e.key === 'Enter') {
-    //   this.handleEnter(e);
-    //   return;
-    // }
   }
 
   private handleTab(e: KeyboardEvent): void {
