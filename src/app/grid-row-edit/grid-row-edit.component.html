@@ -1,0 +1,38 @@
+<p>
+  Navigace - šipky ||| Spustit editaci - enter ||| Uložit editaci - enter |||
+  Zrušit editaci - escape
+</p>
+
+<hr />
+
+<kendo-grid
+  #grid
+  [data]="products"
+  [trackBy]="trackBy"
+  [navigable]="true"
+  (keydown.enter)="onEnter($event)"
+  (keydown.escape)="onEscape($event)"
+>
+  <kendo-grid-column
+    field="ProductName"
+    title="Product Name"
+  ></kendo-grid-column>
+
+  <kendo-grid-column
+    field="UnitPrice"
+    title="Price"
+    editor="numeric"
+  ></kendo-grid-column>
+
+  <!-- <kendo-grid-column
+    field="Discontinued"
+    title="Discontinued"
+    editor="boolean"
+  ></kendo-grid-column> -->
+
+  <kendo-grid-column
+    field="UnitsInStock"
+    title="Units In Stock"
+    editor="numeric"
+  ></kendo-grid-column>
+</kendo-grid>

@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Directive,
   ElementRef,
   Input,
@@ -26,7 +27,8 @@ export class InCellTabDirective implements OnInit, OnDestroy {
   constructor(
     private el: ElementRef,
     private grid: GridComponent,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -36,6 +38,7 @@ export class InCellTabDirective implements OnInit, OnDestroy {
       }
 
       this.grid.focusNextCell(this.wrap);
+      this.cd.markForCheck();
     });
 
     this.unsubKeydown = this.renderer.listen(
@@ -92,5 +95,7 @@ export class InCellTabDirective implements OnInit, OnDestroy {
       cellToFocus.colIndex,
       formGroup
     );
+
+    this.cd.markForCheck();
   }
 }

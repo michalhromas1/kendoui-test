@@ -4,11 +4,11 @@ import { CreateFormGroupArgs, GridItem } from '@progress/kendo-angular-grid';
 import { getProducts, Product } from '../mocks';
 
 @Component({
-  selector: 'app-grid',
-  templateUrl: './grid.component.html',
+  selector: 'app-grid-cell-edit',
+  templateUrl: './grid-cell-edit.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GridComponent {
+export class GridCellEditComponent {
   products = getProducts().slice(0, 10);
 
   constructor(private formBuilder: FormBuilder) {}

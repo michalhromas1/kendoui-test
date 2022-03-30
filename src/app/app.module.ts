@@ -4,7 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { AppComponent } from './app.component';
-import { GridModule } from './grid/grid.module';
+import { GridCellEditModule } from './grid-cell-edit/grid-cell-edit.module';
+import { GridRowEditModule } from './grid-row-edit/grid-row-edit.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -12,7 +13,8 @@ import { GridModule } from './grid/grid.module';
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
-    GridModule,
+    GridCellEditModule,
+    GridRowEditModule,
     DropDownsModule,
   ],
   providers: [],
