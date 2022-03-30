@@ -1,4 +1,10 @@
-<kendo-grid [data]="products" [trackBy]="trackBy">
+<kendo-grid
+  [data]="products"
+  [trackBy]="trackBy"
+  (edit)="editHandler($event)"
+  (cancel)="cancelHandler($event)"
+  (save)="saveHandler($event)"
+>
   <kendo-grid-column
     field="ProductName"
     title="Product Name"
@@ -21,4 +27,12 @@
     title="Units In Stock"
     editor="numeric"
   ></kendo-grid-column>
+
+  <kendo-grid-command-column title="command" [width]="220">
+    <ng-template kendoGridCellTemplate>
+      <button kendoGridEditCommand>Edit</button>
+      <button kendoGridSaveCommand>Update</button>
+      <button kendoGridCancelCommand>Cancel</button>
+    </ng-template>
+  </kendo-grid-command-column>
 </kendo-grid>
