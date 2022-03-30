@@ -1,9 +1,10 @@
 <kendo-grid
+  #grid
   [data]="products"
   [trackBy]="trackBy"
-  (edit)="editHandler($event)"
+  [navigable]="true"
   (cancel)="cancelHandler($event)"
-  (save)="saveHandler($event)"
+  (keydown.enter)="onEnter($event, grid)"
 >
   <kendo-grid-column
     field="ProductName"
