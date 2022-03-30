@@ -22,11 +22,13 @@ export class GridRowEditComponent {
 
   onEnter(e: Event, grid: GridComponent): void {
     const activeRow = grid.activeRow;
+    const activeCell = grid.activeCell;
     const product = activeRow?.dataItem as Product | undefined;
     const rowIndex = activeRow?.dataRowIndex;
+    const colIndex = activeCell.colIndex;
     const shouldStartEditing = !grid.isEditing();
 
-    if (!activeRow || !product) {
+    if (!activeRow || !activeCell || !product) {
       return;
     }
 
@@ -34,7 +36,7 @@ export class GridRowEditComponent {
     e.stopPropagation();
 
     if (shouldStartEditing) {
-      this.startRowEdit(grid, rowIndex, product);
+      this.startRowEdit(grid, rowIndex, product, colIndex);
       return;
     }
 
@@ -59,12 +61,18 @@ export class GridRowEditComponent {
   private startRowEdit(
     grid: GridComponent,
     rowIndex: number,
-    product: Product
+    product: Product,
+    columnIndex?: number
   ): void {
     const productFormGroup = this.createProductFormGroup(product);
+    this.currentlyEditingFormGroup = productFormGroup;
+
+    if (columnIndex !== undefined) {
+      grid.editRow(rowIndex, productFormGroup, { columnIndex });
+      return;
+    }
 
     grid.editRow(rowIndex, productFormGroup);
-    this.currentlyEditingFormGroup = productFormGroup;
   }
 
   private saveRowEdit(
