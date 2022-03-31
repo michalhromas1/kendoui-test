@@ -50,7 +50,7 @@ export class GridRowEditComponent implements AfterViewInit, OnDestroy {
     const activeCell = this.grid.activeCell;
     const product = activeRow?.dataItem as Product | undefined;
     const rowIndex = activeRow?.dataRowIndex;
-    const colIndex = activeCell.colIndex;
+    const colIndex = activeCell?.colIndex;
     const shouldStartEditing = !this.grid.isEditing();
 
     if (!activeRow || !activeCell || !product) {

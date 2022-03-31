@@ -20,7 +20,6 @@ export class InCellTabDirective implements OnInit, OnDestroy {
   @Input('inCellTab') createFormGroup!: (
     args: CreateFormGroupArgs
   ) => FormGroup;
-  @Input() wrap = true;
 
   private unsubKeydown!: () => void;
 
@@ -32,14 +31,14 @@ export class InCellTabDirective implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.grid.cellClose.pipe().subscribe((e) => {
-      if ((e.originalEvent as KeyboardEvent)?.key !== 'Enter') {
-        return;
-      }
+    // this.grid.cellClose.pipe().subscribe((e) => {
+    //   if ((e.originalEvent as KeyboardEvent)?.key !== 'Enter') {
+    //     return;
+    //   }
 
-      this.grid.focusNextCell(this.wrap);
-      this.cd.markForCheck();
-    });
+    //   this.grid.focusNextCell(this.wrap);
+    //   this.cd.markForCheck();
+    // });
 
     this.unsubKeydown = this.renderer.listen(
       this.el.nativeElement,
@@ -72,8 +71,8 @@ export class InCellTabDirective implements OnInit, OnDestroy {
     }
 
     const cellToFocus = e.shiftKey
-      ? this.grid.focusPrevCell(this.wrap)
-      : this.grid.focusNextCell(this.wrap);
+      ? this.grid.focusPrevCell(true)
+      : this.grid.focusNextCell(true);
 
     if (!cellToFocus) {
       return;
