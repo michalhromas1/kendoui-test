@@ -122,7 +122,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     this.editCell(nextCellRowIndex, nextCellColumnIndex, nextCellProduct);
   }
 
-  onPaste(e: ClipboardEvent): void {
+  onPaste(e: KeyboardEvent, metaKey = false): void {
     const activeCell = this.grid.activeCell;
     const columnIndex = this.grid.activeCell?.colIndex;
     const product = this.grid.activeCell?.dataItem as Product;
@@ -136,17 +136,24 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     e.preventDefault();
     e.stopPropagation();
 
-    const value = e.clipboardData?.getData('text');
     const allHeaders = this.grid.headerColumns as QueryList<ColumnComponent>;
     const header = allHeaders.get(columnIndex)!;
     const selectedProperty = header.field;
 
-    this.products = this.products.map((p) => {
-      if (p.ProductID !== product.ProductID) {
-        return p;
+    navigator.clipboard.readText().then((value) => {
+      if (!value) {
+        return;
       }
 
-      return { ...p, [selectedProperty]: value };
+      this.products = this.products.map((p) => {
+        if (p.ProductID !== product.ProductID) {
+          return p;
+        }
+
+        return { ...p, [selectedProperty]: value };
+      });
+
+      this.cd.markForCheck();
     });
   }
 
