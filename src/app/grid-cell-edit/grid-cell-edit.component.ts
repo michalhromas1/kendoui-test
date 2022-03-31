@@ -131,8 +131,15 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     const product = this.grid.activeCell?.dataItem as Product;
     const isEditable = !!product;
     const isEditing = !!this.activeProductFormGroup;
+    const isClipboardReadSupported = !!navigator?.clipboard?.readText;
 
-    if (!isOSPaste || !activeCell || !isEditable || isEditing) {
+    if (
+      !isClipboardReadSupported ||
+      !isOSPaste ||
+      !activeCell ||
+      !isEditable ||
+      isEditing
+    ) {
       return;
     }
 
