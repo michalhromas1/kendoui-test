@@ -66,18 +66,44 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     e.preventDefault();
     e.stopPropagation();
 
-    console.log(shouldStartEditing);
-
     if (shouldStartEditing) {
       this.editCell(rowIndex, columnIndex, product);
-      this.cd.markForCheck();
       return;
     }
 
     this.saveCell();
     this.closeCell();
+  }
 
-    this.cd.markForCheck();
+  onTab(e: KeyboardEvent, goBackwards = false): void {
+    const activeCell = this.grid.activeCell;
+    const isEditing = !!this.activeProductFormGroup;
+
+    if (!activeCell) {
+      return;
+    }
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (isEditing) {
+      this.saveCell();
+      this.closeCell();
+    }
+
+    const nextCell = goBackwards
+      ? this.grid.focusPrevCell()
+      : this.grid.focusNextCell();
+
+    const nextCellProduct = nextCell?.dataItem as Product | undefined;
+    const nextCellRowIndex = nextCell?.dataRowIndex;
+    const nextCellColumnIndex = nextCell?.colIndex;
+
+    if (!isEditing || !nextCellProduct) {
+      return;
+    }
+
+    this.editCell(nextCellRowIndex, nextCellColumnIndex, nextCellProduct);
   }
 
   private editCell(
