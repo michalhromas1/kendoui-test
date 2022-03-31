@@ -4,13 +4,19 @@ import {
   ChangeDetectorRef,
   Component,
   OnDestroy,
+  QueryList,
   ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { GridComponent, GridItem } from '@progress/kendo-angular-grid';
+import {
+  ColumnComponent,
+  GridComponent,
+  GridItem,
+} from '@progress/kendo-angular-grid';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { getProducts, Product } from '../mocks';
+import { isOSMacOS } from '../operating-system';
 
 @Component({
   selector: 'app-grid-cell-edit',
@@ -115,6 +121,43 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     }
 
     this.editCell(nextCellRowIndex, nextCellColumnIndex, nextCellProduct);
+  }
+
+  onPaste(e: KeyboardEvent, metaKey = false): void {
+    const isMacOS = isOSMacOS();
+    const isOSPaste = isMacOS ? metaKey : !metaKey;
+    const activeCell = this.grid.activeCell;
+    const columnIndex = this.grid.activeCell?.colIndex;
+    const product = this.grid.activeCell?.dataItem as Product;
+    const isEditable = !!product;
+    const isEditing = !!this.activeProductFormGroup;
+
+    if (!isOSPaste || !activeCell || !isEditable || isEditing) {
+      return;
+    }
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    const allHeaders = this.grid.headerColumns as QueryList<ColumnComponent>;
+    const header = allHeaders.get(columnIndex)!;
+    const selectedProperty = header.field;
+
+    navigator.clipboard.readText().then((value) => {
+      if (!value) {
+        return;
+      }
+
+      this.products = this.products.map((p) => {
+        if (p.ProductID !== product.ProductID) {
+          return p;
+        }
+
+        return { ...p, [selectedProperty]: value };
+      });
+
+      this.cd.markForCheck();
+    });
   }
 
   private editCell(
