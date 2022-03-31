@@ -16,6 +16,7 @@ import {
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { getProducts, Product } from '../mocks';
+import { isOSMacOS } from '../operating-system';
 
 @Component({
   selector: 'app-grid-cell-edit',
@@ -123,13 +124,15 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
   }
 
   onPaste(e: KeyboardEvent, metaKey = false): void {
+    const isMacOS = isOSMacOS();
+    const isOSPaste = isMacOS ? metaKey : !metaKey;
     const activeCell = this.grid.activeCell;
     const columnIndex = this.grid.activeCell?.colIndex;
     const product = this.grid.activeCell?.dataItem as Product;
     const isEditable = !!product;
     const isEditing = !!this.activeProductFormGroup;
 
-    if (!activeCell || !isEditable || isEditing) {
+    if (!isOSPaste || !activeCell || !isEditable || isEditing) {
       return;
     }
 
