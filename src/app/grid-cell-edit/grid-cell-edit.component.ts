@@ -37,6 +37,10 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
         return;
       }
 
+      if (e.originalEvent?.key !== 'Escape') {
+        this.saveCell();
+      }
+
       this.closeCell();
       this.cd.markForCheck();
     });
