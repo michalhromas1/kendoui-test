@@ -77,6 +77,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
 
   onTab(e: KeyboardEvent, goBackwards = false): void {
     const activeCell = this.grid.activeCell;
+    const activeCellRowIndex = this.grid.activeCell?.dataRowIndex;
     const isEditing = !!this.activeProductFormGroup;
 
     if (!activeCell) {
@@ -86,8 +87,10 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     e.preventDefault();
     e.stopPropagation();
 
+    let nextCellProduct!: Product;
+
     if (isEditing) {
-      this.saveCell();
+      nextCellProduct = this.saveCell();
       this.closeCell();
     }
 
@@ -95,12 +98,16 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
       ? this.grid.focusPrevCell()
       : this.grid.focusNextCell();
 
-    const nextCellProduct = nextCell?.dataItem as Product | undefined;
+    const hasNextCellData = !!nextCell?.dataItem;
     const nextCellRowIndex = nextCell?.dataRowIndex;
     const nextCellColumnIndex = nextCell?.colIndex;
 
-    if (!isEditing || !nextCellProduct) {
+    if (!isEditing || !hasNextCellData) {
       return;
+    }
+
+    if (nextCellRowIndex !== activeCellRowIndex) {
+      nextCellProduct = nextCell.dataItem;
     }
 
     this.editCell(nextCellRowIndex, nextCellColumnIndex, nextCellProduct);
@@ -119,12 +126,20 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     this.activeProductFormGroup = productFormGroup;
   }
 
-  private saveCell(): void {
-    const updatedProduct = this.activeProductFormGroup!.value;
+  private saveCell(): Product {
+    const updates: Partial<Product> = this.activeProductFormGroup!.value;
+    let updatedProduct!: Product;
 
-    this.products = this.products.map((p) =>
-      p.ProductID === updatedProduct.ProductID ? { ...p, ...updatedProduct } : p
-    );
+    this.products = this.products.map((product) => {
+      if (product.ProductID !== updates.ProductID) {
+        return product;
+      }
+
+      updatedProduct = { ...product, ...updates };
+      return updatedProduct;
+    });
+
+    return updatedProduct;
   }
 
   private closeCell(): void {
