@@ -4,10 +4,15 @@ import {
   ChangeDetectorRef,
   Component,
   OnDestroy,
+  QueryList,
   ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { GridComponent, GridItem } from '@progress/kendo-angular-grid';
+import {
+  ColumnComponent,
+  GridComponent,
+  GridItem,
+} from '@progress/kendo-angular-grid';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { getProducts, Product } from '../mocks';
@@ -115,6 +120,34 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     }
 
     this.editCell(nextCellRowIndex, nextCellColumnIndex, nextCellProduct);
+  }
+
+  onPaste(e: ClipboardEvent): void {
+    const activeCell = this.grid.activeCell;
+    const columnIndex = this.grid.activeCell?.colIndex;
+    const product = this.grid.activeCell?.dataItem as Product;
+    const isEditable = !!product;
+    const isEditing = !!this.activeProductFormGroup;
+
+    if (!activeCell || !isEditable || isEditing) {
+      return;
+    }
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    const value = e.clipboardData?.getData('text');
+    const allHeaders = this.grid.headerColumns as QueryList<ColumnComponent>;
+    const header = allHeaders.get(columnIndex)!;
+    const selectedProperty = header.field;
+
+    this.products = this.products.map((p) => {
+      if (p.ProductID !== product.ProductID) {
+        return p;
+      }
+
+      return { ...p, [selectedProperty]: value };
+    });
   }
 
   private editCell(

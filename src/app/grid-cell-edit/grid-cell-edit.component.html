@@ -6,6 +6,7 @@
   (keyup.enter)="onEnter($any($event))"
   (keydown.tab)="onTab($any($event))"
   (keydown.shift.tab)="onTab($any($event), true)"
+  (paste)="onPaste($event)"
 >
   <kendo-grid-column
     field="ProductName"
