@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-const uiComponents = ['grid-row-edit', 'grid-cell-edit'] as const;
+const uiComponents = ['grid-cell-edit', 'grid-row-edit'] as const;
 type UIComponent = typeof uiComponents[number];
 
 @Component({
@@ -10,5 +10,5 @@ type UIComponent = typeof uiComponents[number];
 })
 export class AppComponent {
   uiComponents = [...uiComponents];
-  selectedUiComponent: UIComponent = 'grid-row-edit';
+  selectedUiComponent: UIComponent = 'grid-cell-edit';
 }

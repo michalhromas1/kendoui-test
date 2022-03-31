@@ -1,9 +1,11 @@
 <kendo-grid
+  #grid
   [data]="products"
-  [kendoGridInCellEditing]="createFormGroup"
   [navigable]="true"
-  [inCellTab]="createFormGroup"
   [trackBy]="trackBy"
+  (keyup.enter)="onEnter($any($event))"
+  (keydown.tab)="onTab($any($event))"
+  (keydown.shift.tab)="onTab($any($event), true)"
 >
   <kendo-grid-column
     field="ProductName"
