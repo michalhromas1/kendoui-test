@@ -7,6 +7,6 @@ Select component:
 <hr />
 
 <ng-container [ngSwitch]="selectedUiComponent">
-  <app-grid-row-edit *ngSwitchCase="'grid-row-edit'"></app-grid-row-edit>
   <app-grid-cell-edit *ngSwitchCase="'grid-cell-edit'"></app-grid-cell-edit>
+  <app-grid-row-edit *ngSwitchCase="'grid-row-edit'"></app-grid-row-edit>
 </ng-container>
