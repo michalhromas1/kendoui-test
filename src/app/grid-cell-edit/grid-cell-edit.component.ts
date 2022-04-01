@@ -213,17 +213,6 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     this.activeProductFormGroup = undefined;
   }
 
-  private createProductFormGroup = (product: Product): FormGroup => {
-    const { ProductID, ProductName, UnitPrice, UnitsInStock } = product;
-
-    return this.formBuilder.group({
-      ProductID,
-      UnitPrice,
-      ProductName,
-      UnitsInStock,
-    });
-  };
-
   private copy$(
     e: ClipboardEvent | KeyboardEvent,
     writeFunc$: (value: string) => Observable<void>
@@ -293,4 +282,24 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     const rowColumn = allRowColumns.find((c) => c.leafIndex === columnIndex);
     return !!rowColumn?.editable;
   }
+
+  private createProductFormGroup = (product: Product): FormGroup => {
+    const {
+      ProductID,
+      ProductName,
+      QuantityPerUnit,
+      UnitPrice,
+      UnitsInStock,
+      UnitsOnOrder,
+    } = product;
+
+    return this.formBuilder.group({
+      ProductID,
+      ProductName,
+      QuantityPerUnit,
+      UnitPrice,
+      UnitsInStock,
+      UnitsOnOrder,
+    });
+  };
 }
