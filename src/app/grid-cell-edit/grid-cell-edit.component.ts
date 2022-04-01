@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import {
+  CheckboxColumnComponent,
   ColumnComponent,
   GridComponent,
   GridItem,
@@ -90,9 +91,12 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
   onTab(e: KeyboardEvent, goBackwards = false): void {
     const activeCell = this.grid.activeCell;
     const activeCellRowIndex = this.grid.activeCell?.dataRowIndex;
+    const activeCellColumnIndex = this.grid.activeCell?.colIndex;
     const isEditing = !!this.activeProductFormGroup;
+    const header = this.getHeader(activeCellColumnIndex);
+    const isCheckboxColumnComponent = this.isCheckboxColumnComponent(header);
 
-    if (!activeCell) {
+    if (!activeCell || isCheckboxColumnComponent) {
       return;
     }
 
@@ -230,8 +234,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     e.preventDefault();
     e.stopPropagation();
 
-    const allHeaders = this.grid.headerColumns as QueryList<ColumnComponent>;
-    const header = allHeaders.get(columnIndex)!;
+    const header = this.getHeader(columnIndex);
     const selectedProperty = header.field as keyof Product;
 
     if (selectedProperty === undefined || selectedProperty === null) {
@@ -259,8 +262,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     e.preventDefault();
     e.stopPropagation();
 
-    const allHeaders = this.grid.headerColumns as QueryList<ColumnComponent>;
-    const header = allHeaders.get(columnIndex)!;
+    const header = this.getHeader(columnIndex);
     const selectedProperty = header.field as keyof Product;
 
     if (selectedProperty === undefined || selectedProperty === null) {
@@ -289,6 +291,17 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     const allRowColumns = this.grid.columnList.toArray() as ColumnComponent[];
     const rowColumn = allRowColumns.find((c) => c.leafIndex === columnIndex);
     return !!rowColumn?.editable;
+  }
+
+  private getHeader(columnIndex: number): ColumnComponent {
+    const allHeaders = this.grid.headerColumns as QueryList<ColumnComponent>;
+    return allHeaders.get(columnIndex)!;
+  }
+
+  private isCheckboxColumnComponent(
+    component: object
+  ): component is CheckboxColumnComponent {
+    return 'isCheckboxColumn' in component;
   }
 
   private createProductFormGroup = (product: Product): FormGroup => {
