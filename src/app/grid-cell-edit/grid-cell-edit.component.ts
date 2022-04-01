@@ -111,11 +111,12 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
       ? this.grid.focusPrevCell()
       : this.grid.focusNextCell();
 
-    const hasNextCellData = !!nextCell?.dataItem;
     const nextCellRowIndex = nextCell?.dataRowIndex;
     const nextCellColumnIndex = nextCell?.colIndex;
+    const isNextCellEditable =
+      !!nextCell?.dataItem && this.isCellEditable(nextCellColumnIndex);
 
-    if (!isEditing || !hasNextCellData) {
+    if (!isEditing || !isNextCellEditable) {
       return;
     }
 
