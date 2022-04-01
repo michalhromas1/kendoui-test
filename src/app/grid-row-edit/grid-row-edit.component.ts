@@ -119,14 +119,12 @@ export class GridRowEditComponent implements AfterViewInit, OnDestroy {
   }
 
   private createProductFormGroup = (product: Product): FormGroup => {
-    const { ProductID, ProductName, UnitPrice, UnitsInStock, Discontinued } =
-      product;
+    const { ProductID, ProductName, UnitPrice, UnitsInStock } = product;
 
     return this.formBuilder.group({
       ProductID,
       ProductName,
       UnitPrice,
-      Discontinued,
       UnitsInStock,
     });
   };
