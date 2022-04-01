@@ -123,6 +123,29 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     this.editCell(nextCellRowIndex, nextCellColumnIndex, nextCellProduct);
   }
 
+  onNativeCopy(e: ClipboardEvent): void {
+    const activeCell = this.grid.activeCell;
+    const columnIndex = this.grid.activeCell?.colIndex;
+    const product = this.grid.activeCell?.dataItem as Product;
+    const hasData = !!product;
+    const isEditing = !!this.activeProductFormGroup;
+
+    if (!activeCell || !hasData || isEditing) {
+      return;
+    }
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    const allHeaders = this.grid.headerColumns as QueryList<ColumnComponent>;
+    const header = allHeaders.get(columnIndex)!;
+    const selectedProperty = header.field as keyof Product;
+
+    const value = product[selectedProperty].toString();
+
+    e.clipboardData?.setData('text', value);
+  }
+
   onNativePaste(e: ClipboardEvent): void {
     const isCustomKeyboardPasteSupported = !!navigator?.clipboard?.readText;
 
@@ -216,7 +239,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
 
     const allHeaders = this.grid.headerColumns as QueryList<ColumnComponent>;
     const header = allHeaders.get(columnIndex)!;
-    const selectedProperty = header.field;
+    const selectedProperty = header.field as keyof Product;
 
     return value.pipe(
       tap((value) => {
