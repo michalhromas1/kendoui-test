@@ -21,6 +21,7 @@ import { isOSMacOS } from '../operating-system';
 @Component({
   selector: 'app-grid-cell-edit',
   templateUrl: './grid-cell-edit.component.html',
+  styleUrls: ['./grid-cell-edit.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GridCellEditComponent implements AfterViewInit, OnDestroy {
@@ -68,8 +69,9 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     const rowIndex = activeCell?.dataRowIndex;
     const columnIndex = activeCell?.colIndex;
     const shouldStartEditing = !this.activeProductFormGroup;
+    const isEditable = this.isCellEditable(columnIndex);
 
-    if (!activeCell || !product) {
+    if (!activeCell || !product || !isEditable) {
       return;
     }
 
@@ -100,7 +102,8 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     let nextCellProduct!: Product;
 
     if (isEditing) {
-      nextCellProduct = this.saveCell();
+      const currentRowUpdatedProduct = this.saveCell();
+      nextCellProduct = currentRowUpdatedProduct;
       this.closeCell();
     }
 
@@ -108,11 +111,12 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
       ? this.grid.focusPrevCell()
       : this.grid.focusNextCell();
 
-    const hasNextCellData = !!nextCell?.dataItem;
     const nextCellRowIndex = nextCell?.dataRowIndex;
     const nextCellColumnIndex = nextCell?.colIndex;
+    const isNextCellEditable =
+      !!nextCell?.dataItem && this.isCellEditable(nextCellColumnIndex);
 
-    if (!isEditing || !hasNextCellData) {
+    if (!isEditing || !isNextCellEditable) {
       return;
     }
 
@@ -209,17 +213,6 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     this.activeProductFormGroup = undefined;
   }
 
-  private createProductFormGroup = (product: Product): FormGroup => {
-    const { ProductID, ProductName, UnitPrice, UnitsInStock } = product;
-
-    return this.formBuilder.group({
-      ProductID,
-      UnitPrice,
-      ProductName,
-      UnitsInStock,
-    });
-  };
-
   private copy$(
     e: ClipboardEvent | KeyboardEvent,
     writeFunc$: (value: string) => Observable<void>
@@ -252,7 +245,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     const activeCell = this.grid.activeCell;
     const columnIndex = this.grid.activeCell?.colIndex;
     const product = this.grid.activeCell?.dataItem as Product;
-    const isEditable = !!product;
+    const isEditable = !!product && this.isCellEditable(columnIndex);
     const isEditing = !!this.activeProductFormGroup;
 
     if (!activeCell || !isEditable || isEditing) {
@@ -283,4 +276,30 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
       mapTo(undefined)
     );
   }
+
+  private isCellEditable(columnIndex: number): boolean {
+    const allRowColumns = this.grid.columnList.toArray() as ColumnComponent[];
+    const rowColumn = allRowColumns.find((c) => c.leafIndex === columnIndex);
+    return !!rowColumn?.editable;
+  }
+
+  private createProductFormGroup = (product: Product): FormGroup => {
+    const {
+      ProductID,
+      ProductName,
+      QuantityPerUnit,
+      UnitPrice,
+      UnitsInStock,
+      UnitsOnOrder,
+    } = product;
+
+    return this.formBuilder.group({
+      ProductID,
+      ProductName,
+      QuantityPerUnit,
+      UnitPrice,
+      UnitsInStock,
+      UnitsOnOrder,
+    });
+  };
 }

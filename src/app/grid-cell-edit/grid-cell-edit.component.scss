@@ -1,0 +1,13 @@
+:host ::ng-deep {
+  td.disabled {
+    text-decoration: line-through;
+    cursor: not-allowed;
+    background: hsl(0, 47%, 92%);
+  }
+
+  tr:nth-child(even) {
+    td.disabled {
+      background: hsl(0, 65%, 86%);
+    }
+  }
+}

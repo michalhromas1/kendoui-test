@@ -18,10 +18,19 @@
     title="Product Name"
   ></kendo-grid-column>
 
+  <kendo-grid-column
+    field="QuantityPerUnit"
+    title="Quantity"
+  ></kendo-grid-column>
+
   <kendo-grid-column field="UnitPrice" title="Price"></kendo-grid-column>
 
   <kendo-grid-column
     field="UnitsInStock"
-    title="Units In Stock"
+    title="In Stock"
+    [editable]="false"
+    class="disabled"
   ></kendo-grid-column>
+
+  <kendo-grid-column field="UnitsOnOrder" title="On Order"></kendo-grid-column>
 </kendo-grid>
