@@ -8,8 +8,10 @@
   (keydown.shift.tab)="onTab($any($event), true)"
   (copy)="onNativeCopy($any($event))"
   (paste)="onNativePaste($any($event))"
-  (keydown.meta.v)="onKeyboardPaste($any($event), true)"
+  (keydown.control.c)="onKeyboardCopy($any($event))"
   (keydown.control.v)="onKeyboardPaste($any($event))"
+  (keydown.meta.c)="onKeyboardCopy($any($event), true)"
+  (keydown.meta.v)="onKeyboardPaste($any($event), true)"
 >
   <kendo-grid-column
     field="ProductName"
