@@ -6,30 +6,22 @@
   (keyup.enter)="onEnter($any($event))"
   (keydown.tab)="onTab($any($event))"
   (keydown.shift.tab)="onTab($any($event), true)"
+  (copy)="onNativeCopy($any($event))"
   (paste)="onNativePaste($any($event))"
-  (keydown.meta.v)="onKeyboardPaste($any($event), true)"
+  (keydown.control.c)="onKeyboardCopy($any($event))"
   (keydown.control.v)="onKeyboardPaste($any($event))"
+  (keydown.meta.c)="onKeyboardCopy($any($event), true)"
+  (keydown.meta.v)="onKeyboardPaste($any($event), true)"
 >
   <kendo-grid-column
     field="ProductName"
     title="Product Name"
   ></kendo-grid-column>
 
-  <kendo-grid-column
-    field="UnitPrice"
-    title="Price"
-    editor="numeric"
-  ></kendo-grid-column>
-
-  <!-- <kendo-grid-column
-    field="Discontinued"
-    title="Discontinued"
-    editor="boolean"
-  ></kendo-grid-column> -->
+  <kendo-grid-column field="UnitPrice" title="Price"></kendo-grid-column>
 
   <kendo-grid-column
     field="UnitsInStock"
     title="Units In Stock"
-    editor="numeric"
   ></kendo-grid-column>
 </kendo-grid>

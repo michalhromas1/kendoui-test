@@ -123,6 +123,31 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     this.editCell(nextCellRowIndex, nextCellColumnIndex, nextCellProduct);
   }
 
+  onNativeCopy(e: ClipboardEvent): void {
+    const isCustomKeyboardCopySupported = !!navigator?.clipboard?.writeText;
+
+    if (isCustomKeyboardCopySupported) {
+      return;
+    }
+
+    this.copy$(e, (value) => of(e.clipboardData?.setData('text', value)))
+      .pipe(take(1), takeUntil(this.unsubscriber$))
+      .subscribe(() => this.cd.markForCheck());
+  }
+
+  onKeyboardCopy(e: KeyboardEvent, metaKey = false): void {
+    const isOSCopy = isOSMacOS() ? metaKey : !metaKey;
+    const isClipboardWriteSupported = !!navigator?.clipboard?.writeText;
+
+    if (!isClipboardWriteSupported || !isOSCopy) {
+      return;
+    }
+
+    this.copy$(e, (value) => from(navigator.clipboard.writeText(value)))
+      .pipe(take(1), takeUntil(this.unsubscriber$))
+      .subscribe(() => this.cd.markForCheck());
+  }
+
   onNativePaste(e: ClipboardEvent): void {
     const isCustomKeyboardPasteSupported = !!navigator?.clipboard?.readText;
 
@@ -130,7 +155,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
       return;
     }
 
-    this.paste(e, of(e.clipboardData?.getData('text') || ''))
+    this.paste$(e, of(e.clipboardData?.getData('text') || ''))
       .pipe(take(1), takeUntil(this.unsubscriber$))
       .subscribe(() => this.cd.markForCheck());
   }
@@ -143,7 +168,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
       return;
     }
 
-    this.paste(e, from(navigator.clipboard.readText()))
+    this.paste$(e, from(navigator.clipboard.readText()))
       .pipe(take(1), takeUntil(this.unsubscriber$))
       .subscribe(() => this.cd.markForCheck());
   }
@@ -185,19 +210,42 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
   }
 
   private createProductFormGroup = (product: Product): FormGroup => {
-    const { ProductID, ProductName, UnitPrice, UnitsInStock, Discontinued } =
-      product;
+    const { ProductID, ProductName, UnitPrice, UnitsInStock } = product;
 
     return this.formBuilder.group({
       ProductID,
       UnitPrice,
-      Discontinued,
       ProductName,
       UnitsInStock,
     });
   };
 
-  private paste(
+  private copy$(
+    e: ClipboardEvent | KeyboardEvent,
+    writeFunc$: (value: string) => Observable<void>
+  ): Observable<void> {
+    const activeCell = this.grid.activeCell;
+    const columnIndex = this.grid.activeCell?.colIndex;
+    const product = this.grid.activeCell?.dataItem as Product;
+    const hasData = !!product;
+    const isEditing = !!this.activeProductFormGroup;
+
+    if (!activeCell || !hasData || isEditing) {
+      return of(undefined);
+    }
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    const allHeaders = this.grid.headerColumns as QueryList<ColumnComponent>;
+    const header = allHeaders.get(columnIndex)!;
+    const selectedProperty = header.field as keyof Product;
+
+    const value = product[selectedProperty].toString();
+    return writeFunc$(value);
+  }
+
+  private paste$(
     e: ClipboardEvent | KeyboardEvent,
     value: Observable<string>
   ): Observable<void> {
@@ -216,7 +264,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
 
     const allHeaders = this.grid.headerColumns as QueryList<ColumnComponent>;
     const header = allHeaders.get(columnIndex)!;
-    const selectedProperty = header.field;
+    const selectedProperty = header.field as keyof Product;
 
     return value.pipe(
       tap((value) => {
