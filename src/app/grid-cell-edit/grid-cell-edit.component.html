@@ -18,7 +18,12 @@
     title="Product Name"
   ></kendo-grid-column>
 
-  <kendo-grid-column field="UnitPrice" title="Price"></kendo-grid-column>
+  <kendo-grid-column
+    field="UnitPrice"
+    title="Price"
+    [editable]="false"
+    class="disabled"
+  ></kendo-grid-column>
 
   <kendo-grid-column
     field="UnitsInStock"

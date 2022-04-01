@@ -21,6 +21,7 @@ import { isOSMacOS } from '../operating-system';
 @Component({
   selector: 'app-grid-cell-edit',
   templateUrl: './grid-cell-edit.component.html',
+  styleUrls: ['./grid-cell-edit.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GridCellEditComponent implements AfterViewInit, OnDestroy {
@@ -68,8 +69,11 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     const rowIndex = activeCell?.dataRowIndex;
     const columnIndex = activeCell?.colIndex;
     const shouldStartEditing = !this.activeProductFormGroup;
+    const allRowColumns = this.grid.columnList.toArray() as ColumnComponent[];
+    const rowColumn = allRowColumns.find((c) => c.leafIndex === columnIndex);
+    const isEditable = !!rowColumn?.editable;
 
-    if (!activeCell || !product) {
+    if (!activeCell || !product || !isEditable) {
       return;
     }
 
