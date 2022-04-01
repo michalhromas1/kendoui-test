@@ -13,6 +13,7 @@ import {
   ColumnComponent,
   GridComponent,
   GridItem,
+  NavigationCell,
 } from '@progress/kendo-angular-grid';
 import { from, Observable, of, Subject } from 'rxjs';
 import { mapTo, take, takeUntil, tap } from 'rxjs/operators';
@@ -111,14 +112,35 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
       this.closeCell();
     }
 
-    const nextCell = goBackwards
-      ? this.grid.focusPrevCell()
-      : this.grid.focusNextCell();
+    let nextCell: NavigationCell | undefined | null;
+    let nextCellColumnIndex!: number;
 
-    const nextCellRowIndex = nextCell?.dataRowIndex;
-    const nextCellColumnIndex = nextCell?.colIndex;
+    while (nextCell === undefined && nextCell !== null) {
+      nextCell = goBackwards
+        ? this.grid.focusPrevCell()
+        : this.grid.focusNextCell();
+
+      if (!nextCell) {
+        nextCell = null;
+        break;
+      }
+
+      nextCellColumnIndex = nextCell.colIndex;
+      const nextCellHeader = this.getHeader(nextCellColumnIndex);
+      const isCheckboxSelect = this.isCheckboxColumnComponent(nextCellHeader);
+
+      nextCell = isCheckboxSelect ? undefined : nextCell;
+
+      console.log(nextCell);
+    }
+
+    if (!nextCell) {
+      return;
+    }
+
+    const nextCellRowIndex = nextCell.dataRowIndex;
     const isNextCellEditable =
-      !!nextCell?.dataItem && this.isCellEditable(nextCellColumnIndex);
+      !!nextCell.dataItem && this.isCellEditable(nextCellColumnIndex);
 
     if (!isEditing || !isNextCellEditable) {
       return;
