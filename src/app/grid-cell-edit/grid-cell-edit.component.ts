@@ -234,6 +234,10 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     const header = allHeaders.get(columnIndex)!;
     const selectedProperty = header.field as keyof Product;
 
+    if (selectedProperty === undefined || selectedProperty === null) {
+      return of(undefined);
+    }
+
     const value = product[selectedProperty].toString();
     return writeFunc$(value);
   }
@@ -258,6 +262,10 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     const allHeaders = this.grid.headerColumns as QueryList<ColumnComponent>;
     const header = allHeaders.get(columnIndex)!;
     const selectedProperty = header.field as keyof Product;
+
+    if (selectedProperty === undefined || selectedProperty === null) {
+      return of(undefined);
+    }
 
     return value.pipe(
       tap((value) => {
