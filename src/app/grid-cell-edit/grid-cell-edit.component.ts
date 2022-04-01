@@ -13,8 +13,8 @@ import {
   GridComponent,
   GridItem,
 } from '@progress/kendo-angular-grid';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { from, Observable, of, Subject } from 'rxjs';
+import { mapTo, take, takeUntil, tap } from 'rxjs/operators';
 import { getProducts, Product } from '../mocks';
 import { isOSMacOS } from '../operating-system';
 
@@ -123,48 +123,29 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     this.editCell(nextCellRowIndex, nextCellColumnIndex, nextCellProduct);
   }
 
-  onPaste(e: KeyboardEvent, metaKey = false): void {
-    const isMacOS = isOSMacOS();
-    const isOSPaste = isMacOS ? metaKey : !metaKey;
-    const activeCell = this.grid.activeCell;
-    const columnIndex = this.grid.activeCell?.colIndex;
-    const product = this.grid.activeCell?.dataItem as Product;
-    const isEditable = !!product;
-    const isEditing = !!this.activeProductFormGroup;
-    const isClipboardReadSupported = !!navigator?.clipboard?.readText;
+  onNativePaste(e: ClipboardEvent): void {
+    const isCustomKeyboardPasteSupported = !!navigator?.clipboard?.readText;
 
-    if (
-      !isClipboardReadSupported ||
-      !isOSPaste ||
-      !activeCell ||
-      !isEditable ||
-      isEditing
-    ) {
+    if (isCustomKeyboardPasteSupported) {
       return;
     }
 
-    e.preventDefault();
-    e.stopPropagation();
+    this.paste(e, of(e.clipboardData?.getData('text') || ''))
+      .pipe(take(1), takeUntil(this.unsubscriber$))
+      .subscribe(() => this.cd.markForCheck());
+  }
 
-    const allHeaders = this.grid.headerColumns as QueryList<ColumnComponent>;
-    const header = allHeaders.get(columnIndex)!;
-    const selectedProperty = header.field;
+  onKeyboardPaste(e: KeyboardEvent, metaKey = false): void {
+    const isOSPaste = isOSMacOS() ? metaKey : !metaKey;
+    const isClipboardReadSupported = !!navigator?.clipboard?.readText;
 
-    navigator.clipboard.readText().then((value) => {
-      if (!value) {
-        return;
-      }
+    if (!isClipboardReadSupported || !isOSPaste) {
+      return;
+    }
 
-      this.products = this.products.map((p) => {
-        if (p.ProductID !== product.ProductID) {
-          return p;
-        }
-
-        return { ...p, [selectedProperty]: value };
-      });
-
-      this.cd.markForCheck();
-    });
+    this.paste(e, from(navigator.clipboard.readText()))
+      .pipe(take(1), takeUntil(this.unsubscriber$))
+      .subscribe(() => this.cd.markForCheck());
   }
 
   private editCell(
@@ -215,4 +196,43 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
       UnitsInStock,
     });
   };
+
+  private paste(
+    e: ClipboardEvent | KeyboardEvent,
+    value: Observable<string>
+  ): Observable<void> {
+    const activeCell = this.grid.activeCell;
+    const columnIndex = this.grid.activeCell?.colIndex;
+    const product = this.grid.activeCell?.dataItem as Product;
+    const isEditable = !!product;
+    const isEditing = !!this.activeProductFormGroup;
+
+    if (!activeCell || !isEditable || isEditing) {
+      return of(undefined);
+    }
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    const allHeaders = this.grid.headerColumns as QueryList<ColumnComponent>;
+    const header = allHeaders.get(columnIndex)!;
+    const selectedProperty = header.field;
+
+    return value.pipe(
+      tap((value) => {
+        if (!value) {
+          return;
+        }
+
+        this.products = this.products.map((p) => {
+          if (p.ProductID !== product.ProductID) {
+            return p;
+          }
+
+          return { ...p, [selectedProperty]: value };
+        });
+      }),
+      mapTo(undefined)
+    );
+  }
 }
