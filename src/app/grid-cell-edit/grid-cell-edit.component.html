@@ -3,6 +3,10 @@
   [data]="products"
   [navigable]="true"
   [trackBy]="trackBy"
+  [selectable]="{
+    checkboxOnly: true,
+    mode: 'multiple'
+  }"
   (keyup.enter)="onEnter($any($event))"
   (keydown.tab)="onTab($any($event))"
   (keydown.shift.tab)="onTab($any($event), true)"
@@ -13,6 +17,10 @@
   (keydown.meta.c)="onKeyboardCopy($any($event), true)"
   (keydown.meta.v)="onKeyboardPaste($any($event), true)"
 >
+  <kendo-grid-checkbox-column
+    [showSelectAll]="true"
+  ></kendo-grid-checkbox-column>
+
   <kendo-grid-column
     field="ProductName"
     title="Product Name"

@@ -5,9 +5,19 @@
     background: hsl(0, 47%, 92%);
   }
 
+  td.k-state-selected,
+  tr.k-state-selected > td {
+    background: hsl(205, 47%, 92%);
+  }
+
   tr:nth-child(even) {
     td.disabled {
       background: hsl(0, 65%, 86%);
+    }
+
+    td.k-state-selected,
+    &.k-state-selected > td {
+      background: hsl(205, 65%, 86%);
     }
   }
 }
