@@ -13,7 +13,6 @@ import {
   ColumnComponent,
   GridComponent,
   GridItem,
-  NavigationCell,
 } from '@progress/kendo-angular-grid';
 import { from, Observable, of, Subject } from 'rxjs';
 import { mapTo, take, takeUntil, tap } from 'rxjs/operators';
@@ -112,33 +111,80 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
       this.closeCell();
     }
 
-    let nextCell: NavigationCell | undefined | null;
-    let nextCellColumnIndex!: number;
+    console.log('activeCellRowIndex', activeCellRowIndex);
+    console.log('activeCellColumnIndex', activeCellColumnIndex);
 
-    while (nextCell === undefined && nextCell !== null) {
-      nextCell = goBackwards
-        ? this.grid.focusPrevCell()
-        : this.grid.focusNextCell();
+    const totalRowCount = this.grid.totalCount;
+    const allRowColumns = this.grid.columns;
 
-      if (!nextCell) {
-        nextCell = null;
-        break;
-      }
+    console.log('totalRowCount', totalRowCount);
+    console.log('allRowColumns', allRowColumns);
 
-      nextCellColumnIndex = nextCell.colIndex;
-      const nextCellHeader = this.getHeader(nextCellColumnIndex);
-      const isCheckboxSelect = this.isCheckboxColumnComponent(nextCellHeader);
+    // const nextCell = this.grid.focusCell(5, 2);
+    // const nextCellColumnIndex = nextCell.colIndex;
 
-      nextCell = isCheckboxSelect ? undefined : nextCell;
+    // let nextCell: NavigationCell | undefined | null;
+    // let nextCellColumnIndex!: number;
 
-      console.log(nextCell);
+    // while (nextCell === undefined && nextCell !== null) {
+    //   nextCell = goBackwards
+    //     ? this.grid.focusPrevCell()
+    //     : this.grid.focusNextCell();
+
+    //   if (!nextCell) {
+    //     nextCell = null;
+    //     break;
+    //   }
+
+    //   nextCellColumnIndex = nextCell.colIndex;
+    //   const nextCellHeader = this.getHeader(nextCellColumnIndex);
+    //   const isCheckboxSelect = this.isCheckboxColumnComponent(nextCellHeader);
+
+    //   nextCell = isCheckboxSelect ? undefined : nextCell;
+
+    //   console.log(nextCell);
+    // }
+
+    const checkboxColumnIndex = allRowColumns.find((c) =>
+      this.isCheckboxColumnComponent(c)
+    )?.leafIndex;
+
+    const shouldWrapRow = goBackwards
+      ? activeCellColumnIndex === 1
+      : allRowColumns.length - 1 === activeCellColumnIndex;
+
+    console.log(checkboxColumnIndex);
+
+    let nextCellRowIndex = activeCellRowIndex + 1;
+    let nextCellColumnIndex = goBackwards
+      ? activeCellColumnIndex - 1
+      : activeCellColumnIndex + 1;
+
+    if (shouldWrapRow) {
+      nextCellColumnIndex = goBackwards ? allRowColumns.length - 1 : 0;
+      nextCellRowIndex = goBackwards
+        ? nextCellRowIndex - 1
+        : nextCellRowIndex + 1;
     }
+
+    if (nextCellColumnIndex === checkboxColumnIndex) {
+      nextCellColumnIndex = goBackwards
+        ? nextCellColumnIndex - 1
+        : nextCellColumnIndex + 1;
+    }
+
+    if (nextCellRowIndex > totalRowCount || nextCellRowIndex < 0) {
+      (document.activeElement as HTMLElement).blur();
+      return;
+    }
+
+    const nextCell = this.grid.focusCell(nextCellRowIndex, nextCellColumnIndex);
+    // const nextCellColumnIndex = nextCell?.colIndex;
 
     if (!nextCell) {
       return;
     }
 
-    const nextCellRowIndex = nextCell.dataRowIndex;
     const isNextCellEditable =
       !!nextCell.dataItem && this.isCellEditable(nextCellColumnIndex);
 
@@ -256,7 +302,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     e.preventDefault();
     e.stopPropagation();
 
-    const header = this.getHeader(columnIndex);
+    const header = this.getHeader(columnIndex)!;
     const selectedProperty = header.field as keyof Product;
 
     if (selectedProperty === undefined || selectedProperty === null) {
@@ -284,7 +330,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     e.preventDefault();
     e.stopPropagation();
 
-    const header = this.getHeader(columnIndex);
+    const header = this.getHeader(columnIndex)!;
     const selectedProperty = header.field as keyof Product;
 
     if (selectedProperty === undefined || selectedProperty === null) {
@@ -315,14 +361,18 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     return !!rowColumn?.editable;
   }
 
-  private getHeader(columnIndex: number): ColumnComponent {
+  private getHeader(columnIndex: number): ColumnComponent | undefined {
     const allHeaders = this.grid.headerColumns as QueryList<ColumnComponent>;
-    return allHeaders.get(columnIndex)!;
+    return allHeaders.get(columnIndex);
   }
 
   private isCheckboxColumnComponent(
-    component: object
+    component: unknown
   ): component is CheckboxColumnComponent {
+    if (typeof component !== 'object' || component === null) {
+      return false;
+    }
+
     return 'isCheckboxColumn' in component;
   }
 
