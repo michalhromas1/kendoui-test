@@ -53,15 +53,6 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     return this.grid.columns.length;
   }
 
-  private get checkboxColumnIndex(): number | undefined {
-    return this.headerColumns.find((c) => this.isCheckboxColumnComponent(c))
-      ?.leafIndex;
-  }
-
-  private get hasCheckboxColumn(): boolean {
-    return this.checkboxColumnIndex !== undefined;
-  }
-
   private get firstFocusableColumnIndex(): number | undefined {
     return this.focusableColumnsIndexes[0];
   }
@@ -74,7 +65,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
 
   private get focusableColumnsIndexes(): number[] {
     return this.headerColumns
-      .filter((c) => this.isCheckboxColumnComponent(c))
+      .filter((c) => !this.isCheckboxColumnComponent(c))
       .map((c) => c.leafIndex);
   }
 
@@ -132,51 +123,16 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     this.closeCell();
   }
 
-  private getNextFocusableCellCoordinates(
-    currentCoordinates: CellCoordinates,
-    goBackwards = false
-  ): CellCoordinates | undefined {
-    const { row: currentRowIdx, col: currentCellIdx } = currentCoordinates;
-
-    const shouldWrapRow = goBackwards
-      ? currentCellIdx === 1
-      : this.columnCount - 1 === currentCellIdx;
-
-    let result: CellCoordinates = {
-      row: currentRowIdx,
-      col: goBackwards ? currentCellIdx - 1 : currentCellIdx + 1,
-    };
-
-    if (shouldWrapRow) {
-      result = {
-        row: goBackwards ? currentRowIdx - 1 : currentRowIdx + 1,
-        col: goBackwards
-          ? this.lastFocusableColumnIndex!
-          : this.firstFocusableColumnIndex!,
-      };
-    }
-
-    const wouldGoToCheckbox = result.col === this.checkboxColumnIndex;
-    if (wouldGoToCheckbox) {
-      result.col = goBackwards ? result.col - 1 : result.col + 1;
-    }
-
-    const isOutOfBounds = result.row > this.totalRowCount || result.row < 0;
-
-    if (isOutOfBounds) {
-      return;
-    }
-
-    return result;
-  }
-
   onTab(e: KeyboardEvent, goBackwards = false): void {
     const activeCell = this.grid.activeCell;
-    const activeCellRowIndex = activeCell?.dataRowIndex;
     const activeCellColumnIndex = activeCell?.colIndex;
     const isEditing = !!this.activeProductFormGroup;
     const header = this.getHeader(activeCellColumnIndex);
     const isCheckboxColumnComponent = this.isCheckboxColumnComponent(header);
+    const currentCoordinates: CellCoordinates = {
+      row: activeCell.dataRowIndex + 1, // +1 aby se nepočítal header row
+      col: activeCell.colIndex,
+    };
 
     if (!activeCell || isCheckboxColumnComponent) {
       return;
@@ -185,7 +141,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     e.preventDefault();
     e.stopPropagation();
 
-    let nextCellProduct!: Product;
+    let nextCellProduct: Product | undefined;
 
     if (isEditing) {
       const currentRowUpdatedProduct = this.saveCell();
@@ -193,10 +149,20 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
       this.closeCell();
     }
 
-    const currentCoordinates: CellCoordinates = {
-      row: activeCellRowIndex + 1, // +1 aby se nepočítal header row
-      col: activeCellColumnIndex,
-    };
+    this.tryFocusAndEditNextCell(
+      currentCoordinates,
+      isEditing,
+      nextCellProduct,
+      goBackwards
+    );
+  }
+
+  private tryFocusAndEditNextCell(
+    currentCoordinates: CellCoordinates,
+    shouldEdit: boolean,
+    product?: Product,
+    goBackwards = false
+  ): void {
     const nextCellCoordinates = this.getNextFocusableCellCoordinates(
       currentCoordinates,
       goBackwards
@@ -211,23 +177,67 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
       nextCellCoordinates;
 
     const nextCell = this.grid.focusCell(nextCellRowIndex, nextCellColumnIndex);
-
     if (!nextCell) {
       return;
     }
 
     const isNextCellEditable =
       !!nextCell.dataItem && this.isCellEditable(nextCellColumnIndex);
-
-    if (!isEditing || !isNextCellEditable) {
+    if (!shouldEdit || !isNextCellEditable) {
       return;
     }
 
-    if (nextCellRowIndex !== activeCellRowIndex) {
-      nextCellProduct = nextCell.dataItem;
+    if (nextCellRowIndex !== currentCoordinates.row) {
+      product = nextCell.dataItem;
     }
 
-    this.editCell(nextCellRowIndex, nextCellColumnIndex, nextCellProduct);
+    this.editCell(nextCellRowIndex - 1, nextCellColumnIndex, product!);
+  }
+
+  private getNextFocusableCellCoordinates(
+    currentCoordinates: CellCoordinates,
+    goBackwards = false
+  ): CellCoordinates | undefined {
+    return goBackwards
+      ? this.getNextFocusableCellCoordinatesBackwards(currentCoordinates)
+      : this.getNextFocusableCellCoordinatesForwards(currentCoordinates);
+  }
+
+  private getNextFocusableCellCoordinatesForwards(
+    currentCoordinates: CellCoordinates
+  ): CellCoordinates | undefined {
+    const { row: currentRowIdx, col: currentCellIdx } = currentCoordinates;
+    const shouldWrapRow = currentCellIdx === this.lastFocusableColumnIndex;
+
+    const result = {
+      row: !shouldWrapRow ? currentRowIdx : currentRowIdx + 1,
+      col: !shouldWrapRow
+        ? currentCellIdx + 1
+        : this.firstFocusableColumnIndex!,
+    };
+
+    return this.doCoordinatesExist(result) ? result : undefined;
+  }
+
+  private getNextFocusableCellCoordinatesBackwards(
+    currentCoordinates: CellCoordinates
+  ): CellCoordinates | undefined {
+    const { row: currentRowIdx, col: currentCellIdx } = currentCoordinates;
+    const shouldWrapRow = currentCellIdx === this.firstFocusableColumnIndex;
+
+    const result = {
+      row: !shouldWrapRow ? currentRowIdx : currentRowIdx - 1,
+      col: !shouldWrapRow ? currentCellIdx - 1 : this.lastFocusableColumnIndex!,
+    };
+
+    return this.doCoordinatesExist(result) ? result : undefined;
+  }
+
+  private doCoordinatesExist({ row, col }: CellCoordinates): boolean {
+    const doesRowExist = row >= 0 && row <= this.totalRowCount;
+    const doesColExist = col >= 0 && col <= this.columnCount;
+
+    return doesRowExist && doesColExist;
   }
 
   onNativeCopy(e: ClipboardEvent): void {
