@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import {
+  CheckboxColumnComponent,
   ColumnComponent,
   GridComponent,
   GridItem,
@@ -17,6 +18,13 @@ import { from, Observable, of, Subject } from 'rxjs';
 import { mapTo, take, takeUntil, tap } from 'rxjs/operators';
 import { getProducts, Product } from '../mocks';
 import { isOSMacOS } from '../operating-system';
+
+type CellCoordinates = {
+  row: number;
+  col: number;
+};
+
+type HeaderColumn = ColumnComponent | CheckboxColumnComponent;
 
 @Component({
   selector: 'app-grid-cell-edit',
@@ -32,6 +40,34 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
   private activeProductFormGroup: FormGroup | undefined;
   private activeRowIndex: number | undefined;
   private unsubscriber$ = new Subject<void>();
+
+  private get headerColumns(): QueryList<HeaderColumn> {
+    return this.grid.headerColumns;
+  }
+
+  private get totalRowCount(): number {
+    return this.grid.totalCount;
+  }
+
+  private get columnCount(): number {
+    return this.grid.columns.length;
+  }
+
+  private get firstFocusableColumnIndex(): number | undefined {
+    return this.focusableColumnsIndexes[0];
+  }
+
+  private get lastFocusableColumnIndex(): number | undefined {
+    const focusableColumnsIndexes = this.focusableColumnsIndexes;
+    const focusableColumnsIndexesCount = this.focusableColumnsIndexes.length;
+    return focusableColumnsIndexes[focusableColumnsIndexesCount - 1];
+  }
+
+  private get focusableColumnsIndexes(): number[] {
+    return this.headerColumns
+      .filter((c) => !this.isCheckboxColumnComponent(c))
+      .map((c) => c.leafIndex);
+  }
 
   constructor(
     private formBuilder: FormBuilder,
@@ -89,17 +125,23 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
 
   onTab(e: KeyboardEvent, goBackwards = false): void {
     const activeCell = this.grid.activeCell;
-    const activeCellRowIndex = this.grid.activeCell?.dataRowIndex;
+    const activeCellColumnIndex = activeCell?.colIndex;
     const isEditing = !!this.activeProductFormGroup;
+    const header = this.getHeader(activeCellColumnIndex);
+    const isCheckboxColumnComponent = this.isCheckboxColumnComponent(header);
+    const currentCoordinates: CellCoordinates = {
+      row: activeCell.dataRowIndex + 1, // +1 aby se nepočítal header row
+      col: activeCell.colIndex,
+    };
 
-    if (!activeCell) {
+    if (!activeCell || isCheckboxColumnComponent) {
       return;
     }
 
     e.preventDefault();
     e.stopPropagation();
 
-    let nextCellProduct!: Product;
+    let nextCellProduct: Product | undefined;
 
     if (isEditing) {
       const currentRowUpdatedProduct = this.saveCell();
@@ -107,24 +149,12 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
       this.closeCell();
     }
 
-    const nextCell = goBackwards
-      ? this.grid.focusPrevCell()
-      : this.grid.focusNextCell();
-
-    const nextCellRowIndex = nextCell?.dataRowIndex;
-    const nextCellColumnIndex = nextCell?.colIndex;
-    const isNextCellEditable =
-      !!nextCell?.dataItem && this.isCellEditable(nextCellColumnIndex);
-
-    if (!isEditing || !isNextCellEditable) {
-      return;
-    }
-
-    if (nextCellRowIndex !== activeCellRowIndex) {
-      nextCellProduct = nextCell.dataItem;
-    }
-
-    this.editCell(nextCellRowIndex, nextCellColumnIndex, nextCellProduct);
+    this.tryFocusAndEditNextCell(
+      currentCoordinates,
+      isEditing,
+      nextCellProduct,
+      goBackwards
+    );
   }
 
   onNativeCopy(e: ClipboardEvent): void {
@@ -230,9 +260,15 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     e.preventDefault();
     e.stopPropagation();
 
-    const allHeaders = this.grid.headerColumns as QueryList<ColumnComponent>;
-    const header = allHeaders.get(columnIndex)!;
+    const header = this.getHeader(columnIndex);
+    if (!header || this.isCheckboxColumnComponent(header)) {
+      return of(undefined);
+    }
+
     const selectedProperty = header.field as keyof Product;
+    if (selectedProperty === undefined || selectedProperty === null) {
+      return of(undefined);
+    }
 
     const value = product[selectedProperty].toString();
     return writeFunc$(value);
@@ -255,9 +291,15 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     e.preventDefault();
     e.stopPropagation();
 
-    const allHeaders = this.grid.headerColumns as QueryList<ColumnComponent>;
-    const header = allHeaders.get(columnIndex)!;
+    const header = this.getHeader(columnIndex);
+    if (!header || this.isCheckboxColumnComponent(header)) {
+      return of(undefined);
+    }
+
     const selectedProperty = header.field as keyof Product;
+    if (selectedProperty === undefined || selectedProperty === null) {
+      return of(undefined);
+    }
 
     return value.pipe(
       tap((value) => {
@@ -277,10 +319,109 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     );
   }
 
+  private tryFocusAndEditNextCell(
+    currentCoordinates: CellCoordinates,
+    shouldEdit: boolean,
+    product?: Product,
+    goBackwards = false
+  ): void {
+    const nextCellCoordinates = this.getNextFocusableCellCoordinates(
+      currentCoordinates,
+      goBackwards
+    );
+
+    if (!nextCellCoordinates) {
+      (document.activeElement as HTMLElement).blur();
+      return;
+    }
+
+    const { row: nextCellRowIndex, col: nextCellColumnIndex } =
+      nextCellCoordinates;
+
+    const nextCell = this.grid.focusCell(nextCellRowIndex, nextCellColumnIndex);
+    if (!nextCell) {
+      return;
+    }
+
+    const isNextCellEditable =
+      !!nextCell.dataItem && this.isCellEditable(nextCellColumnIndex);
+    if (!shouldEdit || !isNextCellEditable) {
+      return;
+    }
+
+    if (nextCellRowIndex !== currentCoordinates.row) {
+      product = nextCell.dataItem;
+    }
+
+    // nextCellRowIndex - 1 - musí se počítat s header row
+    this.editCell(nextCellRowIndex - 1, nextCellColumnIndex, product!);
+  }
+
+  private getNextFocusableCellCoordinates(
+    currentCoordinates: CellCoordinates,
+    goBackwards = false
+  ): CellCoordinates | undefined {
+    return goBackwards
+      ? this.getNextFocusableCellCoordinatesBackwards(currentCoordinates)
+      : this.getNextFocusableCellCoordinatesForwards(currentCoordinates);
+  }
+
+  private getNextFocusableCellCoordinatesForwards(
+    currentCoordinates: CellCoordinates
+  ): CellCoordinates | undefined {
+    const { row: currentRowIdx, col: currentCellIdx } = currentCoordinates;
+    const shouldWrapRow = currentCellIdx === this.lastFocusableColumnIndex;
+
+    const result = {
+      row: !shouldWrapRow ? currentRowIdx : currentRowIdx + 1,
+      col: !shouldWrapRow
+        ? currentCellIdx + 1
+        : this.firstFocusableColumnIndex!,
+    };
+
+    return this.doCoordinatesExist(result) ? result : undefined;
+  }
+
+  private getNextFocusableCellCoordinatesBackwards(
+    currentCoordinates: CellCoordinates
+  ): CellCoordinates | undefined {
+    const { row: currentRowIdx, col: currentCellIdx } = currentCoordinates;
+    const shouldWrapRow = currentCellIdx === this.firstFocusableColumnIndex;
+
+    const result = {
+      row: !shouldWrapRow ? currentRowIdx : currentRowIdx - 1,
+      col: !shouldWrapRow ? currentCellIdx - 1 : this.lastFocusableColumnIndex!,
+    };
+
+    return this.doCoordinatesExist(result) ? result : undefined;
+  }
+
+  private doCoordinatesExist({ row, col }: CellCoordinates): boolean {
+    const doesRowExist = row >= 0 && row <= this.totalRowCount;
+    const doesColExist = col >= 0 && col <= this.columnCount;
+
+    return doesRowExist && doesColExist;
+  }
+
   private isCellEditable(columnIndex: number): boolean {
     const allRowColumns = this.grid.columnList.toArray() as ColumnComponent[];
     const rowColumn = allRowColumns.find((c) => c.leafIndex === columnIndex);
     return !!rowColumn?.editable;
+  }
+
+  private getHeader(columnIndex: number): HeaderColumn | undefined {
+    const allHeaders = this.headerColumns;
+    return allHeaders.get(columnIndex);
+  }
+
+  private isCheckboxColumnComponent(
+    component: unknown
+  ): component is CheckboxColumnComponent {
+    if (typeof component !== 'object' || component === null) {
+      return false;
+    }
+
+    return 'isCheckboxColumn' in component;
   }
 
   private createProductFormGroup = (product: Product): FormGroup => {
