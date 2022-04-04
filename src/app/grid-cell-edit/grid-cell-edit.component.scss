@@ -1,7 +1,16 @@
-$disabled-light: hsl(0, 47%, 92%);
-$disabled-dark: hsl(0, 65%, 86%);
-$selected-light: hsl(205, 47%, 92%);
-$selected-dark: hsl(205, 65%, 86%);
+$saturation-light: 47%;
+$lightness-light: 92%;
+
+$saturation-dark: 65%;
+$lightness-dark: 86%;
+
+$disabled-light: hsl(0, $saturation-light, $lightness-light);
+$selected-light: hsl(205, $saturation-light, $lightness-light);
+$selected-disabled-light: hsl(290, $saturation-light, $lightness-light);
+
+$disabled-dark: hsl(0, $saturation-dark, $lightness-dark);
+$selected-dark: hsl(205, $saturation-dark, $lightness-dark);
+$selected-disabled-dark: hsl(290, $saturation-dark, $lightness-dark);
 
 :host ::ng-deep {
   td.disabled {
@@ -15,7 +24,7 @@ $selected-dark: hsl(205, 65%, 86%);
     background: $selected-light;
 
     &.disabled {
-      background: $disabled-light;
+      background: $selected-disabled-light;
     }
   }
 
@@ -29,7 +38,7 @@ $selected-dark: hsl(205, 65%, 86%);
       background: $selected-dark;
 
       &.disabled {
-        background: $disabled-dark;
+        background: $selected-disabled-dark;
       }
     }
   }
