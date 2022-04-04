@@ -24,6 +24,8 @@ type CellCoordinates = {
   col: number;
 };
 
+type HeaderColumn = ColumnComponent | CheckboxColumnComponent;
+
 @Component({
   selector: 'app-grid-cell-edit',
   templateUrl: './grid-cell-edit.component.html',
@@ -38,6 +40,43 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
   private activeProductFormGroup: FormGroup | undefined;
   private activeRowIndex: number | undefined;
   private unsubscriber$ = new Subject<void>();
+
+  private get headerColumns(): QueryList<HeaderColumn> {
+    return this.grid.headerColumns;
+  }
+
+  private get totalRowCount(): number {
+    return this.grid.totalCount;
+  }
+
+  private get columnCount(): number {
+    return this.grid.columns.length;
+  }
+
+  private get checkboxColumnIndex(): number | undefined {
+    return this.headerColumns.find((c) => this.isCheckboxColumnComponent(c))
+      ?.leafIndex;
+  }
+
+  private get hasCheckboxColumn(): boolean {
+    return this.checkboxColumnIndex !== undefined;
+  }
+
+  private get firstFocusableColumnIndex(): number | undefined {
+    return this.focusableColumnsIndexes[0];
+  }
+
+  private get lastFocusableColumnIndex(): number | undefined {
+    const focusableColumnsIndexes = this.focusableColumnsIndexes;
+    const focusableColumnsIndexesCount = this.focusableColumnsIndexes.length;
+    return focusableColumnsIndexes[focusableColumnsIndexesCount - 1];
+  }
+
+  private get focusableColumnsIndexes(): number[] {
+    return this.headerColumns
+      .filter((c) => this.isCheckboxColumnComponent(c))
+      .map((c) => c.leafIndex);
+  }
 
   constructor(
     private formBuilder: FormBuilder,
@@ -99,42 +138,36 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
   ): CellCoordinates | undefined {
     const { row: currentRowIdx, col: currentCellIdx } = currentCoordinates;
 
-    const totalRowCount = this.grid.totalCount;
-    const allRowColumns = this.grid.columns;
-
-    const checkboxColumnIndex = allRowColumns.find((c) =>
-      this.isCheckboxColumnComponent(c)
-    )?.leafIndex;
-
     const shouldWrapRow = goBackwards
       ? currentCellIdx === 1
-      : allRowColumns.length - 1 === currentCellIdx;
+      : this.columnCount - 1 === currentCellIdx;
 
-    console.log(checkboxColumnIndex);
-
-    let nextCellRowIndex = currentRowIdx + 1;
-    let nextCellColumnIndex = goBackwards
-      ? currentCellIdx - 1
-      : currentCellIdx + 1;
+    let result: CellCoordinates = {
+      row: currentRowIdx,
+      col: goBackwards ? currentCellIdx - 1 : currentCellIdx + 1,
+    };
 
     if (shouldWrapRow) {
-      nextCellColumnIndex = goBackwards ? allRowColumns.length - 1 : 0;
-      nextCellRowIndex = goBackwards
-        ? nextCellRowIndex - 1
-        : nextCellRowIndex + 1;
+      result = {
+        row: goBackwards ? currentRowIdx - 1 : currentRowIdx + 1,
+        col: goBackwards
+          ? this.lastFocusableColumnIndex!
+          : this.firstFocusableColumnIndex!,
+      };
     }
 
-    if (nextCellColumnIndex === checkboxColumnIndex) {
-      nextCellColumnIndex = goBackwards
-        ? nextCellColumnIndex - 1
-        : nextCellColumnIndex + 1;
+    const wouldGoToCheckbox = result.col === this.checkboxColumnIndex;
+    if (wouldGoToCheckbox) {
+      result.col = goBackwards ? result.col - 1 : result.col + 1;
     }
 
-    if (nextCellRowIndex > totalRowCount || nextCellRowIndex < 0) {
+    const isOutOfBounds = result.row > this.totalRowCount || result.row < 0;
+
+    if (isOutOfBounds) {
       return;
     }
 
-    return { row: nextCellRowIndex, col: nextCellColumnIndex };
+    return result;
   }
 
   onTab(e: KeyboardEvent, goBackwards = false): void {
@@ -161,7 +194,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     }
 
     const currentCoordinates: CellCoordinates = {
-      row: activeCellRowIndex,
+      row: activeCellRowIndex + 1, // +1 aby se nepočítal header row
       col: activeCellColumnIndex,
     };
     const nextCellCoordinates = this.getNextFocusableCellCoordinates(
@@ -300,9 +333,12 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     e.preventDefault();
     e.stopPropagation();
 
-    const header = this.getHeader(columnIndex)!;
-    const selectedProperty = header.field as keyof Product;
+    const header = this.getHeader(columnIndex);
+    if (!header || this.isCheckboxColumnComponent(header)) {
+      return of(undefined);
+    }
 
+    const selectedProperty = header.field as keyof Product;
     if (selectedProperty === undefined || selectedProperty === null) {
       return of(undefined);
     }
@@ -328,9 +364,12 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     e.preventDefault();
     e.stopPropagation();
 
-    const header = this.getHeader(columnIndex)!;
-    const selectedProperty = header.field as keyof Product;
+    const header = this.getHeader(columnIndex);
+    if (!header || this.isCheckboxColumnComponent(header)) {
+      return of(undefined);
+    }
 
+    const selectedProperty = header.field as keyof Product;
     if (selectedProperty === undefined || selectedProperty === null) {
       return of(undefined);
     }
@@ -359,8 +398,8 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     return !!rowColumn?.editable;
   }
 
-  private getHeader(columnIndex: number): ColumnComponent | undefined {
-    const allHeaders = this.grid.headerColumns as QueryList<ColumnComponent>;
+  private getHeader(columnIndex: number): HeaderColumn | undefined {
+    const allHeaders = this.headerColumns;
     return allHeaders.get(columnIndex);
   }
 
