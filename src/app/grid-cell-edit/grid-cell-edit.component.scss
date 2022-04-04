@@ -1,23 +1,36 @@
+$disabled-light: hsl(0, 47%, 92%);
+$disabled-dark: hsl(0, 65%, 86%);
+$selected-light: hsl(205, 47%, 92%);
+$selected-dark: hsl(205, 65%, 86%);
+
 :host ::ng-deep {
   td.disabled {
     text-decoration: line-through;
     cursor: not-allowed;
-    background: hsl(0, 47%, 92%);
+    background: $disabled-light;
   }
 
   td.k-state-selected,
   tr.k-state-selected > td {
-    background: hsl(205, 47%, 92%);
+    background: $selected-light;
+
+    &.disabled {
+      background: $disabled-light;
+    }
   }
 
   tr:nth-child(even) {
     td.disabled {
-      background: hsl(0, 65%, 86%);
+      background: $disabled-dark;
     }
 
     td.k-state-selected,
     &.k-state-selected > td {
-      background: hsl(205, 65%, 86%);
+      background: $selected-dark;
+
+      &.disabled {
+        background: $disabled-dark;
+      }
     }
   }
 }
