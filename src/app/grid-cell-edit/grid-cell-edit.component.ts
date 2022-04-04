@@ -157,89 +157,6 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     );
   }
 
-  private tryFocusAndEditNextCell(
-    currentCoordinates: CellCoordinates,
-    shouldEdit: boolean,
-    product?: Product,
-    goBackwards = false
-  ): void {
-    const nextCellCoordinates = this.getNextFocusableCellCoordinates(
-      currentCoordinates,
-      goBackwards
-    );
-
-    if (!nextCellCoordinates) {
-      (document.activeElement as HTMLElement).blur();
-      return;
-    }
-
-    const { row: nextCellRowIndex, col: nextCellColumnIndex } =
-      nextCellCoordinates;
-
-    const nextCell = this.grid.focusCell(nextCellRowIndex, nextCellColumnIndex);
-    if (!nextCell) {
-      return;
-    }
-
-    const isNextCellEditable =
-      !!nextCell.dataItem && this.isCellEditable(nextCellColumnIndex);
-    if (!shouldEdit || !isNextCellEditable) {
-      return;
-    }
-
-    if (nextCellRowIndex !== currentCoordinates.row) {
-      product = nextCell.dataItem;
-    }
-
-    this.editCell(nextCellRowIndex - 1, nextCellColumnIndex, product!);
-  }
-
-  private getNextFocusableCellCoordinates(
-    currentCoordinates: CellCoordinates,
-    goBackwards = false
-  ): CellCoordinates | undefined {
-    return goBackwards
-      ? this.getNextFocusableCellCoordinatesBackwards(currentCoordinates)
-      : this.getNextFocusableCellCoordinatesForwards(currentCoordinates);
-  }
-
-  private getNextFocusableCellCoordinatesForwards(
-    currentCoordinates: CellCoordinates
-  ): CellCoordinates | undefined {
-    const { row: currentRowIdx, col: currentCellIdx } = currentCoordinates;
-    const shouldWrapRow = currentCellIdx === this.lastFocusableColumnIndex;
-
-    const result = {
-      row: !shouldWrapRow ? currentRowIdx : currentRowIdx + 1,
-      col: !shouldWrapRow
-        ? currentCellIdx + 1
-        : this.firstFocusableColumnIndex!,
-    };
-
-    return this.doCoordinatesExist(result) ? result : undefined;
-  }
-
-  private getNextFocusableCellCoordinatesBackwards(
-    currentCoordinates: CellCoordinates
-  ): CellCoordinates | undefined {
-    const { row: currentRowIdx, col: currentCellIdx } = currentCoordinates;
-    const shouldWrapRow = currentCellIdx === this.firstFocusableColumnIndex;
-
-    const result = {
-      row: !shouldWrapRow ? currentRowIdx : currentRowIdx - 1,
-      col: !shouldWrapRow ? currentCellIdx - 1 : this.lastFocusableColumnIndex!,
-    };
-
-    return this.doCoordinatesExist(result) ? result : undefined;
-  }
-
-  private doCoordinatesExist({ row, col }: CellCoordinates): boolean {
-    const doesRowExist = row >= 0 && row <= this.totalRowCount;
-    const doesColExist = col >= 0 && col <= this.columnCount;
-
-    return doesRowExist && doesColExist;
-  }
-
   onNativeCopy(e: ClipboardEvent): void {
     const isCustomKeyboardCopySupported = !!navigator?.clipboard?.writeText;
 
@@ -400,6 +317,90 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
       }),
       mapTo(undefined)
     );
+  }
+
+  private tryFocusAndEditNextCell(
+    currentCoordinates: CellCoordinates,
+    shouldEdit: boolean,
+    product?: Product,
+    goBackwards = false
+  ): void {
+    const nextCellCoordinates = this.getNextFocusableCellCoordinates(
+      currentCoordinates,
+      goBackwards
+    );
+
+    if (!nextCellCoordinates) {
+      (document.activeElement as HTMLElement).blur();
+      return;
+    }
+
+    const { row: nextCellRowIndex, col: nextCellColumnIndex } =
+      nextCellCoordinates;
+
+    const nextCell = this.grid.focusCell(nextCellRowIndex, nextCellColumnIndex);
+    if (!nextCell) {
+      return;
+    }
+
+    const isNextCellEditable =
+      !!nextCell.dataItem && this.isCellEditable(nextCellColumnIndex);
+    if (!shouldEdit || !isNextCellEditable) {
+      return;
+    }
+
+    if (nextCellRowIndex !== currentCoordinates.row) {
+      product = nextCell.dataItem;
+    }
+
+    // nextCellRowIndex - 1 - musí se počítat s header row
+    this.editCell(nextCellRowIndex - 1, nextCellColumnIndex, product!);
+  }
+
+  private getNextFocusableCellCoordinates(
+    currentCoordinates: CellCoordinates,
+    goBackwards = false
+  ): CellCoordinates | undefined {
+    return goBackwards
+      ? this.getNextFocusableCellCoordinatesBackwards(currentCoordinates)
+      : this.getNextFocusableCellCoordinatesForwards(currentCoordinates);
+  }
+
+  private getNextFocusableCellCoordinatesForwards(
+    currentCoordinates: CellCoordinates
+  ): CellCoordinates | undefined {
+    const { row: currentRowIdx, col: currentCellIdx } = currentCoordinates;
+    const shouldWrapRow = currentCellIdx === this.lastFocusableColumnIndex;
+
+    const result = {
+      row: !shouldWrapRow ? currentRowIdx : currentRowIdx + 1,
+      col: !shouldWrapRow
+        ? currentCellIdx + 1
+        : this.firstFocusableColumnIndex!,
+    };
+
+    return this.doCoordinatesExist(result) ? result : undefined;
+  }
+
+  private getNextFocusableCellCoordinatesBackwards(
+    currentCoordinates: CellCoordinates
+  ): CellCoordinates | undefined {
+    const { row: currentRowIdx, col: currentCellIdx } = currentCoordinates;
+    const shouldWrapRow = currentCellIdx === this.firstFocusableColumnIndex;
+
+    const result = {
+      row: !shouldWrapRow ? currentRowIdx : currentRowIdx - 1,
+      col: !shouldWrapRow ? currentCellIdx - 1 : this.lastFocusableColumnIndex!,
+    };
+
+    return this.doCoordinatesExist(result) ? result : undefined;
+  }
+
+  private doCoordinatesExist({ row, col }: CellCoordinates): boolean {
+    const doesRowExist = row >= 0 && row <= this.totalRowCount;
+    const doesColExist = col >= 0 && col <= this.columnCount;
+
+    return doesRowExist && doesColExist;
   }
 
   private isCellEditable(columnIndex: number): boolean {
