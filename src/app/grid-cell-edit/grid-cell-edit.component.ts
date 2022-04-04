@@ -19,6 +19,11 @@ import { mapTo, take, takeUntil, tap } from 'rxjs/operators';
 import { getProducts, Product } from '../mocks';
 import { isOSMacOS } from '../operating-system';
 
+type CellCoordinates = {
+  row: number;
+  col: number;
+};
+
 @Component({
   selector: 'app-grid-cell-edit',
   templateUrl: './grid-cell-edit.component.html',
@@ -88,10 +93,54 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     this.closeCell();
   }
 
+  private getNextFocusableCellCoordinates(
+    currentCoordinates: CellCoordinates,
+    goBackwards = false
+  ): CellCoordinates | undefined {
+    const { row: currentRowIdx, col: currentCellIdx } = currentCoordinates;
+
+    const totalRowCount = this.grid.totalCount;
+    const allRowColumns = this.grid.columns;
+
+    const checkboxColumnIndex = allRowColumns.find((c) =>
+      this.isCheckboxColumnComponent(c)
+    )?.leafIndex;
+
+    const shouldWrapRow = goBackwards
+      ? currentCellIdx === 1
+      : allRowColumns.length - 1 === currentCellIdx;
+
+    console.log(checkboxColumnIndex);
+
+    let nextCellRowIndex = currentRowIdx + 1;
+    let nextCellColumnIndex = goBackwards
+      ? currentCellIdx - 1
+      : currentCellIdx + 1;
+
+    if (shouldWrapRow) {
+      nextCellColumnIndex = goBackwards ? allRowColumns.length - 1 : 0;
+      nextCellRowIndex = goBackwards
+        ? nextCellRowIndex - 1
+        : nextCellRowIndex + 1;
+    }
+
+    if (nextCellColumnIndex === checkboxColumnIndex) {
+      nextCellColumnIndex = goBackwards
+        ? nextCellColumnIndex - 1
+        : nextCellColumnIndex + 1;
+    }
+
+    if (nextCellRowIndex > totalRowCount || nextCellRowIndex < 0) {
+      return;
+    }
+
+    return { row: nextCellRowIndex, col: nextCellColumnIndex };
+  }
+
   onTab(e: KeyboardEvent, goBackwards = false): void {
     const activeCell = this.grid.activeCell;
-    const activeCellRowIndex = this.grid.activeCell?.dataRowIndex;
-    const activeCellColumnIndex = this.grid.activeCell?.colIndex;
+    const activeCellRowIndex = activeCell?.dataRowIndex;
+    const activeCellColumnIndex = activeCell?.colIndex;
     const isEditing = !!this.activeProductFormGroup;
     const header = this.getHeader(activeCellColumnIndex);
     const isCheckboxColumnComponent = this.isCheckboxColumnComponent(header);
@@ -111,75 +160,24 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
       this.closeCell();
     }
 
-    console.log('activeCellRowIndex', activeCellRowIndex);
-    console.log('activeCellColumnIndex', activeCellColumnIndex);
+    const currentCoordinates: CellCoordinates = {
+      row: activeCellRowIndex,
+      col: activeCellColumnIndex,
+    };
+    const nextCellCoordinates = this.getNextFocusableCellCoordinates(
+      currentCoordinates,
+      goBackwards
+    );
 
-    const totalRowCount = this.grid.totalCount;
-    const allRowColumns = this.grid.columns;
-
-    console.log('totalRowCount', totalRowCount);
-    console.log('allRowColumns', allRowColumns);
-
-    // const nextCell = this.grid.focusCell(5, 2);
-    // const nextCellColumnIndex = nextCell.colIndex;
-
-    // let nextCell: NavigationCell | undefined | null;
-    // let nextCellColumnIndex!: number;
-
-    // while (nextCell === undefined && nextCell !== null) {
-    //   nextCell = goBackwards
-    //     ? this.grid.focusPrevCell()
-    //     : this.grid.focusNextCell();
-
-    //   if (!nextCell) {
-    //     nextCell = null;
-    //     break;
-    //   }
-
-    //   nextCellColumnIndex = nextCell.colIndex;
-    //   const nextCellHeader = this.getHeader(nextCellColumnIndex);
-    //   const isCheckboxSelect = this.isCheckboxColumnComponent(nextCellHeader);
-
-    //   nextCell = isCheckboxSelect ? undefined : nextCell;
-
-    //   console.log(nextCell);
-    // }
-
-    const checkboxColumnIndex = allRowColumns.find((c) =>
-      this.isCheckboxColumnComponent(c)
-    )?.leafIndex;
-
-    const shouldWrapRow = goBackwards
-      ? activeCellColumnIndex === 1
-      : allRowColumns.length - 1 === activeCellColumnIndex;
-
-    console.log(checkboxColumnIndex);
-
-    let nextCellRowIndex = activeCellRowIndex + 1;
-    let nextCellColumnIndex = goBackwards
-      ? activeCellColumnIndex - 1
-      : activeCellColumnIndex + 1;
-
-    if (shouldWrapRow) {
-      nextCellColumnIndex = goBackwards ? allRowColumns.length - 1 : 0;
-      nextCellRowIndex = goBackwards
-        ? nextCellRowIndex - 1
-        : nextCellRowIndex + 1;
-    }
-
-    if (nextCellColumnIndex === checkboxColumnIndex) {
-      nextCellColumnIndex = goBackwards
-        ? nextCellColumnIndex - 1
-        : nextCellColumnIndex + 1;
-    }
-
-    if (nextCellRowIndex > totalRowCount || nextCellRowIndex < 0) {
+    if (!nextCellCoordinates) {
       (document.activeElement as HTMLElement).blur();
       return;
     }
 
+    const { row: nextCellRowIndex, col: nextCellColumnIndex } =
+      nextCellCoordinates;
+
     const nextCell = this.grid.focusCell(nextCellRowIndex, nextCellColumnIndex);
-    // const nextCellColumnIndex = nextCell?.colIndex;
 
     if (!nextCell) {
       return;
