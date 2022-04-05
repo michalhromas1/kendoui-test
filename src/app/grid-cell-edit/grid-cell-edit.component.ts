@@ -26,6 +26,11 @@ type CellCoordinates = {
 
 type HeaderColumn = ColumnComponent | CheckboxColumnComponent;
 
+type ColumnWidth = {
+  idx: number;
+  width: number | undefined;
+};
+
 @Component({
   selector: 'app-grid-cell-edit',
   templateUrl: './grid-cell-edit.component.html',
@@ -38,6 +43,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
   products = this.initialProducts;
   selectedRowsProductIds: number[] = [];
 
+  private initialColumnWidths: ColumnWidth[] = [];
   private activeProductFormGroup: FormGroup | undefined;
   private activeRowIndex: number | undefined;
   private unsubscriber$ = new Subject<void>();
@@ -71,7 +77,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
   }
 
   private get initialProducts(): Product[] {
-    return getProducts().slice(0, 10);
+    return getProducts().slice(0, 30);
   }
 
   constructor(
@@ -80,6 +86,11 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
   ) {}
 
   ngAfterViewInit(): void {
+    this.initialColumnWidths = this.headerColumns.map((c) => ({
+      idx: c.leafIndex,
+      width: c.width,
+    }));
+
     this.grid.cellClose.pipe(takeUntil(this.unsubscriber$)).subscribe((e) => {
       if (e.originalEvent?.key === 'Enter') {
         return;
@@ -123,10 +134,15 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
   }
 
   reset(): void {
+    this.closeCell();
+
     this.products = this.initialProducts;
     this.selectedRowsProductIds = [];
     this.activeProductFormGroup = undefined;
     this.activeRowIndex = undefined;
+
+    this.resetColumnOrder();
+    this.resetColumnWidths();
   }
 
   onEnter(e: KeyboardEvent): void {
@@ -235,6 +251,37 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     this.paste$(e, from(navigator.clipboard.readText()))
       .pipe(take(1), takeUntil(this.unsubscriber$))
       .subscribe(() => this.cd.markForCheck());
+  }
+
+  private resetColumnOrder() {
+    /* řešení dle https://stackoverflow.com/a/27865205 */
+    const columns = this.grid.columns as QueryList<ColumnComponent>;
+
+    columns.forEach(({ field }) => {
+      columns.forEach((c, idx) => {
+        if (c.field === field) {
+          this.grid.reorderColumn(c, idx);
+        }
+      });
+    });
+  }
+
+  private resetColumnWidths(): void {
+    const tableEls = (
+      this.grid.wrapper.nativeElement as HTMLElement
+    ).querySelectorAll('table');
+
+    tableEls.forEach((table) => {
+      table.style.width = '';
+      table.style.minWidth = '';
+    });
+
+    this.headerColumns.forEach((col) => {
+      const colWidth = this.initialColumnWidths.find(
+        (c) => c.idx === col.leafIndex
+      );
+      col.width = colWidth?.width!;
+    });
   }
 
   private editCell(
