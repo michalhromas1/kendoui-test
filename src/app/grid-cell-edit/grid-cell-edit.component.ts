@@ -123,10 +123,13 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
   }
 
   reset(): void {
+    this.closeCell();
+
     this.products = this.initialProducts;
     this.selectedRowsProductIds = [];
     this.activeProductFormGroup = undefined;
     this.activeRowIndex = undefined;
+
     this.resetColumnOrder();
   }
 
