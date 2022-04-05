@@ -1,3 +1,11 @@
+<kendo-buttongroup>
+  <button kendoButton (click)="reset()">Reset</button>
+  <button kendoButton (click)="renameSelected()">Rename selected</button>
+  <button kendoButton (click)="deleteSelected()">Delete selected</button>
+</kendo-buttongroup>
+
+<hr />
+
 <kendo-grid
   #grid
   [data]="products"
@@ -7,6 +15,8 @@
     checkboxOnly: true,
     mode: 'multiple'
   }"
+  kendoGridSelectBy="ProductID"
+  [(selectedKeys)]="selectedRowsProductIds"
   (keyup.enter)="onEnter($any($event))"
   (keydown.tab)="onTab($any($event))"
   (keydown.shift.tab)="onTab($any($event), true)"
