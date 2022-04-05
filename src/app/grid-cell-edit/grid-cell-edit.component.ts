@@ -127,6 +127,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     this.selectedRowsProductIds = [];
     this.activeProductFormGroup = undefined;
     this.activeRowIndex = undefined;
+    this.resetColumnOrder();
   }
 
   onEnter(e: KeyboardEvent): void {
@@ -235,6 +236,18 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     this.paste$(e, from(navigator.clipboard.readText()))
       .pipe(take(1), takeUntil(this.unsubscriber$))
       .subscribe(() => this.cd.markForCheck());
+  }
+
+  private resetColumnOrder() {
+    const columns = this.grid.columns as QueryList<ColumnComponent>;
+
+    columns.forEach(({ field }) => {
+      columns.forEach((c, idx) => {
+        if (c.field === field) {
+          this.grid.reorderColumn(c, idx);
+        }
+      });
+    });
   }
 
   private editCell(

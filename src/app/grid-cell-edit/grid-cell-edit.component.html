@@ -9,10 +9,11 @@
 <div class="grid-wrapper">
   <kendo-grid
     #grid
-    [data]="products"
+    [kendoGridBinding]="products"
     [navigable]="true"
     [trackBy]="trackBy"
     [resizable]="true"
+    [reorderable]="true"
     [height]="600"
     [selectable]="{
       checkboxOnly: true,
