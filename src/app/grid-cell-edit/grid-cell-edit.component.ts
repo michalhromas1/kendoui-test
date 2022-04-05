@@ -35,7 +35,7 @@ type HeaderColumn = ColumnComponent | CheckboxColumnComponent;
 export class GridCellEditComponent implements AfterViewInit, OnDestroy {
   @ViewChild('grid') grid!: GridComponent;
 
-  products = getProducts().slice(0, 10);
+  products = this.initialProducts;
   selectedRowsProductIds: number[] = [];
 
   private activeProductFormGroup: FormGroup | undefined;
@@ -68,6 +68,10 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     return this.headerColumns
       .filter((c) => !this.isCheckboxColumnComponent(c))
       .map((c) => c.leafIndex);
+  }
+
+  private get initialProducts(): Product[] {
+    return getProducts().slice(0, 10);
   }
 
   constructor(
@@ -118,6 +122,13 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     );
   }
 
+  reset(): void {
+    this.products = this.initialProducts;
+    this.selectedRowsProductIds = [];
+    this.activeProductFormGroup = undefined;
+    this.activeRowIndex = undefined;
+  }
+
   onEnter(e: KeyboardEvent): void {
     const activeCell = this.grid.activeCell;
     const product = activeCell?.dataItem as Product | undefined;
@@ -149,7 +160,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     const header = this.getHeader(activeCellColumnIndex);
     const isCheckboxColumnComponent = this.isCheckboxColumnComponent(header);
     const currentCoordinates: CellCoordinates = {
-      row: activeCell.dataRowIndex + 1, // +1 aby se nepočítal header row
+      row: activeCell.dataRowIndex + 1 /* +1 aby se nepočítal header row */,
       col: activeCell.colIndex,
     };
 
