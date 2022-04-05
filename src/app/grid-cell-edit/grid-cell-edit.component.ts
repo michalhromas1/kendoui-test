@@ -71,7 +71,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
   }
 
   private get initialProducts(): Product[] {
-    return getProducts().slice(0, 10);
+    return getProducts().slice(0, 30);
   }
 
   constructor(
