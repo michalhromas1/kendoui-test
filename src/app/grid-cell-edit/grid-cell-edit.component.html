@@ -6,51 +6,59 @@
 
 <hr />
 
-<kendo-grid
-  #grid
-  [data]="products"
-  [navigable]="true"
-  [trackBy]="trackBy"
-  [resizable]="true"
-  [selectable]="{
-    checkboxOnly: true,
-    mode: 'multiple'
-  }"
-  kendoGridSelectBy="ProductID"
-  [(selectedKeys)]="selectedRowsProductIds"
-  (keyup.enter)="onEnter($any($event))"
-  (keydown.tab)="onTab($any($event))"
-  (keydown.shift.tab)="onTab($any($event), true)"
-  (copy)="onNativeCopy($any($event))"
-  (paste)="onNativePaste($any($event))"
-  (keydown.control.c)="onKeyboardCopy($any($event))"
-  (keydown.control.v)="onKeyboardPaste($any($event))"
-  (keydown.meta.c)="onKeyboardCopy($any($event), true)"
-  (keydown.meta.v)="onKeyboardPaste($any($event), true)"
->
-  <kendo-grid-checkbox-column
-    [width]="40"
-    [showSelectAll]="true"
-  ></kendo-grid-checkbox-column>
+<div class="grid-wrapper">
+  <kendo-grid
+    #grid
+    [data]="products"
+    [navigable]="true"
+    [trackBy]="trackBy"
+    [resizable]="true"
+    [selectable]="{
+      checkboxOnly: true,
+      mode: 'multiple'
+    }"
+    kendoGridSelectBy="ProductID"
+    [(selectedKeys)]="selectedRowsProductIds"
+    (keyup.enter)="onEnter($any($event))"
+    (keydown.tab)="onTab($any($event))"
+    (keydown.shift.tab)="onTab($any($event), true)"
+    (copy)="onNativeCopy($any($event))"
+    (paste)="onNativePaste($any($event))"
+    (keydown.control.c)="onKeyboardCopy($any($event))"
+    (keydown.control.v)="onKeyboardPaste($any($event))"
+    (keydown.meta.c)="onKeyboardCopy($any($event), true)"
+    (keydown.meta.v)="onKeyboardPaste($any($event), true)"
+  >
+    <kendo-grid-checkbox-column
+      [width]="40"
+      [showSelectAll]="true"
+    ></kendo-grid-checkbox-column>
 
-  <kendo-grid-column
-    field="ProductName"
-    title="Product Name"
-  ></kendo-grid-column>
+    <kendo-grid-column
+      field="ProductName"
+      title="Product Name"
+    ></kendo-grid-column>
 
-  <kendo-grid-column
-    field="QuantityPerUnit"
-    title="Quantity"
-  ></kendo-grid-column>
+    <kendo-grid-column
+      field="QuantityPerUnit"
+      title="Quantity"
+    ></kendo-grid-column>
 
-  <kendo-grid-column
-    field="UnitPrice"
-    title="Price"
-    [editable]="false"
-    class="disabled"
-  ></kendo-grid-column>
+    <kendo-grid-column
+      field="UnitPrice"
+      title="Price"
+      [editable]="false"
+      class="disabled"
+    ></kendo-grid-column>
 
-  <kendo-grid-column field="UnitsInStock" title="In Stock"></kendo-grid-column>
+    <kendo-grid-column
+      field="UnitsInStock"
+      title="In Stock"
+    ></kendo-grid-column>
 
-  <kendo-grid-column field="UnitsOnOrder" title="On Order"></kendo-grid-column>
-</kendo-grid>
+    <kendo-grid-column
+      field="UnitsOnOrder"
+      title="On Order"
+    ></kendo-grid-column>
+  </kendo-grid>
+</div>
