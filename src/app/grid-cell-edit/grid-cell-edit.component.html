@@ -1,6 +1,10 @@
-<button (click)="reset()">reset</button>
-<button (click)="renameSelected()">rename selected</button>
-<button (click)="deleteSelected()">delete selected</button>
+<kendo-buttongroup>
+  <button kendoButton (click)="reset()">Reset</button>
+  <button kendoButton (click)="renameSelected()">Rename selected</button>
+  <button kendoButton (click)="deleteSelected()">Delete selected</button>
+</kendo-buttongroup>
+
+<hr />
 
 <kendo-grid
   #grid
