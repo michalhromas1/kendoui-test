@@ -112,6 +112,12 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     );
   }
 
+  deleteSelected(): void {
+    this.products = this.products.filter(
+      (p) => !this.selectedRowsProductIds.includes(p.ProductID)
+    );
+  }
+
   onEnter(e: KeyboardEvent): void {
     const activeCell = this.grid.activeCell;
     const product = activeCell?.dataItem as Product | undefined;
