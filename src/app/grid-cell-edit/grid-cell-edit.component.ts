@@ -149,7 +149,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     this.resetColumnWidths();
   }
 
-  onEnter(e: KeyboardEvent): void {
+  onEnter(e: Event): void {
     const activeCell = this.grid.activeCell;
     const product = activeCell?.dataItem as Product | undefined;
     const rowIndex = activeCell?.dataRowIndex;
@@ -173,7 +173,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     this.closeCell();
   }
 
-  onTab(e: KeyboardEvent, goBackwards = false): void {
+  onTab(e: Event, goBackwards = false): void {
     const activeCell = this.grid.activeCell;
     const activeCellColumnIndex = activeCell?.colIndex;
     const isEditing = !!this.activeProductFormGroup;
@@ -219,7 +219,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
       .subscribe(() => this.cd.markForCheck());
   }
 
-  onKeyboardCopy(e: KeyboardEvent, metaKey = false): void {
+  onKeyboardCopy(e: Event, metaKey = false): void {
     const isOSCopy = isOSMacOS() ? metaKey : !metaKey;
     const isClipboardWriteSupported = !!navigator?.clipboard?.writeText;
 
@@ -244,7 +244,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
       .subscribe(() => this.cd.markForCheck());
   }
 
-  onKeyboardPaste(e: KeyboardEvent, metaKey = false): void {
+  onKeyboardPaste(e: Event, metaKey = false): void {
     const isOSPaste = isOSMacOS() ? metaKey : !metaKey;
     const isClipboardReadSupported = !!navigator?.clipboard?.readText;
 
@@ -325,7 +325,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
   }
 
   private copy$(
-    e: ClipboardEvent | KeyboardEvent,
+    e: Event,
     writeFunc$: (value: string) => Observable<void>
   ): Observable<void> {
     const activeCell = this.grid.activeCell;
@@ -355,10 +355,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     return writeFunc$(value);
   }
 
-  private paste$(
-    e: ClipboardEvent | KeyboardEvent,
-    value: Observable<string>
-  ): Observable<void> {
+  private paste$(e: Event, value: Observable<string>): Observable<void> {
     const activeCell = this.grid.activeCell;
     const columnIndex = this.grid.activeCell?.colIndex;
     const product = this.grid.activeCell?.dataItem as Product;
