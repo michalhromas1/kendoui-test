@@ -36,6 +36,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
   @ViewChild('grid') grid!: GridComponent;
 
   products = getProducts().slice(0, 10);
+  selectedRowsProductIds: number[] = [];
 
   private activeProductFormGroup: FormGroup | undefined;
   private activeRowIndex: number | undefined;
@@ -97,6 +98,18 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
   trackBy(_index: number, item: GridItem): number {
     const product = item.data as Product;
     return product.ProductID;
+  }
+
+  renameSelected(): void {
+    this.products = this.products.map((p, idx) =>
+      this.selectedRowsProductIds.includes(p.ProductID)
+        ? {
+            ...p,
+            ProductName: p.ProductName + idx,
+            QuantityPerUnit: p.QuantityPerUnit + idx,
+          }
+        : p
+    );
   }
 
   onEnter(e: KeyboardEvent): void {
@@ -353,7 +366,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
       product = nextCell.dataItem;
     }
 
-    // nextCellRowIndex - 1 - musí se počítat s header row
+    /* nextCellRowIndex - 1 - musí se počítat s header row */
     this.editCell(nextCellRowIndex - 1, nextCellColumnIndex, product!);
   }
 

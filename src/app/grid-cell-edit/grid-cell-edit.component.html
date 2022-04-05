@@ -1,3 +1,5 @@
+<button (click)="renameSelected()">rename selected</button>
+
 <kendo-grid
   #grid
   [data]="products"
@@ -7,6 +9,8 @@
     checkboxOnly: true,
     mode: 'multiple'
   }"
+  kendoGridSelectBy="ProductID"
+  [(selectedKeys)]="selectedRowsProductIds"
   (keyup.enter)="onEnter($any($event))"
   (keydown.tab)="onTab($any($event))"
   (keydown.shift.tab)="onTab($any($event), true)"
