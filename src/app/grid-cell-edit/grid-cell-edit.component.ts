@@ -116,6 +116,8 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
   }
 
   renameSelected(): void {
+    this.closeCell();
+
     this.products = this.products.map((p, idx) =>
       this.selectedRowsProductIds.includes(p.ProductID)
         ? {
@@ -128,6 +130,8 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
   }
 
   deleteSelected(): void {
+    this.closeCell();
+
     this.products = this.products.filter(
       (p) => !this.selectedRowsProductIds.includes(p.ProductID)
     );
