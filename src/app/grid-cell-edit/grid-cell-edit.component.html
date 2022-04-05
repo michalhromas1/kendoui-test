@@ -21,6 +21,7 @@
     }"
     kendoGridSelectBy="ProductID"
     [(selectedKeys)]="selectedRowsProductIds"
+    (dblclick)="onDoubleClick($event)"
     (keyup.enter)="onEnter($event)"
     (keydown.tab)="onTab($event)"
     (keydown.shift.tab)="onTab($event, true)"

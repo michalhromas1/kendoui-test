@@ -149,28 +149,12 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     this.resetColumnWidths();
   }
 
+  onDoubleClick(e: Event): void {
+    this.tryActiveCellEdit(e);
+  }
+
   onEnter(e: Event): void {
-    const activeCell = this.grid.activeCell;
-    const product = activeCell?.dataItem as Product | undefined;
-    const rowIndex = activeCell?.dataRowIndex;
-    const columnIndex = activeCell?.colIndex;
-    const shouldStartEditing = !this.activeProductFormGroup;
-    const isEditable = this.isCellEditable(columnIndex);
-
-    if (!activeCell || !product || !isEditable) {
-      return;
-    }
-
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (shouldStartEditing) {
-      this.editCell(rowIndex, columnIndex, product);
-      return;
-    }
-
-    this.saveCell();
-    this.closeCell();
+    this.tryActiveCellEdit(e);
   }
 
   onTab(e: Event, goBackwards = false): void {
@@ -255,6 +239,32 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     this.paste$(e, from(navigator.clipboard.readText()))
       .pipe(take(1), takeUntil(this.unsubscriber$))
       .subscribe(() => this.cd.markForCheck());
+  }
+
+  private tryActiveCellEdit(e?: Event): void {
+    const activeCell = this.grid.activeCell;
+    const product = activeCell?.dataItem as Product | undefined;
+    const rowIndex = activeCell?.dataRowIndex;
+    const columnIndex = activeCell?.colIndex;
+    const shouldStartEditing = !this.activeProductFormGroup;
+    const isEditable = this.isCellEditable(columnIndex);
+
+    if (!activeCell || !product || !isEditable) {
+      return;
+    }
+
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    if (shouldStartEditing) {
+      this.editCell(rowIndex, columnIndex, product);
+      return;
+    }
+
+    this.saveCell();
+    this.closeCell();
   }
 
   private resetColumnOrder() {
