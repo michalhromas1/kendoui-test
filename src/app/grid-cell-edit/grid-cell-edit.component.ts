@@ -91,6 +91,13 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
       width: c.width,
     }));
 
+    this.grid.selectionChange
+      .pipe(takeUntil(this.unsubscriber$))
+      .subscribe(() => {
+        this.closeCell();
+        this.cd.markForCheck();
+      });
+
     this.grid.cellClose.pipe(takeUntil(this.unsubscriber$)).subscribe((e) => {
       if (e.originalEvent?.key === 'Enter') {
         return;
