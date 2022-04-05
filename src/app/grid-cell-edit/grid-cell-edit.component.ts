@@ -242,6 +242,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
   }
 
   private resetColumnOrder() {
+    /* řešení dle https://stackoverflow.com/a/27865205 */
     const columns = this.grid.columns as QueryList<ColumnComponent>;
 
     columns.forEach(({ field }) => {
