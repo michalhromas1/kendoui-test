@@ -474,12 +474,19 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
   ): CellCoordinates | undefined {
     const { row: currentRowIdx, col: currentCellIdx } = currentCoordinates;
     const shouldWrapRow = currentCellIdx === this.lastFocusableColumnIndex;
+    const focusableColumns = this.focusableColumnsIndexes;
+
+    let col = !shouldWrapRow
+      ? currentCellIdx + 1
+      : this.firstFocusableColumnIndex!;
+
+    while (!focusableColumns.includes(col)) {
+      col = col + 1;
+    }
 
     const result = {
+      col,
       row: !shouldWrapRow ? currentRowIdx : currentRowIdx + 1,
-      col: !shouldWrapRow
-        ? currentCellIdx + 1
-        : this.firstFocusableColumnIndex!,
     };
 
     return this.doCoordinatesExist(result) ? result : undefined;
@@ -490,10 +497,19 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
   ): CellCoordinates | undefined {
     const { row: currentRowIdx, col: currentCellIdx } = currentCoordinates;
     const shouldWrapRow = currentCellIdx === this.firstFocusableColumnIndex;
+    const focusableColumns = this.focusableColumnsIndexes;
+
+    let col = !shouldWrapRow
+      ? currentCellIdx - 1
+      : this.lastFocusableColumnIndex!;
+
+    while (!focusableColumns.includes(col)) {
+      col = col - 1;
+    }
 
     const result = {
+      col,
       row: !shouldWrapRow ? currentRowIdx : currentRowIdx - 1,
-      col: !shouldWrapRow ? currentCellIdx - 1 : this.lastFocusableColumnIndex!,
     };
 
     return this.doCoordinatesExist(result) ? result : undefined;
