@@ -31,6 +31,8 @@
     (keydown.control.v)="onKeyboardPaste($event)"
     (keydown.meta.c)="onKeyboardCopy($event, true)"
     (keydown.meta.v)="onKeyboardPaste($event, true)"
+    (selectionChange)="onSelectionChange()"
+    (cellClose)="onCellClose($event)"
   >
     <kendo-grid-checkbox-column
       [width]="40"
@@ -47,6 +49,29 @@
       title="Quantity"
     ></kendo-grid-column>
 
+    <kendo-grid-column field="CategoryID" title="Category">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        {{ getCategoryById(dataItem.CategoryID)?.text }}
+      </ng-template>
+
+      <ng-template
+        kendoGridEditTemplate
+        let-dataItem="dataItem"
+        let-column="column"
+        let-formGroup="formGroup"
+      >
+        <kendo-dropdownlist
+          forceAutofocus
+          [data]="CATEGORIES"
+          textField="text"
+          valueField="value"
+          [valuePrimitive]="true"
+          [formControl]="formGroup.get('CategoryID')"
+        >
+        </kendo-dropdownlist>
+      </ng-template>
+    </kendo-grid-column>
+
     <kendo-grid-column
       field="UnitPrice"
       title="Price"
@@ -62,6 +87,12 @@
     <kendo-grid-column
       field="UnitsOnOrder"
       title="On Order"
+    ></kendo-grid-column>
+
+    <kendo-grid-column
+      field="Discontinued"
+      title="Discontinued"
+      editor="boolean"
     ></kendo-grid-column>
   </kendo-grid>
 </div>

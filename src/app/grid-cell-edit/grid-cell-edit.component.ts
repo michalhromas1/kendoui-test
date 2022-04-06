@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import {
+  CellCloseEvent,
   CheckboxColumnComponent,
   ColumnComponent,
   GridComponent,
@@ -16,8 +17,9 @@ import {
 } from '@progress/kendo-angular-grid';
 import { from, Observable, of, Subject } from 'rxjs';
 import { mapTo, take, takeUntil, tap } from 'rxjs/operators';
-import { getProducts, Product } from '../mocks';
+import { getCategories, getProducts, Product } from '../mocks';
 import { isOSMacOS } from '../operating-system';
+import { Category } from './../mocks';
 
 type CellCoordinates = {
   row: number;
@@ -39,6 +41,8 @@ type ColumnWidth = {
 })
 export class GridCellEditComponent implements AfterViewInit, OnDestroy {
   @ViewChild('grid') grid!: GridComponent;
+
+  readonly CATEGORIES = getCategories();
 
   products = this.initialProducts;
   selectedRowsProductIds: number[] = [];
@@ -90,26 +94,6 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
       idx: c.leafIndex,
       width: c.width,
     }));
-
-    this.grid.selectionChange
-      .pipe(takeUntil(this.unsubscriber$))
-      .subscribe(() => {
-        this.closeCell();
-        this.cd.markForCheck();
-      });
-
-    this.grid.cellClose.pipe(takeUntil(this.unsubscriber$)).subscribe((e) => {
-      if (e.originalEvent?.key === 'Enter') {
-        return;
-      }
-
-      if (e.originalEvent?.key !== 'Escape') {
-        this.saveCell();
-      }
-
-      this.closeCell();
-      this.cd.markForCheck();
-    });
   }
 
   ngOnDestroy(): void {
@@ -120,6 +104,10 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
   trackBy(_index: number, item: GridItem): number {
     const product = item.data as Product;
     return product.ProductID;
+  }
+
+  getCategoryById(id: number): Category | undefined {
+    return this.CATEGORIES.find((c) => c.value === id);
   }
 
   renameSelected(): void {
@@ -156,12 +144,32 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     this.resetColumnWidths();
   }
 
+  onSelectionChange(): void {
+    if (this.activeProductFormGroup) {
+      this.saveCell();
+    }
+
+    this.closeCell();
+  }
+
+  onCellClose(e: CellCloseEvent): void {
+    if (e.originalEvent?.key === 'Enter') {
+      return;
+    }
+
+    if (e.originalEvent?.key !== 'Escape') {
+      this.saveCell();
+    }
+
+    this.closeCell();
+  }
+
   onDoubleClick(e: Event): void {
-    this.tryActiveCellEdit(e);
+    this.tryEditActiveCell(e);
   }
 
   onEnter(e: Event): void {
-    this.tryActiveCellEdit(e);
+    this.tryEditActiveCell(e);
   }
 
   onTab(e: Event, goBackwards = false): void {
@@ -248,7 +256,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
       .subscribe(() => this.cd.markForCheck());
   }
 
-  private tryActiveCellEdit(e?: Event): void {
+  private tryEditActiveCell(e?: Event): void {
     const activeCell = this.grid.activeCell;
     const product = activeCell?.dataItem as Product | undefined;
     const rowIndex = activeCell?.dataRowIndex;
@@ -466,12 +474,19 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
   ): CellCoordinates | undefined {
     const { row: currentRowIdx, col: currentCellIdx } = currentCoordinates;
     const shouldWrapRow = currentCellIdx === this.lastFocusableColumnIndex;
+    const focusableColumns = this.focusableColumnsIndexes;
+
+    let col = !shouldWrapRow
+      ? currentCellIdx + 1
+      : this.firstFocusableColumnIndex!;
+
+    while (!focusableColumns.includes(col)) {
+      col = col + 1;
+    }
 
     const result = {
+      col,
       row: !shouldWrapRow ? currentRowIdx : currentRowIdx + 1,
-      col: !shouldWrapRow
-        ? currentCellIdx + 1
-        : this.firstFocusableColumnIndex!,
     };
 
     return this.doCoordinatesExist(result) ? result : undefined;
@@ -482,10 +497,19 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
   ): CellCoordinates | undefined {
     const { row: currentRowIdx, col: currentCellIdx } = currentCoordinates;
     const shouldWrapRow = currentCellIdx === this.firstFocusableColumnIndex;
+    const focusableColumns = this.focusableColumnsIndexes;
+
+    let col = !shouldWrapRow
+      ? currentCellIdx - 1
+      : this.lastFocusableColumnIndex!;
+
+    while (!focusableColumns.includes(col)) {
+      col = col - 1;
+    }
 
     const result = {
+      col,
       row: !shouldWrapRow ? currentRowIdx : currentRowIdx - 1,
-      col: !shouldWrapRow ? currentCellIdx - 1 : this.lastFocusableColumnIndex!,
     };
 
     return this.doCoordinatesExist(result) ? result : undefined;
@@ -524,18 +548,22 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
       ProductID,
       ProductName,
       QuantityPerUnit,
+      CategoryID,
       UnitPrice,
       UnitsInStock,
       UnitsOnOrder,
+      Discontinued,
     } = product;
 
     return this.formBuilder.group({
       ProductID,
       ProductName,
       QuantityPerUnit,
+      CategoryID,
       UnitPrice,
       UnitsInStock,
       UnitsOnOrder,
+      Discontinued,
     });
   };
 }
