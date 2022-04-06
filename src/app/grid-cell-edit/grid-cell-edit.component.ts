@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import {
+  CellCloseEvent,
   CheckboxColumnComponent,
   ColumnComponent,
   GridComponent,
@@ -90,26 +91,6 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
       idx: c.leafIndex,
       width: c.width,
     }));
-
-    this.grid.selectionChange
-      .pipe(takeUntil(this.unsubscriber$))
-      .subscribe(() => {
-        this.closeCell();
-        this.cd.markForCheck();
-      });
-
-    this.grid.cellClose.pipe(takeUntil(this.unsubscriber$)).subscribe((e) => {
-      if (e.originalEvent?.key === 'Enter') {
-        return;
-      }
-
-      if (e.originalEvent?.key !== 'Escape') {
-        this.saveCell();
-      }
-
-      this.closeCell();
-      this.cd.markForCheck();
-    });
   }
 
   ngOnDestroy(): void {
@@ -156,12 +137,32 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     this.resetColumnWidths();
   }
 
+  onSelectionChange(): void {
+    if (this.activeProductFormGroup) {
+      this.saveCell();
+    }
+
+    this.closeCell();
+  }
+
+  onCellClose(e: CellCloseEvent): void {
+    if (e.originalEvent?.key === 'Enter') {
+      return;
+    }
+
+    if (e.originalEvent?.key !== 'Escape') {
+      this.saveCell();
+    }
+
+    this.closeCell();
+  }
+
   onDoubleClick(e: Event): void {
-    this.tryActiveCellEdit(e);
+    this.tryEditActiveCell(e);
   }
 
   onEnter(e: Event): void {
-    this.tryActiveCellEdit(e);
+    this.tryEditActiveCell(e);
   }
 
   onTab(e: Event, goBackwards = false): void {
@@ -248,7 +249,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
       .subscribe(() => this.cd.markForCheck());
   }
 
-  private tryActiveCellEdit(e?: Event): void {
+  private tryEditActiveCell(e?: Event): void {
     const activeCell = this.grid.activeCell;
     const product = activeCell?.dataItem as Product | undefined;
     const rowIndex = activeCell?.dataRowIndex;

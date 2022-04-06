@@ -31,6 +31,8 @@
     (keydown.control.v)="onKeyboardPaste($event)"
     (keydown.meta.c)="onKeyboardCopy($event, true)"
     (keydown.meta.v)="onKeyboardPaste($event, true)"
+    (selectionChange)="onSelectionChange()"
+    (cellClose)="onCellClose($event)"
   >
     <kendo-grid-checkbox-column
       [width]="40"
