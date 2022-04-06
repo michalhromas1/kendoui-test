@@ -17,8 +17,9 @@ import {
 } from '@progress/kendo-angular-grid';
 import { from, Observable, of, Subject } from 'rxjs';
 import { mapTo, take, takeUntil, tap } from 'rxjs/operators';
-import { getProducts, Product } from '../mocks';
+import { getCategories, getProducts, Product } from '../mocks';
 import { isOSMacOS } from '../operating-system';
+import { Category } from './../mocks';
 
 type CellCoordinates = {
   row: number;
@@ -40,6 +41,8 @@ type ColumnWidth = {
 })
 export class GridCellEditComponent implements AfterViewInit, OnDestroy {
   @ViewChild('grid') grid!: GridComponent;
+
+  readonly CATEGORIES = getCategories();
 
   products = this.initialProducts;
   selectedRowsProductIds: number[] = [];
@@ -101,6 +104,10 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
   trackBy(_index: number, item: GridItem): number {
     const product = item.data as Product;
     return product.ProductID;
+  }
+
+  getCategoryById(id: number): Category | undefined {
+    return this.CATEGORIES.find((c) => c.value === id);
   }
 
   renameSelected(): void {
@@ -525,6 +532,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
       ProductID,
       ProductName,
       QuantityPerUnit,
+      CategoryID,
       UnitPrice,
       UnitsInStock,
       UnitsOnOrder,
@@ -534,6 +542,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
       ProductID,
       ProductName,
       QuantityPerUnit,
+      CategoryID,
       UnitPrice,
       UnitsInStock,
       UnitsOnOrder,

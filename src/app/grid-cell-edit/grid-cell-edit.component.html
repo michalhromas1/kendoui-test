@@ -49,6 +49,28 @@
       title="Quantity"
     ></kendo-grid-column>
 
+    <kendo-grid-column field="CategoryID" title="Category">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        {{ getCategoryById(dataItem.CategoryID)?.text }}
+      </ng-template>
+
+      <ng-template
+        kendoGridEditTemplate
+        let-dataItem="dataItem"
+        let-column="column"
+        let-formGroup="formGroup"
+      >
+        <kendo-dropdownlist
+          [data]="CATEGORIES"
+          textField="text"
+          valueField="value"
+          [valuePrimitive]="true"
+          [formControl]="formGroup.get('CategoryID')"
+        >
+        </kendo-dropdownlist>
+      </ng-template>
+    </kendo-grid-column>
+
     <kendo-grid-column
       field="UnitPrice"
       title="Price"
