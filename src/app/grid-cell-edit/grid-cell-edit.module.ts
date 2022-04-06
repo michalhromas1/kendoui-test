@@ -4,17 +4,18 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { GridModule } from '@progress/kendo-angular-grid';
-import { AutofocusDirective } from './autofocus.directive';
+import { AutofocusModule } from './../autofocus/autofocus.module';
 import { GridCellEditComponent } from './grid-cell-edit.component';
 
 @NgModule({
-  declarations: [GridCellEditComponent, AutofocusDirective],
+  declarations: [GridCellEditComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     GridModule,
     ButtonsModule,
     DropDownsModule,
+    AutofocusModule,
   ],
   exports: [GridCellEditComponent],
 })
