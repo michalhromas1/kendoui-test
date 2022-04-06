@@ -536,6 +536,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
       UnitPrice,
       UnitsInStock,
       UnitsOnOrder,
+      Discontinued,
     } = product;
 
     return this.formBuilder.group({
@@ -546,6 +547,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
       UnitPrice,
       UnitsInStock,
       UnitsOnOrder,
+      Discontinued,
     });
   };
 }
