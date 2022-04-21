@@ -1,8 +1,5 @@
-documents-page
 <kendo-buttongroup>
   <button kendoButton (click)="reset()">Reset</button>
-  <button kendoButton (click)="renameSelected()">Rename selected</button>
-  <button kendoButton (click)="deleteSelected()">Delete selected</button>
 </kendo-buttongroup>
 
 <hr />
@@ -10,90 +7,14 @@ documents-page
 <div class="grid-wrapper">
   <kendo-grid
     #grid
-    [kendoGridBinding]="products"
-    [navigable]="true"
+    [kendoGridBinding]="documents"
     [trackBy]="trackBy"
     [resizable]="true"
     [reorderable]="true"
     [height]="600"
-    [selectable]="{
-      checkboxOnly: true,
-      mode: 'multiple'
-    }"
-    kendoGridSelectBy="ProductID"
-    [(selectedKeys)]="selectedRowsProductIds"
-    (dblclick)="onDoubleClick($event)"
-    (keyup.enter)="onEnter($event)"
-    (keydown.tab)="onTab($event)"
-    (keydown.shift.tab)="onTab($event, true)"
-    (copy)="onNativeCopy($event)"
-    (paste)="onNativePaste($event)"
-    (keydown.control.c)="onKeyboardCopy($event)"
-    (keydown.control.v)="onKeyboardPaste($event)"
-    (keydown.meta.c)="onKeyboardCopy($event, true)"
-    (keydown.meta.v)="onKeyboardPaste($event, true)"
-    (selectionChange)="onSelectionChange()"
-    (cellClose)="onCellClose($event)"
+    kendoGridSelectBy="id"
   >
-    <kendo-grid-checkbox-column
-      [width]="40"
-      [showSelectAll]="true"
-    ></kendo-grid-checkbox-column>
-
-    <kendo-grid-column
-      field="ProductName"
-      title="Product Name"
-    ></kendo-grid-column>
-
-    <kendo-grid-column
-      field="QuantityPerUnit"
-      title="Quantity"
-    ></kendo-grid-column>
-
-    <kendo-grid-column field="CategoryID" title="Category">
-      <ng-template kendoGridCellTemplate let-dataItem>
-        {{ getCategoryById(dataItem.CategoryID)?.text }}
-      </ng-template>
-
-      <ng-template
-        kendoGridEditTemplate
-        let-dataItem="dataItem"
-        let-column="column"
-        let-formGroup="formGroup"
-      >
-        <kendo-dropdownlist
-          forceAutofocus
-          [data]="CATEGORIES"
-          textField="text"
-          valueField="value"
-          [valuePrimitive]="true"
-          [formControl]="formGroup.get('CategoryID')"
-        >
-        </kendo-dropdownlist>
-      </ng-template>
-    </kendo-grid-column>
-
-    <kendo-grid-column
-      field="UnitPrice"
-      title="Price"
-      [editable]="false"
-      class="disabled"
-    ></kendo-grid-column>
-
-    <kendo-grid-column
-      field="UnitsInStock"
-      title="In Stock"
-    ></kendo-grid-column>
-
-    <kendo-grid-column
-      field="UnitsOnOrder"
-      title="On Order"
-    ></kendo-grid-column>
-
-    <kendo-grid-column
-      field="Discontinued"
-      title="Discontinued"
-      editor="boolean"
-    ></kendo-grid-column>
+    <kendo-grid-column field="id" title="Id"></kendo-grid-column>
+    <kendo-grid-column field="file" title="File"></kendo-grid-column>
   </kendo-grid>
 </div>

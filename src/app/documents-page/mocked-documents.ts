@@ -11,15 +11,15 @@ export type Profile = {
   title: string;
 };
 
-export type Document = DocumentFile & {
+export type AppDocument = AppDocumentFile & {
   id: number;
   file: string;
   profile: string;
   workspace: string;
-  attachments: DocumentFile[];
+  attachments: AppDocumentFile[];
 };
 
-export type DocumentFile = {
+export type AppDocumentFile = {
   id: number;
   file: string;
 };
@@ -32,7 +32,7 @@ export const getProfiles = (): Profile[] => {
   return deepCopy(PROFILES);
 };
 
-export const getDocuments = (): Document[] => {
+export const getDocuments = (): AppDocument[] => {
   return deepCopy(DOCUMENTS);
 };
 
@@ -84,7 +84,7 @@ const PROFILES: Profile[] = [
   },
 ];
 
-const DOCUMENTS: Document[] = [
+const DOCUMENTS: AppDocument[] = [
   {
     id: 1,
     file: 'Document 1',
