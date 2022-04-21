@@ -1,0 +1,54 @@
+$saturation-light: 47%;
+$lightness-light: 92%;
+
+$saturation-dark: 65%;
+$lightness-dark: 86%;
+
+$disabled-light: hsl(0, $saturation-light, $lightness-light);
+$selected-light: hsl(205, $saturation-light, $lightness-light);
+$selected-disabled-light: hsl(290, $saturation-light, $lightness-light);
+
+$disabled-dark: hsl(0, $saturation-dark, $lightness-dark);
+$selected-dark: hsl(205, $saturation-dark, $lightness-dark);
+$selected-disabled-dark: hsl(290, $saturation-dark, $lightness-dark);
+
+:host ::ng-deep {
+  td.disabled {
+    text-decoration: line-through;
+    cursor: not-allowed;
+    background: $disabled-light;
+  }
+
+  td.k-state-selected,
+  tr.k-state-selected > td {
+    background: $selected-light;
+
+    &.disabled {
+      background: $selected-disabled-light;
+    }
+  }
+
+  tr:nth-child(even) {
+    td.disabled {
+      background: $disabled-dark;
+    }
+
+    td.k-state-selected,
+    &.k-state-selected > td {
+      background: $selected-dark;
+
+      &.disabled {
+        background: $selected-disabled-dark;
+      }
+    }
+  }
+}
+
+.k-grid {
+  width: fit-content;
+}
+
+.grid-wrapper {
+  overflow-x: scroll;
+  max-width: 100%;
+}
