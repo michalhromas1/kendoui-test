@@ -1,0 +1,40 @@
+<kendo-buttongroup>
+  <button kendoButton (click)="reset()">Reset</button>
+</kendo-buttongroup>
+
+<hr />
+
+<div class="grid-wrapper">
+  <kendo-grid
+    #grid
+    [kendoGridBinding]="documents"
+    [trackBy]="trackBy"
+    [resizable]="true"
+    [reorderable]="true"
+    [height]="600"
+  >
+    <kendo-grid-column field="id" title="Id" [width]="50"></kendo-grid-column>
+
+    <kendo-grid-column
+      field="workspace"
+      title="Workspace"
+      [width]="150"
+    ></kendo-grid-column>
+
+    <kendo-grid-column
+      field="profile"
+      title="Profil"
+      [width]="150"
+    ></kendo-grid-column>
+
+    <kendo-grid-column field="file" title="Název souboru"></kendo-grid-column>
+
+    <kendo-grid-column field="attachments" title="Přílohy">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <ng-container *ngFor="let attachment of dataItem.attachments">
+          <div>{{ attachment.file }}</div>
+        </ng-container>
+      </ng-template>
+    </kendo-grid-column>
+  </kendo-grid>
+</div>
