@@ -114,8 +114,9 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
     const { previousContainer, container, previousIndex, currentIndex } = event;
     const prevContType = this.getDropListType(previousContainer);
     const contType = this.getDropListType(container);
+    const types = [prevContType, contType];
 
-    if (contType === 'unknown' || prevContType === 'unknown') {
+    if (types.includes('unknown') || types.every((t) => t === 'file')) {
       return;
     }
 
@@ -124,7 +125,7 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
       return;
     }
 
-    if (contType === 'attachments' && prevContType === 'attachments') {
+    if (types.every((t) => t === 'attachments')) {
       transferArrayItem(
         previousContainer.data,
         container.data,
@@ -133,6 +134,9 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
       );
 
       return;
+    }
+
+    if (contType === 'file') {
     }
   }
 
