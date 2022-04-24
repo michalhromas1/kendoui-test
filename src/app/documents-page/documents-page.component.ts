@@ -147,6 +147,17 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
 
       return;
     }
+
+    const document = previousContainer.data as AppDocument;
+    const attachments = container.data as AppDocumentFile[];
+
+    attachments.splice(currentIndex, 0, {
+      id: document.id,
+      file: document.file,
+    });
+
+    document.id = null!;
+    document.file = null!;
   }
 
   private getDropListType(container: CdkDropList<any>): DropListType {
