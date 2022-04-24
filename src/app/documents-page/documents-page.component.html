@@ -12,6 +12,7 @@
     [resizable]="true"
     [reorderable]="true"
     [height]="600"
+    cdkDropListGroup
   >
     <kendo-grid-column field="id" title="Id" [width]="50"></kendo-grid-column>
 
@@ -33,7 +34,6 @@
           cdkDropList
           #nameField="cdkDropList"
           [cdkDropListData]="dataItem.file"
-          [cdkDropListConnectedTo]="[attachmentsField]"
           (cdkDropListDropped)="drop($event)"
         >
           <div cdkDrag>{{ dataItem.file }}</div>
@@ -47,7 +47,6 @@
           cdkDropList
           #attachmentsField="cdkDropList"
           [cdkDropListData]="dataItem.attachments"
-          [cdkDropListConnectedTo]="[nameField]"
           (cdkDropListDropped)="drop($event)"
         >
           <div *ngFor="let attachment of dataItem.attachments" cdkDrag>
