@@ -27,13 +27,31 @@
       [width]="150"
     ></kendo-grid-column>
 
-    <kendo-grid-column field="file" title="Název souboru"></kendo-grid-column>
+    <kendo-grid-column field="file" title="Název souboru">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <div
+          cdkDropList
+          #nameField="cdkDropList"
+          [cdkDropListData]="dataItem.file"
+          [cdkDropListConnectedTo]="[attachmentsField]"
+        >
+          <div cdkDrag>{{ dataItem.file }}</div>
+        </div>
+      </ng-template>
+    </kendo-grid-column>
 
     <kendo-grid-column field="attachments" title="Přílohy">
       <ng-template kendoGridCellTemplate let-dataItem>
-        <ng-container *ngFor="let attachment of dataItem.attachments">
-          <div>{{ attachment.file }}</div>
-        </ng-container>
+        <div
+          cdkDropList
+          #attachmentsField="cdkDropList"
+          [cdkDropListData]="dataItem.attachment"
+          [cdkDropListConnectedTo]="[nameField]"
+        >
+          <div *ngFor="let attachment of dataItem.attachments" cdkDrag>
+            {{ attachment.file }}
+          </div>
+        </div>
       </ng-template>
     </kendo-grid-column>
   </kendo-grid>

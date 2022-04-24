@@ -1,3 +1,4 @@
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -16,6 +17,7 @@ import { DocumentsPageComponent } from './documents-page.component';
     ButtonsModule,
     DropDownsModule,
     ForceAutofocusModule,
+    DragDropModule,
   ],
   exports: [DocumentsPageComponent],
 })

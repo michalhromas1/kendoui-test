@@ -1,3 +1,4 @@
+import { CdkDropList } from '@angular/cdk/drag-drop';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -30,6 +31,8 @@ type ColumnWidth = {
 })
 export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
   @ViewChild('grid') grid!: GridComponent;
+  @ViewChild('nameField') nameField!: CdkDropList;
+  @ViewChild('attachmentsField') attachmentsField!: CdkDropList;
 
   documents = this.initialDocuments;
 
