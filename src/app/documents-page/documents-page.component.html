@@ -34,6 +34,7 @@
           #nameField="cdkDropList"
           [cdkDropListData]="dataItem.file"
           [cdkDropListConnectedTo]="[attachmentsField]"
+          (cdkDropListDropped)="drop($event)"
         >
           <div cdkDrag>{{ dataItem.file }}</div>
         </div>
@@ -45,8 +46,9 @@
         <div
           cdkDropList
           #attachmentsField="cdkDropList"
-          [cdkDropListData]="dataItem.attachment"
+          [cdkDropListData]="dataItem.attachments"
           [cdkDropListConnectedTo]="[nameField]"
+          (cdkDropListDropped)="drop($event)"
         >
           <div *ngFor="let attachment of dataItem.attachments" cdkDrag>
             {{ attachment.file }}
