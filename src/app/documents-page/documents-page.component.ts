@@ -21,6 +21,9 @@ import {
 import { Subject } from 'rxjs';
 import { AppDocument, getDocuments } from './mocked-documents';
 
+const dropListTypes = ['file', 'attachments', 'unknown'] as const;
+type DropListType = typeof dropListTypes[number];
+
 type HeaderColumn = ColumnComponent | CheckboxColumnComponent;
 
 type ColumnWidth = {
@@ -107,20 +110,39 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  drop(event: CdkDragDrop<string[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
+  public drop(event: CdkDragDrop<any>): void {
+    const { previousContainer, container, previousIndex, currentIndex } = event;
+    const prevContType = this.getDropListType(previousContainer);
+    const contType = this.getDropListType(container);
+
+    if (contType === 'unknown' || prevContType === 'unknown') {
+      return;
     }
+
+    if (previousContainer === container) {
+      moveItemInArray(container.data, previousIndex, currentIndex);
+      return;
+    }
+
+    if (contType === 'attachments' && prevContType === 'attachments') {
+      transferArrayItem(
+        previousContainer.data,
+        container.data,
+        previousIndex,
+        currentIndex
+      );
+
+      return;
+    }
+  }
+
+  private getDropListType(container: CdkDropList<any>): DropListType {
+    const el = container.element.nativeElement as HTMLElement;
+    const type = el.dataset['droplist'];
+    return this.isDropListType(type) ? type : 'unknown';
+  }
+
+  private isDropListType(type: any): type is DropListType {
+    return dropListTypes.includes(type);
   }
 }
