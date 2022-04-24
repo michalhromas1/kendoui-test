@@ -19,7 +19,7 @@ import {
   GridItem,
 } from '@progress/kendo-angular-grid';
 import { Subject } from 'rxjs';
-import { AppDocument, getDocuments } from './mocked-documents';
+import { AppDocument, AppDocumentFile, getDocuments } from './mocked-documents';
 
 const dropListTypes = ['file', 'attachments', 'unknown'] as const;
 type DropListType = typeof dropListTypes[number];
@@ -137,6 +137,15 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
     }
 
     if (contType === 'file') {
+      const document = container.data as AppDocument;
+      const attachments = previousContainer.data as AppDocumentFile[];
+      const attachment = attachments[previousIndex];
+
+      document.id = attachment.id;
+      document.file = attachment.file;
+      attachments.splice(previousIndex, 1);
+
+      return;
     }
   }
 
