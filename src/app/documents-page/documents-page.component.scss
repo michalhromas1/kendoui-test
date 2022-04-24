@@ -52,3 +52,7 @@ $selected-disabled-dark: hsl(290, $saturation-dark, $lightness-dark);
   overflow-x: scroll;
   max-width: 100%;
 }
+
+.cdk-drop-list {
+  min-height: 20px;
+}

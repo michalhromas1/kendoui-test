@@ -1,4 +1,10 @@
 import {
+  CdkDragDrop,
+  CdkDropList,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
+import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
@@ -13,7 +19,10 @@ import {
   GridItem,
 } from '@progress/kendo-angular-grid';
 import { Subject } from 'rxjs';
-import { AppDocument, getDocuments } from './mocked-documents';
+import { AppDocument, AppDocumentFile, getDocuments } from './mocked-documents';
+
+const dropListTypes = ['file', 'attachments', 'unknown'] as const;
+type DropListType = typeof dropListTypes[number];
 
 type HeaderColumn = ColumnComponent | CheckboxColumnComponent;
 
@@ -30,6 +39,8 @@ type ColumnWidth = {
 })
 export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
   @ViewChild('grid') grid!: GridComponent;
+  @ViewChild('nameField') nameField!: CdkDropList;
+  @ViewChild('attachmentsField') attachmentsField!: CdkDropList;
 
   documents = this.initialDocuments;
 
@@ -97,5 +108,65 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
       );
       col.width = colWidth?.width!;
     });
+  }
+
+  public drop(event: CdkDragDrop<any>): void {
+    const { previousContainer, container, previousIndex, currentIndex } = event;
+    const prevContType = this.getDropListType(previousContainer);
+    const contType = this.getDropListType(container);
+    const types = [prevContType, contType];
+
+    if (types.includes('unknown') || types.every((t) => t === 'file')) {
+      return;
+    }
+
+    if (previousContainer === container) {
+      moveItemInArray(container.data, previousIndex, currentIndex);
+      return;
+    }
+
+    if (types.every((t) => t === 'attachments')) {
+      transferArrayItem(
+        previousContainer.data,
+        container.data,
+        previousIndex,
+        currentIndex
+      );
+
+      return;
+    }
+
+    if (contType === 'file') {
+      const document = container.data as AppDocument;
+      const attachments = previousContainer.data as AppDocumentFile[];
+      const attachment = attachments[previousIndex];
+
+      document.id = attachment.id;
+      document.file = attachment.file;
+      attachments.splice(previousIndex, 1);
+
+      return;
+    }
+
+    const document = previousContainer.data as AppDocument;
+    const attachments = container.data as AppDocumentFile[];
+
+    attachments.splice(currentIndex, 0, {
+      id: document.id,
+      file: document.file,
+    });
+
+    document.id = null!;
+    document.file = null!;
+  }
+
+  private getDropListType(container: CdkDropList<any>): DropListType {
+    const el = container.element.nativeElement as HTMLElement;
+    const type = el.dataset['droplist'];
+    return this.isDropListType(type) ? type : 'unknown';
+  }
+
+  private isDropListType(type: any): type is DropListType {
+    return dropListTypes.includes(type);
   }
 }
