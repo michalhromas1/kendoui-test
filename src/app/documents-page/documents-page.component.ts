@@ -43,6 +43,7 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
   @ViewChild('attachmentsField') attachmentsField!: CdkDropList;
 
   documents = this.initialDocuments;
+  preview: string | undefined;
 
   private initialColumnWidths: ColumnWidth[] = [];
   private unsubscriber$ = new Subject<void>();
@@ -79,7 +80,11 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
     this.resetColumnWidths();
   }
 
-  private resetColumnOrder() {
+  openPreview(file: string): void {
+    this.preview = file;
+  }
+
+  private resetColumnOrder(): void {
     /* řešení dle https://stackoverflow.com/a/27865205 */
     const columns = this.grid.columns as QueryList<ColumnComponent>;
 

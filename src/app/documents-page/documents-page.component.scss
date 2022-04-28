@@ -62,3 +62,7 @@ $selected-disabled-dark: hsl(290, $saturation-dark, $lightness-dark);
   font-weight: bold;
   cursor: grab;
 }
+
+.filename {
+  cursor: pointer;
+}

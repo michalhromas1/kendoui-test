@@ -44,7 +44,10 @@
               data-droplist="file"
             >
               <div cdkDrag *ngIf="dataItem.file">
-                <i cdkDragHandle>#</i>{{ dataItem.file }}
+                <i cdkDragHandle>#</i
+                ><span class="filename" (click)="openPreview(dataItem.file)">{{
+                  dataItem.file
+                }}</span>
               </div>
             </div>
           </ng-template>
@@ -61,7 +64,12 @@
             >
               <div *ngFor="let attachment of dataItem.attachments" cdkDrag>
                 <ng-container *ngIf="attachment.file"
-                  ><i cdkDragHandle>#</i>{{ attachment.file }}</ng-container
+                  ><i cdkDragHandle>#</i>
+                  <span
+                    class="filename"
+                    (click)="openPreview(attachment.file)"
+                    >{{ attachment.file }}</span
+                  ></ng-container
                 >
               </div>
             </div>
@@ -72,6 +80,6 @@
   </kendo-splitter-pane>
 
   <kendo-splitter-pane>
-    <h3>Main content</h3>
+    <h3>{{ preview }}</h3>
   </kendo-splitter-pane>
 </kendo-splitter>
