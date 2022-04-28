@@ -43,7 +43,7 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
   @ViewChild('attachmentsField') attachmentsField!: CdkDropList;
 
   documents = this.initialDocuments;
-  preview: string | undefined;
+  preview: AppDocumentFile | undefined;
 
   private initialColumnWidths: ColumnWidth[] = [];
   private unsubscriber$ = new Subject<void>();
@@ -81,7 +81,7 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
     this.resetColumnWidths();
   }
 
-  openPreview(file: string): void {
+  openPreview(file: AppDocumentFile): void {
     this.preview = file;
   }
 
