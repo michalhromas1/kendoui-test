@@ -4,6 +4,16 @@
 
 <hr />
 
+<kendo-splitter style="height: 200px">
+  <kendo-splitter-pane [scrollable]="false" size="20%">
+    <h3>Non-scrollable content</h3>
+  </kendo-splitter-pane>
+
+  <kendo-splitter-pane>
+    <h3>Main content</h3>
+  </kendo-splitter-pane>
+</kendo-splitter>
+
 <div class="grid-wrapper">
   <kendo-grid
     #grid
