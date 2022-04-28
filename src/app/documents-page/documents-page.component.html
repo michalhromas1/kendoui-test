@@ -82,5 +82,7 @@
       <h3 class="preview-title">{{ preview.title }}</h3>
       <i (click)="closePreview()" class="close-preview">&times;</i>
     </div>
+
+    <img [src]="preview.url" />
   </kendo-splitter-pane>
 </kendo-splitter>

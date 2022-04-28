@@ -87,7 +87,7 @@ const DOCUMENTS: AppDocument[] = [
   {
     id: 1,
     title: 'Document 1',
-    url: '',
+    url: 'https://images.unsplash.com/photo-1471879832106-c7ab9e0cee23?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8Mnx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60',
     profile: 'Profile 1',
     workspace: 'Workspace 1',
     attachments: [],
@@ -96,51 +96,51 @@ const DOCUMENTS: AppDocument[] = [
     id: 2,
     title: 'Document 2',
     profile: 'Profile 1',
-    url: '',
+    url: 'https://images.unsplash.com/photo-1523897056079-5553b57112d4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8M3x8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60',
     workspace: 'Workspace 1',
     attachments: [
       {
         id: 100,
         title: 'Attachment 1',
-        url: '',
+        url: 'https://images.unsplash.com/photo-1506057213367-028a17ec52e5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60',
       },
       {
         id: 101,
         title: 'Attachment 2',
-        url: '',
+        url: 'https://images.unsplash.com/photo-1503965830912-6d7b07921cd1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8Nnx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60',
       },
     ],
   },
   {
     id: 3,
     title: 'Document 3',
-    url: '',
+    url: 'https://images.unsplash.com/photo-1449867727329-3294ea016353?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8NHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60',
     profile: 'Profile 4',
     workspace: 'Workspace 2',
     attachments: [
       {
         id: 102,
         title: 'Attachment 3',
-        url: '',
+        url: 'https://images.unsplash.com/photo-1457270508644-1e4905fabd7e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8OHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60',
       },
       {
         id: 103,
         title: 'Attachment 4',
-        url: '',
+        url: 'https://images.unsplash.com/photo-1518495973542-4542c06a5843?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTR8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=800&q=60',
       },
     ],
   },
   {
     id: 4,
     title: 'Document 4',
-    url: '',
+    url: 'https://images.unsplash.com/photo-1435224654926-ecc9f7fa028c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8OXx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=60',
     profile: 'Profile 6',
     workspace: 'Workspace 3',
     attachments: [
       {
         id: 104,
         title: 'Attachment 5',
-        url: '',
+        url: 'https://images.unsplash.com/photo-1475776408506-9a5371e7a068?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTN8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=800&q=60',
       },
     ],
   },
