@@ -12,8 +12,6 @@ export type Profile = {
 };
 
 export type AppDocument = AppDocumentFile & {
-  id: number;
-  file: string;
   profile: string;
   workspace: string;
   attachments: AppDocumentFile[];
@@ -21,7 +19,8 @@ export type AppDocument = AppDocumentFile & {
 
 export type AppDocumentFile = {
   id: number;
-  file: string;
+  title: string;
+  url: string;
 };
 
 export const getWorkspaces = (): Workspace[] => {
@@ -87,52 +86,61 @@ const PROFILES: Profile[] = [
 const DOCUMENTS: AppDocument[] = [
   {
     id: 1,
-    file: 'Document 1',
+    title: 'Document 1',
+    url: '',
     profile: 'Profile 1',
     workspace: 'Workspace 1',
     attachments: [],
   },
   {
     id: 2,
-    file: 'Document 2',
+    title: 'Document 2',
     profile: 'Profile 1',
+    url: '',
     workspace: 'Workspace 1',
     attachments: [
       {
         id: 100,
-        file: 'Attachment 1',
+        title: 'Attachment 1',
+        url: '',
       },
       {
         id: 101,
-        file: 'Attachment 2',
+        title: 'Attachment 2',
+        url: '',
       },
     ],
   },
   {
     id: 3,
-    file: 'Document 3',
+    title: 'Document 3',
+    url: '',
     profile: 'Profile 4',
     workspace: 'Workspace 2',
     attachments: [
       {
         id: 102,
-        file: 'Attachment 3',
+        title: 'Attachment 3',
+        url: '',
       },
       {
         id: 103,
-        file: 'Attachment 4',
+        title: 'Attachment 4',
+        url: '',
       },
     ],
   },
   {
     id: 4,
-    file: 'Document 4',
+    title: 'Document 4',
+    url: '',
     profile: 'Profile 6',
     workspace: 'Workspace 3',
     attachments: [
       {
         id: 104,
-        file: 'Attachment 5',
+        title: 'Attachment 5',
+        url: '',
       },
     ],
   },

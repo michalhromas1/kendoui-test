@@ -34,7 +34,7 @@
           [width]="150"
         ></kendo-grid-column>
 
-        <kendo-grid-column field="file" title="Název souboru">
+        <kendo-grid-column field="title" title="Název souboru">
           <ng-template kendoGridCellTemplate let-dataItem>
             <div
               cdkDropList
@@ -43,10 +43,10 @@
               (cdkDropListDropped)="drop($event)"
               data-droplist="file"
             >
-              <div cdkDrag *ngIf="dataItem.file">
+              <div cdkDrag *ngIf="dataItem.title">
                 <i cdkDragHandle>#</i
-                ><span class="filename" (click)="openPreview(dataItem.file)">{{
-                  dataItem.file
+                ><span class="filename" (click)="openPreview(dataItem.title)">{{
+                  dataItem.title
                 }}</span>
               </div>
             </div>
@@ -63,12 +63,12 @@
               data-droplist="attachments"
             >
               <div *ngFor="let attachment of dataItem.attachments" cdkDrag>
-                <ng-container *ngIf="attachment.file"
+                <ng-container *ngIf="attachment.title"
                   ><i cdkDragHandle>#</i>
                   <span
                     class="filename"
-                    (click)="openPreview(attachment.file)"
-                    >{{ attachment.file }}</span
+                    (click)="openPreview(attachment.title)"
+                    >{{ attachment.title }}</span
                   ></ng-container
                 >
               </div>

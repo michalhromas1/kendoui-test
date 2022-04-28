@@ -152,7 +152,8 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
       const attachment = attachments[previousIndex];
 
       document.id = attachment.id;
-      document.file = attachment.file;
+      document.title = attachment.title;
+      document.url = attachment.url;
       attachments.splice(previousIndex, 1);
 
       return;
@@ -163,11 +164,13 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
 
     attachments.splice(currentIndex, 0, {
       id: document.id,
-      file: document.file,
+      title: document.title,
+      url: document.url,
     });
 
     document.id = null!;
-    document.file = null!;
+    document.title = null!;
+    document.url = null!;
   }
 
   private getDropListType(container: CdkDropList<any>): DropListType {
