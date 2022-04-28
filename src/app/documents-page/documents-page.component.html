@@ -4,16 +4,16 @@
 
 <hr />
 
-<kendo-splitter>
+<kendo-splitter class="page">
   <kendo-splitter-pane>
-    <div class="grid-wrapper">
+    <div class="grid-wrapper h-100">
       <kendo-grid
         #grid
+        class="h-100"
         [kendoGridBinding]="documents"
         [trackBy]="trackBy"
         [resizable]="true"
         [reorderable]="true"
-        [height]="600"
         cdkDropListGroup
       >
         <kendo-grid-column
