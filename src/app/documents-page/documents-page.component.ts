@@ -19,6 +19,7 @@ import {
   GridItem,
 } from '@progress/kendo-angular-grid';
 import { Subject } from 'rxjs';
+import { deepCopy } from '../helpers';
 import { AppDocument, AppDocumentFile, getDocuments } from './mocked-documents';
 
 const dropListTypes = ['file', 'attachments', 'unknown'] as const;
@@ -82,7 +83,7 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
   }
 
   openPreview(file: AppDocumentFile): void {
-    this.preview = file;
+    this.preview = deepCopy(file);
   }
 
   closePreview(): void {
