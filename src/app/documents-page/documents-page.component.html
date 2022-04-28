@@ -83,6 +83,8 @@
       <i (click)="closePreview()" class="close-preview">&times;</i>
     </div>
 
-    <img [src]="preview.url" />
+    <div class="preview-body">
+      <img [src]="preview.url" />
+    </div>
   </kendo-splitter-pane>
 </kendo-splitter>
