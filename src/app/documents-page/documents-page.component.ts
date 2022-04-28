@@ -45,6 +45,7 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
 
   documents = this.initialDocuments;
   preview: AppDocumentFile | undefined;
+  selectedRowsDocumentIds: number[] = [];
 
   private initialColumnWidths: ColumnWidth[] = [];
   private unsubscriber$ = new Subject<void>();
@@ -76,6 +77,7 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
 
   reset(): void {
     this.documents = this.initialDocuments;
+    this.selectedRowsDocumentIds = [];
     this.preview = undefined;
 
     this.resetColumnOrder();
@@ -88,6 +90,12 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
 
   closePreview(): void {
     this.preview = undefined;
+  }
+
+  deleteSelected(): void {
+    this.documents = this.documents.filter(
+      (d) => !this.selectedRowsDocumentIds.includes(d.id)
+    );
   }
 
   private resetColumnOrder(): void {
