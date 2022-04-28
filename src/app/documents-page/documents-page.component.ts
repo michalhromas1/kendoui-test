@@ -85,6 +85,10 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
     this.preview = file;
   }
 
+  closePreview(): void {
+    this.preview = undefined;
+  }
+
   private resetColumnOrder(): void {
     /* řešení dle https://stackoverflow.com/a/27865205 */
     const columns = this.grid.columns as QueryList<ColumnComponent>;
