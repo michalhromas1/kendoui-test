@@ -19,6 +19,7 @@ import {
   GridItem,
 } from '@progress/kendo-angular-grid';
 import { Subject } from 'rxjs';
+import { deepCopy } from '../helpers';
 import { AppDocument, AppDocumentFile, getDocuments } from './mocked-documents';
 
 const dropListTypes = ['file', 'attachments', 'unknown'] as const;
@@ -43,6 +44,7 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
   @ViewChild('attachmentsField') attachmentsField!: CdkDropList;
 
   documents = this.initialDocuments;
+  preview: AppDocumentFile | undefined;
 
   private initialColumnWidths: ColumnWidth[] = [];
   private unsubscriber$ = new Subject<void>();
@@ -74,12 +76,21 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
 
   reset(): void {
     this.documents = this.initialDocuments;
+    this.preview = undefined;
 
     this.resetColumnOrder();
     this.resetColumnWidths();
   }
 
-  private resetColumnOrder() {
+  openPreview(file: AppDocumentFile): void {
+    this.preview = deepCopy(file);
+  }
+
+  closePreview(): void {
+    this.preview = undefined;
+  }
+
+  private resetColumnOrder(): void {
     /* řešení dle https://stackoverflow.com/a/27865205 */
     const columns = this.grid.columns as QueryList<ColumnComponent>;
 
@@ -142,7 +153,8 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
       const attachment = attachments[previousIndex];
 
       document.id = attachment.id;
-      document.file = attachment.file;
+      document.title = attachment.title;
+      document.url = attachment.url;
       attachments.splice(previousIndex, 1);
 
       return;
@@ -153,11 +165,13 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
 
     attachments.splice(currentIndex, 0, {
       id: document.id,
-      file: document.file,
+      title: document.title,
+      url: document.url,
     });
 
     document.id = null!;
-    document.file = null!;
+    document.title = null!;
+    document.url = null!;
   }
 
   private getDropListType(container: CdkDropList<any>): DropListType {
