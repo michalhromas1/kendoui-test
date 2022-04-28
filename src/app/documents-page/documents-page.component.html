@@ -22,6 +22,7 @@
           mode: 'multiple'
         }"
         [groupable]="true"
+        [filterable]="true"
         cdkDropListGroup
       >
         <kendo-grid-checkbox-column
@@ -33,6 +34,7 @@
           field="id"
           title="Id"
           [width]="50"
+          [filterable]="false"
         ></kendo-grid-column>
 
         <kendo-grid-column
@@ -66,7 +68,11 @@
           </ng-template>
         </kendo-grid-column>
 
-        <kendo-grid-column field="attachments" title="Přílohy">
+        <kendo-grid-column
+          field="attachments"
+          title="Přílohy"
+          [filterable]="false"
+        >
           <ng-template kendoGridCellTemplate let-dataItem>
             <div
               cdkDropList
