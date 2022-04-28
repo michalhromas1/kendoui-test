@@ -18,6 +18,7 @@ import {
   GridComponent,
   GridItem,
 } from '@progress/kendo-angular-grid';
+import { GroupDescriptor } from '@progress/kendo-data-query';
 import { Subject } from 'rxjs';
 import { deepCopy } from '../helpers';
 import { AppDocument, AppDocumentFile, getDocuments } from './mocked-documents';
@@ -46,6 +47,7 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
   documents = this.initialDocuments;
   preview: AppDocumentFile | undefined;
   selectedRowsDocumentIds: number[] = [];
+  groups: GroupDescriptor[] = [];
 
   private initialColumnWidths: ColumnWidth[] = [];
   private unsubscriber$ = new Subject<void>();
@@ -78,6 +80,7 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
   reset(): void {
     this.documents = this.initialDocuments;
     this.selectedRowsDocumentIds = [];
+    this.groups = [];
     this.preview = undefined;
 
     this.resetColumnOrder();
