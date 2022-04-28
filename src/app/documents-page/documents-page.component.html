@@ -77,7 +77,7 @@
     </div>
   </kendo-splitter-pane>
 
-  <kendo-splitter-pane *ngIf="preview" size="20%" min="20%">
+  <kendo-splitter-pane *ngIf="preview" size="20%" min="20%" max="80%">
     <div class="preview-header">
       <h3 class="preview-title">{{ preview.title }}</h3>
       <i (click)="closePreview()" class="close-preview">&times;</i>
