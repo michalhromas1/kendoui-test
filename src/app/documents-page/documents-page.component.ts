@@ -75,6 +75,7 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
 
   reset(): void {
     this.documents = this.initialDocuments;
+    this.preview = undefined;
 
     this.resetColumnOrder();
     this.resetColumnWidths();
