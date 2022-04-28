@@ -56,3 +56,9 @@ $selected-disabled-dark: hsl(290, $saturation-dark, $lightness-dark);
 .cdk-drop-list {
   min-height: 20px;
 }
+
+.cdk-drag-handle {
+  margin-right: 0.5rem;
+  font-weight: bold;
+  cursor: grab;
+}
