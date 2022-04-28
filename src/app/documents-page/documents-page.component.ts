@@ -18,7 +18,10 @@ import {
   GridComponent,
   GridItem,
 } from '@progress/kendo-angular-grid';
-import { GroupDescriptor } from '@progress/kendo-data-query';
+import {
+  CompositeFilterDescriptor,
+  GroupDescriptor,
+} from '@progress/kendo-data-query';
 import { Subject } from 'rxjs';
 import { deepCopy } from '../helpers';
 import { AppDocument, AppDocumentFile, getDocuments } from './mocked-documents';
@@ -48,6 +51,7 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
   preview: AppDocumentFile | undefined;
   selectedRowsDocumentIds: number[] = [];
   groups: GroupDescriptor[] = [];
+  filter: CompositeFilterDescriptor = this.initialFilter;
 
   private initialColumnWidths: ColumnWidth[] = [];
   private unsubscriber$ = new Subject<void>();
@@ -58,6 +62,13 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
 
   private get initialDocuments(): AppDocument[] {
     return getDocuments();
+  }
+
+  private get initialFilter(): CompositeFilterDescriptor {
+    return {
+      logic: 'and',
+      filters: [],
+    };
   }
 
   ngAfterViewInit(): void {
@@ -81,6 +92,7 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
     this.documents = this.initialDocuments;
     this.selectedRowsDocumentIds = [];
     this.groups = [];
+    this.filter = this.initialFilter;
     this.preview = undefined;
 
     this.resetColumnOrder();
