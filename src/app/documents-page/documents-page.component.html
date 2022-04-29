@@ -1,9 +1,11 @@
 <kendo-switch
-  class="lang"
+  class="mr-1"
   [(ngModel)]="czech"
   onLabel="CZE"
   offLabel="ENG"
 ></kendo-switch>
+
+<button class="mr-1" kendoButton (click)="openProfilePicker()">Profiles</button>
 
 <kendo-buttongroup>
   <button kendoButton (click)="reset()">Reset</button>
