@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
+import { DialogsModule } from '@progress/kendo-angular-dialog';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { GridModule } from '@progress/kendo-angular-grid';
 import { LayoutModule } from '@progress/kendo-angular-layout';
@@ -20,6 +21,7 @@ import { DocumentsPageComponent } from './documents-page.component';
     ForceAutofocusModule,
     DragDropModule,
     LayoutModule,
+    DialogsModule,
   ],
   exports: [DocumentsPageComponent],
 })
