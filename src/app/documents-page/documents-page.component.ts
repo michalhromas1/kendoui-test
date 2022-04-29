@@ -53,6 +53,7 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
   groups: GroupDescriptor[] = [];
   filter: CompositeFilterDescriptor = this.initialFilter;
   czech: boolean = false;
+  profilePickerOpened: boolean = false;
 
   private initialColumnWidths: ColumnWidth[] = [];
   private unsubscriber$ = new Subject<void>();
@@ -115,7 +116,19 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
   }
 
   openProfilePicker(): void {
-    console.log('prf');
+    this.profilePickerOpened = true;
+  }
+
+  confirmProfilePicker(): void {
+    this.closeProfilePicker();
+  }
+
+  cancelProfilePicker(): void {
+    this.closeProfilePicker();
+  }
+
+  private closeProfilePicker(): void {
+    this.profilePickerOpened = false;
   }
 
   private resetColumnOrder(): void {

@@ -128,3 +128,18 @@
     </div>
   </kendo-splitter-pane>
 </kendo-splitter>
+
+<kendo-dialog
+  *ngIf="profilePickerOpened"
+  title="Choose profiles"
+  (close)="cancelProfilePicker()"
+>
+  <p style="margin: 30px; text-align: center">Choose profiles</p>
+
+  <kendo-dialog-actions>
+    <button kendoButton (click)="cancelProfilePicker()">Cancel</button>
+    <button kendoButton (click)="confirmProfilePicker()" themeColor="primary">
+      Ok
+    </button>
+  </kendo-dialog-actions>
+</kendo-dialog>
