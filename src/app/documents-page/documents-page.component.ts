@@ -9,6 +9,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   OnDestroy,
+  OnInit,
   QueryList,
   ViewChild,
 } from '@angular/core';
@@ -29,6 +30,7 @@ import {
   AppDocumentFile,
   getDocuments,
   getWorkspaceProfileRelationships,
+  Profile,
   WorkspaceProfileRelationship,
 } from './mocked-documents';
 
@@ -48,7 +50,9 @@ type ColumnWidth = {
   styleUrls: ['./documents-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
+export class DocumentsPageComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   @ViewChild('grid') grid!: GridComponent;
   @ViewChild('nameField') nameField!: CdkDropList;
   @ViewChild('attachmentsField') attachmentsField!: CdkDropList;
@@ -62,7 +66,7 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
   profilePickerOpened: boolean = false;
   workspacePickerData: WorkspaceProfileRelationship[] =
     this.initialWorkspacePickerData;
-  workspacePickerCheckedKeys: string[] = [];
+  workspacePickerCheckedKeys: string[] = this.initialWorkspacePickerCheckedKeys;
   workspacePickerCheckedKeysUponPickerOpen: string[] = [];
 
   private initialColumnWidths: ColumnWidth[] = [];
@@ -85,6 +89,44 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
 
   private get initialWorkspacePickerData(): WorkspaceProfileRelationship[] {
     return getWorkspaceProfileRelationships();
+  }
+
+  private get initialWorkspacePickerCheckedKeys(): string[] {
+    const s = this.initialWorkspacePickerData.reduce<string[]>(
+      (result, w, idx) => [
+        ...result,
+        idx.toString(),
+        ...w.profiles.map((p, i) => `${idx}_${i}`),
+      ],
+      []
+    );
+
+    console.log(s);
+
+    return s;
+  }
+
+  private get checkedProfilesDocuments(): AppDocument[] {
+    const checkedProfileTitles = this.checkedProfiles.map((p) => p.title);
+
+    return this.initialDocuments.filter((d) =>
+      checkedProfileTitles.includes(d.profile)
+    );
+  }
+
+  private get checkedProfiles(): Profile[] {
+    const checkedProfileKeys = this.workspacePickerCheckedKeys
+      .filter((k) => k.split('_').length === 2)
+      .map((k) => k.split('_'));
+
+    return checkedProfileKeys.map(
+      ([wKey, pKey]) =>
+        this.workspacePickerData[Number(wKey)].profiles[Number(pKey)]
+    );
+  }
+
+  ngOnInit(): void {
+    this.documents = this.checkedProfilesDocuments;
   }
 
   ngAfterViewInit(): void {
@@ -111,7 +153,7 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
     this.filter = this.initialFilter;
     this.preview = undefined;
     this.workspacePickerData = this.initialWorkspacePickerData;
-    this.workspacePickerCheckedKeys = [];
+    this.workspacePickerCheckedKeys = this.initialWorkspacePickerCheckedKeys;
     this.workspacePickerCheckedKeysUponPickerOpen = [];
 
     this.resetColumnOrder();
@@ -140,7 +182,7 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
   }
 
   confirmProfilePicker(): void {
-    console.log(this.workspacePickerCheckedKeys);
+    this.documents = this.checkedProfilesDocuments;
     this.closeProfilePicker();
   }
 
