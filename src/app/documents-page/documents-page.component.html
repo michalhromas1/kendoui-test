@@ -133,15 +133,17 @@
   *ngIf="profilePickerOpened"
   title="Choose profiles"
   (close)="cancelProfilePicker()"
-  minWidth="50vw"
-  maxWidth="80vw"
-  maxHeight="80vh"
+  width="50vw"
+  height="55vh"
+  maxWidth="50vw"
+  maxHeight="55vh"
 >
   <kendo-treeview
     [nodes]="workspacePickerData"
     textField="title"
     kendoTreeViewHierarchyBinding
     childrenField="profiles"
+    [filterable]="true"
   >
   </kendo-treeview>
 
