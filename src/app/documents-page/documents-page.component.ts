@@ -62,6 +62,8 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
   profilePickerOpened: boolean = false;
   workspacePickerData: WorkspaceProfileRelationship[] =
     this.initialWorkspacePickerData;
+  workspacePickerCheckedKeys: string[] = [];
+  workspacePickerCheckedKeysUponPickerOpen: string[] = [];
 
   private initialColumnWidths: ColumnWidth[] = [];
   private unsubscriber$ = new Subject<void>();
@@ -109,6 +111,8 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
     this.filter = this.initialFilter;
     this.preview = undefined;
     this.workspacePickerData = this.initialWorkspacePickerData;
+    this.workspacePickerCheckedKeys = [];
+    this.workspacePickerCheckedKeysUponPickerOpen = [];
 
     this.resetColumnOrder();
     this.resetColumnWidths();
@@ -129,19 +133,27 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
   }
 
   openProfilePicker(): void {
+    this.workspacePickerCheckedKeysUponPickerOpen = deepCopy(
+      this.workspacePickerCheckedKeys
+    );
     this.profilePickerOpened = true;
   }
 
   confirmProfilePicker(): void {
+    console.log(this.workspacePickerCheckedKeys);
     this.closeProfilePicker();
   }
 
   cancelProfilePicker(): void {
+    this.workspacePickerCheckedKeys = deepCopy(
+      this.workspacePickerCheckedKeysUponPickerOpen
+    );
     this.closeProfilePicker();
   }
 
   private closeProfilePicker(): void {
     this.profilePickerOpened = false;
+    this.workspacePickerCheckedKeysUponPickerOpen = [];
   }
 
   private resetColumnOrder(): void {
