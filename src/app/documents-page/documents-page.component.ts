@@ -52,6 +52,8 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
   selectedRowsDocumentIds: number[] = [];
   groups: GroupDescriptor[] = [];
   filter: CompositeFilterDescriptor = this.initialFilter;
+  czech: boolean = false;
+  profilePickerOpened: boolean = false;
 
   private initialColumnWidths: ColumnWidth[] = [];
   private unsubscriber$ = new Subject<void>();
@@ -111,6 +113,22 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
     this.documents = this.documents.filter(
       (d) => !this.selectedRowsDocumentIds.includes(d.id)
     );
+  }
+
+  openProfilePicker(): void {
+    this.profilePickerOpened = true;
+  }
+
+  confirmProfilePicker(): void {
+    this.closeProfilePicker();
+  }
+
+  cancelProfilePicker(): void {
+    this.closeProfilePicker();
+  }
+
+  private closeProfilePicker(): void {
+    this.profilePickerOpened = false;
   }
 
   private resetColumnOrder(): void {

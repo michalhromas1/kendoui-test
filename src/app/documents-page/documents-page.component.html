@@ -1,3 +1,12 @@
+<kendo-switch
+  class="mr-1"
+  [(ngModel)]="czech"
+  onLabel="CZE"
+  offLabel="ENG"
+></kendo-switch>
+
+<button class="mr-1" kendoButton (click)="openProfilePicker()">Profiles</button>
+
 <kendo-buttongroup>
   <button kendoButton (click)="reset()">Reset</button>
   <button kendoButton (click)="deleteSelected()">Delete selected</button>
@@ -94,6 +103,16 @@
             </div>
           </ng-template>
         </kendo-grid-column>
+
+        <kendo-grid-messages
+          [groupPanelEmpty]="
+            czech
+              ? 'Přetáhněte sloupec k seskupení'
+              : 'Drag a column header and drop it here to group by that column'
+          "
+          [noRecords]="czech ? 'Zde nic není.' : 'No records available.'"
+        >
+        </kendo-grid-messages>
       </kendo-grid>
     </div>
   </kendo-splitter-pane>
@@ -109,3 +128,18 @@
     </div>
   </kendo-splitter-pane>
 </kendo-splitter>
+
+<kendo-dialog
+  *ngIf="profilePickerOpened"
+  title="Choose profiles"
+  (close)="cancelProfilePicker()"
+>
+  <p style="margin: 30px; text-align: center">Choose profiles</p>
+
+  <kendo-dialog-actions>
+    <button kendoButton (click)="cancelProfilePicker()">Cancel</button>
+    <button kendoButton (click)="confirmProfilePicker()" themeColor="primary">
+      Ok
+    </button>
+  </kendo-dialog-actions>
+</kendo-dialog>
