@@ -3,6 +3,8 @@
   <button kendoButton (click)="deleteSelected()">Delete selected</button>
 </kendo-buttongroup>
 
+<kendo-switch [(ngModel)]="czech" onLabel="CZE" offLabel="ENG"></kendo-switch>
+
 <hr />
 
 <kendo-splitter class="page">
@@ -96,8 +98,12 @@
         </kendo-grid-column>
 
         <kendo-grid-messages
-          groupPanelEmpty="Přetáhněte sloupec k seskupení"
-          noRecords="Zde nic není"
+          [groupPanelEmpty]="
+            czech
+              ? 'Přetáhněte sloupec k seskupení'
+              : 'Drag a column header and drop it here to group by that column'
+          "
+          [noRecords]="czech ? 'Zde nic není.' : 'No records available.'"
         >
         </kendo-grid-messages>
       </kendo-grid>

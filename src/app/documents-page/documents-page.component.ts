@@ -52,6 +52,7 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
   selectedRowsDocumentIds: number[] = [];
   groups: GroupDescriptor[] = [];
   filter: CompositeFilterDescriptor = this.initialFilter;
+  czech: boolean = false;
 
   private initialColumnWidths: ColumnWidth[] = [];
   private unsubscriber$ = new Subject<void>();
