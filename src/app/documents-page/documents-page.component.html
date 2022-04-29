@@ -1,9 +1,14 @@
+<kendo-switch
+  class="lang"
+  [(ngModel)]="czech"
+  onLabel="CZE"
+  offLabel="ENG"
+></kendo-switch>
+
 <kendo-buttongroup>
   <button kendoButton (click)="reset()">Reset</button>
   <button kendoButton (click)="deleteSelected()">Delete selected</button>
 </kendo-buttongroup>
-
-<kendo-switch [(ngModel)]="czech" onLabel="CZE" offLabel="ENG"></kendo-switch>
 
 <hr />
 
