@@ -8,6 +8,7 @@ import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { GridModule } from '@progress/kendo-angular-grid';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { LayoutModule } from '@progress/kendo-angular-layout';
+import { TreeViewModule } from '@progress/kendo-angular-treeview';
 import { ForceAutofocusModule } from '../force-autofocus/force-autofocus.module';
 import { DocumentsPageComponent } from './documents-page.component';
 
@@ -25,6 +26,7 @@ import { DocumentsPageComponent } from './documents-page.component';
     DialogsModule,
     InputsModule,
     FormsModule,
+    TreeViewModule,
   ],
   exports: [DocumentsPageComponent],
 })

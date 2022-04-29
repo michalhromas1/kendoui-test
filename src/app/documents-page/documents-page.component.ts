@@ -24,7 +24,13 @@ import {
 } from '@progress/kendo-data-query';
 import { Subject } from 'rxjs';
 import { deepCopy } from '../helpers';
-import { AppDocument, AppDocumentFile, getDocuments } from './mocked-documents';
+import {
+  AppDocument,
+  AppDocumentFile,
+  getDocuments,
+  getWorkspaceProfileRelationships,
+  WorkspaceProfileRelationship,
+} from './mocked-documents';
 
 const dropListTypes = ['file', 'attachments', 'unknown'] as const;
 type DropListType = typeof dropListTypes[number];
@@ -54,6 +60,8 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
   filter: CompositeFilterDescriptor = this.initialFilter;
   czech: boolean = false;
   profilePickerOpened: boolean = false;
+  workspacePickerData: WorkspaceProfileRelationship[] =
+    this.initialWorkspacePickerData;
 
   private initialColumnWidths: ColumnWidth[] = [];
   private unsubscriber$ = new Subject<void>();
@@ -71,6 +79,10 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
       logic: 'and',
       filters: [],
     };
+  }
+
+  private get initialWorkspacePickerData(): WorkspaceProfileRelationship[] {
+    return getWorkspaceProfileRelationships();
   }
 
   ngAfterViewInit(): void {
@@ -96,6 +108,7 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
     this.groups = [];
     this.filter = this.initialFilter;
     this.preview = undefined;
+    this.workspacePickerData = this.initialWorkspacePickerData;
 
     this.resetColumnOrder();
     this.resetColumnWidths();

@@ -134,7 +134,13 @@
   title="Choose profiles"
   (close)="cancelProfilePicker()"
 >
-  <p style="margin: 30px; text-align: center">Choose profiles</p>
+  <kendo-treeview
+    [nodes]="workspacePickerData"
+    textField="title"
+    kendoTreeViewHierarchyBinding
+    childrenField="profiles"
+  >
+  </kendo-treeview>
 
   <kendo-dialog-actions>
     <button kendoButton (click)="cancelProfilePicker()">Cancel</button>
