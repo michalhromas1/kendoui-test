@@ -9,6 +9,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   OnDestroy,
+  OnInit,
   QueryList,
   ViewChild,
 } from '@angular/core';
@@ -24,7 +25,14 @@ import {
 } from '@progress/kendo-data-query';
 import { Subject } from 'rxjs';
 import { deepCopy } from '../helpers';
-import { AppDocument, AppDocumentFile, getDocuments } from './mocked-documents';
+import {
+  AppDocument,
+  AppDocumentFile,
+  getDocuments,
+  getWorkspaceProfileRelationships,
+  Profile,
+  WorkspaceProfileRelationship,
+} from './mocked-documents';
 
 const dropListTypes = ['file', 'attachments', 'unknown'] as const;
 type DropListType = typeof dropListTypes[number];
@@ -42,7 +50,9 @@ type ColumnWidth = {
   styleUrls: ['./documents-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
+export class DocumentsPageComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   @ViewChild('grid') grid!: GridComponent;
   @ViewChild('nameField') nameField!: CdkDropList;
   @ViewChild('attachmentsField') attachmentsField!: CdkDropList;
@@ -54,6 +64,10 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
   filter: CompositeFilterDescriptor = this.initialFilter;
   czech: boolean = false;
   profilePickerOpened: boolean = false;
+  workspacePickerData: WorkspaceProfileRelationship[] =
+    this.initialWorkspacePickerData;
+  workspacePickerCheckedKeys: string[] = this.initialWorkspacePickerCheckedKeys;
+  workspacePickerCheckedKeysUponPickerOpen: string[] = [];
 
   private initialColumnWidths: ColumnWidth[] = [];
   private unsubscriber$ = new Subject<void>();
@@ -71,6 +85,48 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
       logic: 'and',
       filters: [],
     };
+  }
+
+  private get initialWorkspacePickerData(): WorkspaceProfileRelationship[] {
+    return getWorkspaceProfileRelationships();
+  }
+
+  private get initialWorkspacePickerCheckedKeys(): string[] {
+    const s = this.initialWorkspacePickerData.reduce<string[]>(
+      (result, w, idx) => [
+        ...result,
+        idx.toString(),
+        ...w.profiles.map((p, i) => `${idx}_${i}`),
+      ],
+      []
+    );
+
+    console.log(s);
+
+    return s;
+  }
+
+  private get checkedProfilesDocuments(): AppDocument[] {
+    const checkedProfileTitles = this.checkedProfiles.map((p) => p.title);
+
+    return this.initialDocuments.filter((d) =>
+      checkedProfileTitles.includes(d.profile)
+    );
+  }
+
+  private get checkedProfiles(): Profile[] {
+    const checkedProfileKeys = this.workspacePickerCheckedKeys
+      .filter((k) => k.split('_').length === 2)
+      .map((k) => k.split('_'));
+
+    return checkedProfileKeys.map(
+      ([wKey, pKey]) =>
+        this.workspacePickerData[Number(wKey)].profiles[Number(pKey)]
+    );
+  }
+
+  ngOnInit(): void {
+    this.documents = this.checkedProfilesDocuments;
   }
 
   ngAfterViewInit(): void {
@@ -96,6 +152,9 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
     this.groups = [];
     this.filter = this.initialFilter;
     this.preview = undefined;
+    this.workspacePickerData = this.initialWorkspacePickerData;
+    this.workspacePickerCheckedKeys = this.initialWorkspacePickerCheckedKeys;
+    this.workspacePickerCheckedKeysUponPickerOpen = [];
 
     this.resetColumnOrder();
     this.resetColumnWidths();
@@ -116,19 +175,27 @@ export class DocumentsPageComponent implements AfterViewInit, OnDestroy {
   }
 
   openProfilePicker(): void {
+    this.workspacePickerCheckedKeysUponPickerOpen = deepCopy(
+      this.workspacePickerCheckedKeys
+    );
     this.profilePickerOpened = true;
   }
 
   confirmProfilePicker(): void {
+    this.documents = this.checkedProfilesDocuments;
     this.closeProfilePicker();
   }
 
   cancelProfilePicker(): void {
+    this.workspacePickerCheckedKeys = deepCopy(
+      this.workspacePickerCheckedKeysUponPickerOpen
+    );
     this.closeProfilePicker();
   }
 
   private closeProfilePicker(): void {
     this.profilePickerOpened = false;
+    this.workspacePickerCheckedKeysUponPickerOpen = [];
   }
 
   private resetColumnOrder(): void {

@@ -133,8 +133,22 @@
   *ngIf="profilePickerOpened"
   title="Choose profiles"
   (close)="cancelProfilePicker()"
+  width="50vw"
+  height="55vh"
+  maxWidth="50vw"
+  maxHeight="55vh"
 >
-  <p style="margin: 30px; text-align: center">Choose profiles</p>
+  <kendo-treeview
+    [nodes]="workspacePickerData"
+    textField="title"
+    kendoTreeViewHierarchyBinding
+    kendoTreeViewExpandable
+    kendoTreeViewCheckable
+    childrenField="profiles"
+    [filterable]="true"
+    [(checkedKeys)]="workspacePickerCheckedKeys"
+  >
+  </kendo-treeview>
 
   <kendo-dialog-actions>
     <button kendoButton (click)="cancelProfilePicker()">Cancel</button>

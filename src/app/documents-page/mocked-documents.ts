@@ -23,6 +23,21 @@ export type AppDocumentFile = {
   url: string;
 };
 
+export type WorkspaceProfileRelationship = Workspace & {
+  profiles: Profile[];
+};
+
+export const getWorkspaceProfileRelationships =
+  (): WorkspaceProfileRelationship[] => {
+    const workspaces = getWorkspaces();
+    const profiles = getProfiles();
+
+    return workspaces.map((w) => ({
+      ...w,
+      profiles: profiles.filter((p) => p.workspaceId === w.id),
+    }));
+  };
+
 export const getWorkspaces = (): Workspace[] => {
   return deepCopy(WORKSPACES);
 };
