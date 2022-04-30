@@ -230,12 +230,23 @@ export class DocumentsPageComponent
       return;
     }
 
+    if (wasAdded) {
+      const allWProfilesKeys = workspace.profiles.map(
+        (p, idx) => `${workspaceKey}_${idx}`
+      );
+
+      keys = [...keys, ...allWProfilesKeys.filter((k) => !keys.includes(k))];
+    } else {
+    }
+
+    this.workspacePickerCheckedKeys = keys;
+
     // console.log(new Set([...this.workspacePickerCheckedKeys, ...keys]));
     // const changedKey = Array.from(
     //   new Set([...this.workspacePickerCheckedKeys, ...keys])
     // );
-    console.log(changedKey, wasAdded);
-    this.workspacePickerCheckedKeys = keys;
+    // console.log(changedKey, wasAdded);
+    // this.workspacePickerCheckedKeys = keys;
   }
 
   private closeProfilePicker(): void {
