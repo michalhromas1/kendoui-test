@@ -143,10 +143,14 @@
     textField="title"
     kendoTreeViewHierarchyBinding
     kendoTreeViewExpandable
-    kendoTreeViewCheckable
+    [kendoTreeViewCheckable]="{
+      checkChildren: false,
+      checkOnClick: true
+    }"
     childrenField="profiles"
     [filterable]="true"
-    [(checkedKeys)]="workspacePickerCheckedKeys"
+    [checkedKeys]="workspacePickerCheckedKeys"
+    (checkedKeysChange)="onCheckedKeysChange($event)"
   >
   </kendo-treeview>
 

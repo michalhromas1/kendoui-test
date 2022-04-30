@@ -92,7 +92,7 @@ export class DocumentsPageComponent
   }
 
   private get initialWorkspacePickerCheckedKeys(): string[] {
-    const s = this.initialWorkspacePickerData.reduce<string[]>(
+    return this.initialWorkspacePickerData.reduce<string[]>(
       (result, w, idx) => [
         ...result,
         idx.toString(),
@@ -100,10 +100,6 @@ export class DocumentsPageComponent
       ],
       []
     );
-
-    console.log(s);
-
-    return s;
   }
 
   private get checkedProfilesDocuments(): AppDocument[] {
@@ -191,6 +187,61 @@ export class DocumentsPageComponent
       this.workspacePickerCheckedKeysUponPickerOpen
     );
     this.closeProfilePicker();
+  }
+
+  onCheckedKeysChange(keys: string[]): void {
+    const changedKeys = [...this.workspacePickerCheckedKeys, ...keys].reduce<
+      string[]
+    >((unique, current) => {
+      const duplicateIdx = unique.indexOf(current);
+
+      if (duplicateIdx !== -1) {
+        unique.splice(duplicateIdx, 1);
+      } else {
+        unique.push(current);
+      }
+
+      return unique;
+    }, []);
+
+    const changedKey =
+      changedKeys.length === 1
+        ? changedKeys[0]
+        : changedKeys.filter((k) => k.split('_')[1] !== undefined)[0];
+
+    const wasAdded = keys.includes(changedKey);
+    const [workspaceKey, profileKey] = changedKey.split('_');
+
+    const workspace = this.workspacePickerData[Number(workspaceKey)];
+
+    if (profileKey !== undefined) {
+      const wProfileCount = workspace.profiles.length;
+      const checkedWProfileCount = keys.filter((k) => {
+        const [wKey, pKey] = k.split('_');
+        return wKey === workspaceKey && pKey !== undefined;
+      }).length;
+
+      if (wasAdded && wProfileCount === checkedWProfileCount) {
+        keys = [...keys, workspaceKey];
+      } else if (!wasAdded && wProfileCount !== checkedWProfileCount) {
+        keys = keys.filter((k) => k !== workspaceKey);
+      }
+
+      this.workspacePickerCheckedKeys = keys;
+      return;
+    }
+
+    if (wasAdded) {
+      const allWProfilesKeys = workspace.profiles.map(
+        (p, idx) => `${workspaceKey}_${idx}`
+      );
+
+      keys = [...keys, ...allWProfilesKeys.filter((k) => !keys.includes(k))];
+    } else {
+      keys = keys.filter((k) => k.split('_')[0] !== workspaceKey);
+    }
+
+    this.workspacePickerCheckedKeys = keys;
   }
 
   private closeProfilePicker(): void {
