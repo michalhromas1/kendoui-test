@@ -194,7 +194,7 @@ export class DocumentsPageComponent
   }
 
   onCheckedKeysChange(keys: string[]): void {
-    const changedKey = [...this.workspacePickerCheckedKeys, ...keys].reduce<
+    const changedKeys = [...this.workspacePickerCheckedKeys, ...keys].reduce<
       string[]
     >((unique, current) => {
       const duplicateIdx = unique.indexOf(current);
@@ -206,7 +206,12 @@ export class DocumentsPageComponent
       }
 
       return unique;
-    }, [])[0];
+    }, []);
+
+    const changedKey =
+      changedKeys.length === 1
+        ? changedKeys[0]
+        : changedKeys.filter((k) => k.split('_')[1] !== undefined)[0];
 
     const wasAdded = keys.includes(changedKey);
     const [workspaceKey, profileKey] = changedKey.split('_');
