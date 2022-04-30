@@ -237,6 +237,7 @@ export class DocumentsPageComponent
 
       keys = [...keys, ...allWProfilesKeys.filter((k) => !keys.includes(k))];
     } else {
+      keys = keys.filter((k) => k.split('_')[0] !== workspaceKey);
     }
 
     this.workspacePickerCheckedKeys = keys;
