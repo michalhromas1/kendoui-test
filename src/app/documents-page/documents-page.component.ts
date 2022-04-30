@@ -92,7 +92,7 @@ export class DocumentsPageComponent
   }
 
   private get initialWorkspacePickerCheckedKeys(): string[] {
-    const s = this.initialWorkspacePickerData.reduce<string[]>(
+    return this.initialWorkspacePickerData.reduce<string[]>(
       (result, w, idx) => [
         ...result,
         idx.toString(),
@@ -100,10 +100,6 @@ export class DocumentsPageComponent
       ],
       []
     );
-
-    console.log(s);
-
-    return s;
   }
 
   private get checkedProfilesDocuments(): AppDocument[] {
@@ -246,13 +242,6 @@ export class DocumentsPageComponent
     }
 
     this.workspacePickerCheckedKeys = keys;
-
-    // console.log(new Set([...this.workspacePickerCheckedKeys, ...keys]));
-    // const changedKey = Array.from(
-    //   new Set([...this.workspacePickerCheckedKeys, ...keys])
-    // );
-    // console.log(changedKey, wasAdded);
-    // this.workspacePickerCheckedKeys = keys;
   }
 
   private closeProfilePicker(): void {
