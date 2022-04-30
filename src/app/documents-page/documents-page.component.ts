@@ -193,6 +193,51 @@ export class DocumentsPageComponent
     this.closeProfilePicker();
   }
 
+  onCheckedKeysChange(keys: string[]): void {
+    const changedKey = [...this.workspacePickerCheckedKeys, ...keys].reduce<
+      string[]
+    >((unique, current) => {
+      const duplicateIdx = unique.indexOf(current);
+
+      if (duplicateIdx !== -1) {
+        unique.splice(duplicateIdx, 1);
+      } else {
+        unique.push(current);
+      }
+
+      return unique;
+    }, [])[0];
+
+    const wasAdded = keys.includes(changedKey);
+    const [workspaceKey, profileKey] = changedKey.split('_');
+
+    const workspace = this.workspacePickerData[Number(workspaceKey)];
+
+    if (profileKey !== undefined) {
+      const wProfileCount = workspace.profiles.length;
+      const checkedWProfileCount = keys.filter((k) => {
+        const [wKey, pKey] = k.split('_');
+        return wKey === workspaceKey && pKey !== undefined;
+      }).length;
+
+      if (wasAdded && wProfileCount === checkedWProfileCount) {
+        keys = [...keys, workspaceKey];
+      } else if (!wasAdded && wProfileCount !== checkedWProfileCount) {
+        keys = keys.filter((k) => k !== workspaceKey);
+      }
+
+      this.workspacePickerCheckedKeys = keys;
+      return;
+    }
+
+    // console.log(new Set([...this.workspacePickerCheckedKeys, ...keys]));
+    // const changedKey = Array.from(
+    //   new Set([...this.workspacePickerCheckedKeys, ...keys])
+    // );
+    console.log(changedKey, wasAdded);
+    this.workspacePickerCheckedKeys = keys;
+  }
+
   private closeProfilePicker(): void {
     this.profilePickerOpened = false;
     this.workspacePickerCheckedKeysUponPickerOpen = [];
