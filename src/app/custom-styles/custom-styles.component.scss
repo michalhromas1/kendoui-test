@@ -12,6 +12,10 @@ $disabled-dark: hsl(0, $saturation-dark, $lightness-dark);
 $selected-dark: hsl(205, $saturation-dark, $lightness-dark);
 $selected-disabled-dark: hsl(290, $saturation-dark, $lightness-dark);
 
+:host {
+  --k-grid-color: yellow;
+}
+
 :host ::ng-deep {
   td.disabled {
     text-decoration: line-through;
@@ -129,8 +133,4 @@ $selected-disabled-dark: hsl(290, $saturation-dark, $lightness-dark);
   .mr-1 {
     margin-right: 1rem;
   }
-}
-
-:host {
-  --k-grid-color: yellow;
 }
