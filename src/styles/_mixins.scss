@@ -6,6 +6,12 @@
   }
 }
 
+@mixin createVarBasedRules($vars-prefix, $rules...) {
+  @each $rule in $rules {
+    #{list.nth($rule, 1)}: var(--#{$vars-prefix}-#{list.nth($rule, 2)});
+  }
+}
+
 $kendo-prefix: "kendo";
 
 @function withKendoPrefix($name) {
