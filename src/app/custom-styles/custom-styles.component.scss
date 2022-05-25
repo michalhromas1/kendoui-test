@@ -1,3 +1,5 @@
+@use "/src/styles/kendo/prefixes";
+
 $saturation-light: 47%;
 $lightness-light: 92%;
 
@@ -12,10 +14,8 @@ $disabled-dark: hsl(0, $saturation-dark, $lightness-dark);
 $selected-dark: hsl(205, $saturation-dark, $lightness-dark);
 $selected-disabled-dark: hsl(290, $saturation-dark, $lightness-dark);
 
-@use "/src/styles/kendo/prefixes";
-
 :host {
-  --#{prefixes.$grid}-c: yellow;
+  --#{prefixes.$grid}-c: green;
 }
 
 :host ::ng-deep {
@@ -48,10 +48,6 @@ $selected-disabled-dark: hsl(290, $saturation-dark, $lightness-dark);
       }
     }
   }
-}
-
-.k-grid {
-  width: fit-content;
 }
 
 .grid-wrapper {
