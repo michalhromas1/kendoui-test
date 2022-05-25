@@ -1,7 +1,7 @@
 @use "../mixins";
 @use "./prefixes";
 
-$prefix: prefixes.$grid;
+$prefix: prefixes.$button;
 
 :root {
   @include mixins.createVars(
