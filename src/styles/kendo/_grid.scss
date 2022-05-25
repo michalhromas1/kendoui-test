@@ -12,9 +12,5 @@ $prefix: prefixes.$grid;
 }
 
 .k-grid {
-  @include mixins.createVarBasedRules(
-    $prefix,
-    ("background", "background"),
-    ("color", "color")
-  );
+  @include mixins.createVarBasedRules($prefix, "background", "color");
 }

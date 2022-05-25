@@ -8,7 +8,11 @@
 
 @mixin createVarBasedRules($vars-prefix, $rules...) {
   @each $rule in $rules {
-    #{list.nth($rule, 1)}: var(--#{$vars-prefix}-#{list.nth($rule, 2)});
+    @if list.length($rule) == 1 {
+      #{list.nth($rule, 1)}: var(--#{$vars-prefix}-#{list.nth($rule, 1)});
+    } @else {
+      #{list.nth($rule, 1)}: var(--#{$vars-prefix}-#{list.nth($rule, 2)});
+    }
   }
 }
 
