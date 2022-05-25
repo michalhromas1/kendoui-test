@@ -1,0 +1,13 @@
+@use "sass:list";
+
+@mixin createVars($prefix, $vars...) {
+  @each $var in $vars {
+    --#{$prefix}-#{list.nth($var, 1)}: #{list.nth($var, 2)};
+  }
+}
+
+$kendo-prefix: "kendo";
+
+@function withKendoPrefix($name) {
+  @return "#{$kendo-prefix}-#{$name}";
+}

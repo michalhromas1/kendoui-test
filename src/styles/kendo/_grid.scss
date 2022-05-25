@@ -1,9 +1,12 @@
+@use "../mixins";
+
+$prefix: mixins.withKendoPrefix(grid);
+
 :root {
-  --k-grid-bg: red;
-  --k-grid-color: blue;
+  @include mixins.createVars($prefix, (bg, red), (color, blue));
 }
 
 .k-grid {
-  background: var(--k-grid-bg);
-  color: var(--k-grid-color);
+  background: var(--#{$prefix}-bg);
+  color: var(--#{$prefix}-color);
 }
