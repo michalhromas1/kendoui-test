@@ -14,10 +14,6 @@ $disabled-dark: hsl(0, $saturation-dark, $lightness-dark);
 $selected-dark: hsl(205, $saturation-dark, $lightness-dark);
 $selected-disabled-dark: hsl(290, $saturation-dark, $lightness-dark);
 
-:host {
-  --#{prefixes.$grid}-c: green;
-}
-
 :host ::ng-deep {
   td.disabled {
     text-decoration: line-through;

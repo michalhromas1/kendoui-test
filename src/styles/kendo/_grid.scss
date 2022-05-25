@@ -4,13 +4,17 @@
 $prefix: prefixes.$grid;
 
 :root {
-  @include mixins.createVars($prefix, ("bg", "red"), ("c", "blue"));
+  @include mixins.createVars(
+    $prefix,
+    ("background", "#fff"),
+    ("color", "#424242")
+  );
 }
 
 .k-grid {
   @include mixins.createVarBasedRules(
     $prefix,
-    ("background", "bg"),
-    ("color", "c")
+    ("background", "background"),
+    ("color", "color")
   );
 }
