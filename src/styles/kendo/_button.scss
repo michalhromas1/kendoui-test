@@ -1,0 +1,16 @@
+@use "../mixins";
+@use "./prefixes";
+
+$prefix: prefixes.$grid;
+
+:root {
+  @include mixins.createVars(
+    $prefix,
+    ("background-color", "#f5f5f5"),
+    ("color", "#424242")
+  );
+}
+
+.k-button {
+  @include mixins.createVarBasedRules($prefix, "background-color", "color");
+}
