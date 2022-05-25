@@ -7,6 +7,7 @@ Select component:
 <hr />
 
 <ng-container [ngSwitch]="selectedUiComponent">
+  <app-custom-styles *ngSwitchCase="'custom-styles'"></app-custom-styles>
   <app-documents-page *ngSwitchCase="'documents-page'"></app-documents-page>
   <app-grid-cell-edit *ngSwitchCase="'grid-cell-edit'"></app-grid-cell-edit>
   <app-grid-row-edit *ngSwitchCase="'grid-row-edit'"></app-grid-row-edit>
