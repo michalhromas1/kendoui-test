@@ -1,0 +1,3 @@
+@use "../mixins";
+
+$grid: mixins.withKendoPrefix("grid");

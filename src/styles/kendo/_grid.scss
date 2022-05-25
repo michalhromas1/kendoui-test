@@ -1,6 +1,7 @@
 @use "../mixins";
+@use "./prefixes";
 
-$prefix: mixins.withKendoPrefix("grid");
+$prefix: prefixes.$grid;
 
 :root {
   @include mixins.createVars($prefix, ("bg", "red"), ("c", "blue"));
@@ -9,7 +10,7 @@ $prefix: mixins.withKendoPrefix("grid");
 .k-grid {
   @include mixins.createVarBasedRules(
     $prefix,
-    ("bg", "background"),
-    ("c", "color")
+    ("background", "bg"),
+    ("color", "c")
   );
 }

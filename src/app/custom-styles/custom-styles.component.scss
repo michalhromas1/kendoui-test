@@ -12,8 +12,10 @@ $disabled-dark: hsl(0, $saturation-dark, $lightness-dark);
 $selected-dark: hsl(205, $saturation-dark, $lightness-dark);
 $selected-disabled-dark: hsl(290, $saturation-dark, $lightness-dark);
 
+@use "/src/styles/kendo/prefixes";
+
 :host {
-  --k-grid-color: yellow;
+  --#{prefixes.$grid}-c: yellow;
 }
 
 :host ::ng-deep {
