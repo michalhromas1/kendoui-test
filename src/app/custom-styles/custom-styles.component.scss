@@ -1,5 +1,5 @@
 @use "/src/styles/kendo/native/grid" as grid;
-@use "/src/styles/kendo/native/button" as button;
+@use "/src/styles/kendo/override/button" as button;
 
 $saturation-light: 47%;
 $lightness-light: 92%;
@@ -17,7 +17,7 @@ $selected-disabled-dark: hsl(290, $saturation-dark, $lightness-dark);
 
 :host {
   @include grid.overrideVars(("background-color", red), ("color", green));
-  @include button.overrideVars(("background-color", red), ("color", green));
+  @include button.overrideVars(("color", green));
 }
 
 :host ::ng-deep {

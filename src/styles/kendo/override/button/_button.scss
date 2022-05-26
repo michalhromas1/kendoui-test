@@ -1,0 +1,5 @@
+@use "./button.override" as override;
+
+:root {
+  @include override.overrideVars(("color", yellow));
+}
