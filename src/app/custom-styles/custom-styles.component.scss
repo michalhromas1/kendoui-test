@@ -1,5 +1,3 @@
-@use "/src/styles/kendo/override/button" as button;
-
 $saturation-light: 47%;
 $lightness-light: 92%;
 
@@ -13,10 +11,6 @@ $selected-disabled-light: hsl(290, $saturation-light, $lightness-light);
 $disabled-dark: hsl(0, $saturation-dark, $lightness-dark);
 $selected-dark: hsl(205, $saturation-dark, $lightness-dark);
 $selected-disabled-dark: hsl(290, $saturation-dark, $lightness-dark);
-
-:host {
-  @include button.overrideVars(("color", green));
-}
 
 :host ::ng-deep {
   td.disabled {

@@ -1,8 +1,0 @@
-@use "/src/styles/core/dynamic-vars";
-@use "./grid.prefix" as prefix;
-
-$varList: dynamic-vars.createVarList(
-  prefix.$prefix,
-  ("background-color", #fff),
-  ("color", #424242)
-);

@@ -1,5 +1,0 @@
-@use "./grid.override" as override;
-
-:root {
-  @include override.overrideVars();
-}
