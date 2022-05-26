@@ -12,6 +12,8 @@
     @if $prop {
       $varName: --#{$prefix}-#{$prop};
       $result: list.append($result, ($varName, $value, $prop));
+    } @else {
+      @error _createErrorInvalidPropertyKey($propKey);
     }
   }
 
@@ -45,6 +47,12 @@
     @if $prop {
       $varName: --#{$prefix}-#{$prop};
       #{$varName}: $value;
+    } @else {
+      @error _createErrorInvalidPropertyKey($propKey);
     }
   }
+}
+
+@function _createErrorInvalidPropertyKey($propKey) {
+  @return "_dynamic-vars.scss: Property key not defined (#{$propKey}). Look at ./_prop-list.scss to see all defined property keys.";
 }
