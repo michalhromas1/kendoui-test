@@ -1,7 +1,4 @@
-@use "/src/styles/helpers/dynamic-vars";
-@use "/src/styles/kendo/prefixes";
-
-$grid-prefix: prefixes.$grid;
+@use "/src/styles/kendo/native/grid/grid.override" as grid;
 
 $saturation-light: 47%;
 $lightness-light: 92%;
@@ -18,13 +15,7 @@ $selected-dark: hsl(205, $saturation-dark, $lightness-dark);
 $selected-disabled-dark: hsl(290, $saturation-dark, $lightness-dark);
 
 :host {
-  @include dynamic-vars.overrideVars(
-    $grid-prefix,
-    ("background-color", red),
-    ("color", green)
-  );
-  // @include dynamic-vars.overrideVars(($grid-prefix, "color", blue))
-  // --#{prefixes.$button}-background-color: yellow;
+  @include grid.overrideVars(("background-color", red), ("color", green));
 }
 
 :host ::ng-deep {
