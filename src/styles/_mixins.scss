@@ -1,18 +1,38 @@
 @use "sass:list";
+@use "sass:map";
 
-@mixin createVars($prefix, $vars...) {
+@function createVarss($prefix, $vars...) {
+  $result: ();
+
   @each $var in $vars {
-    --#{$prefix}-#{list.nth($var, 1)}: #{list.nth($var, 2)};
+    $propKey: list.nth($var, 1);
+    $value: list.nth($var, 2);
+    $prop: getProp($propKey);
+
+    @if $prop {
+      $varName: --#{$prefix}-#{$prop};
+      $result: list.append($result, ($varName, $value, $prop));
+    }
+  }
+
+  @return $result;
+}
+
+@mixin createVars($vars) {
+  @each $var in $vars {
+    $varName: list.nth($var, 1);
+    $value: list.nth($var, 2);
+
+    #{$varName}: $value;
   }
 }
 
-@mixin createVarBasedRules($vars-prefix, $rules...) {
-  @each $rule in $rules {
-    @if list.length($rule) == 1 {
-      #{list.nth($rule, 1)}: var(--#{$vars-prefix}-#{list.nth($rule, 1)});
-    } @else {
-      #{list.nth($rule, 1)}: var(--#{$vars-prefix}-#{list.nth($rule, 2)});
-    }
+@mixin createVarBasedRules($vars) {
+  @each $var in $vars {
+    $varName: list.nth($var, 1);
+    $prop: list.nth($var, 3);
+
+    #{$prop}: var($varName);
   }
 }
 
@@ -20,4 +40,13 @@ $kendo-prefix: "kendo";
 
 @function withKendoPrefix($name) {
   @return "#{$kendo-prefix}-#{$name}";
+}
+
+$props: (
+  "color": "color",
+  "background-color": "background-color",
+);
+
+@function getProp($key) {
+  @return map.get($props, $key);
 }
