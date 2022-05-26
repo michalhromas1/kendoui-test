@@ -1,0 +1,8 @@
+@use "/src/styles/core/dynamic-vars";
+@use "./button.prefix" as prefix;
+
+$varList: dynamic-vars.createVarList(
+  prefix.$prefix,
+  ("background-color", #f5f5f5),
+  ("color", #424242)
+);

@@ -1,0 +1,10 @@
+@use "/src/styles/core/dynamic-vars";
+@use "./button.vars" as vars;
+
+:root {
+  @include dynamic-vars.useVarListAtRoot(vars.$varList);
+}
+
+.k-button {
+  @include dynamic-vars.useVarListAtElement(vars.$varList);
+}
