@@ -1,12 +1,12 @@
 @use "sass:list";
 @use "sass:map";
 
-@function createVarss($prefix, $vars...) {
+@function getVarList($prefix, $propKeyValuePairs...) {
   $result: ();
 
-  @each $var in $vars {
-    $propKey: list.nth($var, 1);
-    $value: list.nth($var, 2);
+  @each $propKeyValuePair in $propKeyValuePairs {
+    $propKey: list.nth($propKeyValuePair, 1);
+    $value: list.nth($propKeyValuePair, 2);
     $prop: getProp($propKey);
 
     @if $prop {
@@ -18,19 +18,19 @@
   @return $result;
 }
 
-@mixin createVars($vars) {
-  @each $var in $vars {
-    $varName: list.nth($var, 1);
-    $value: list.nth($var, 2);
+@mixin useVarListAtRoot($varList) {
+  @each $item in $varList {
+    $varName: list.nth($item, 1);
+    $value: list.nth($item, 2);
 
     #{$varName}: $value;
   }
 }
 
-@mixin createVarBasedRules($vars) {
-  @each $var in $vars {
-    $varName: list.nth($var, 1);
-    $prop: list.nth($var, 3);
+@mixin useVarListAtElement($varList) {
+  @each $item in $varList {
+    $varName: list.nth($item, 1);
+    $prop: list.nth($item, 3);
 
     #{$prop}: var($varName);
   }
