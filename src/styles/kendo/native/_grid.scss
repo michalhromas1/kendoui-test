@@ -1,5 +1,5 @@
 @use "/src/styles/helpers/dynamic-vars";
-@use "./grid-vars" as vars;
+@use "./grid.vars" as vars;
 
 :root {
   @include dynamic-vars.useVarListAtRoot(vars.$varList);

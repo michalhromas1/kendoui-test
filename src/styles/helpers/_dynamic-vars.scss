@@ -35,3 +35,16 @@
     #{$prop}: var($varName);
   }
 }
+
+@mixin overrideVars($prefix, $propKeyValuePairs...) {
+  @each $propKeyValuePair in $propKeyValuePairs {
+    $propKey: list.nth($propKeyValuePair, 1);
+    $value: list.nth($propKeyValuePair, 2);
+    $prop: prop-list.getProp($propKey);
+
+    @if $prop {
+      $varName: --#{$prefix}-#{$prop};
+      #{$varName}: $value;
+    }
+  }
+}

@@ -1,5 +1,8 @@
 $_kendo-prefix: "kendo";
 
-@function withKendoPrefix($name) {
+@function _withKendoPrefix($name) {
   @return "#{$_kendo-prefix}-#{$name}";
 }
+
+$grid: _withKendoPrefix("grid");
+$button: _withKendoPrefix("button");
