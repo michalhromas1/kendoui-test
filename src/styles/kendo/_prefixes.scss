@@ -1,4 +1,5 @@
-@use "../mixins";
+$_kendo-prefix: "kendo";
 
-$grid: mixins.withKendoPrefix("grid");
-$button: mixins.withKendoPrefix("button");
+@function withKendoPrefix($name) {
+  @return "#{$_kendo-prefix}-#{$name}";
+}

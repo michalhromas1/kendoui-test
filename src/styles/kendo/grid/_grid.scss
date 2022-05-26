@@ -1,0 +1,10 @@
+@use "../../dynamic-vars";
+@use "./grid-vars" as vars;
+
+:root {
+  @include dynamic-vars.useVarListAtRoot(vars.$varList);
+}
+
+.k-grid {
+  @include dynamic-vars.useVarListAtElement(vars.$varList);
+}

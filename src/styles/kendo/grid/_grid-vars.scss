@@ -1,0 +1,10 @@
+@use "../../dynamic-vars";
+@use "../prefixes";
+
+$prefix: prefixes.withKendoPrefix("grid");
+
+$varList: dynamic-vars.createVarList(
+  $prefix,
+  ("background-color", #fff),
+  ("color", #424242)
+);

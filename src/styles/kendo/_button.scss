@@ -1,16 +1,16 @@
-@use "../mixins";
-@use "./prefixes";
+// @use "../mixins";
+// @use "./prefixes";
 
-$prefix: prefixes.$button;
+// $prefix: prefixes.$button;
 
-// :root {
-//   // @include mixins.createVars(
-//   //   $prefix,
-//   //   ("background-color", "#f5f5f5"),
-//   //   ("color", "#424242")
-//   // );
-// }
+// // :root {
+// //   // @include mixins.createVars(
+// //   //   $prefix,
+// //   //   ("background-color", "#f5f5f5"),
+// //   //   ("color", "#424242")
+// //   // );
+// // }
 
-// .k-button {
-//   // @include mixins.createVarBasedRules($prefix, "background-color", "color");
-// }
+// // .k-button {
+// //   // @include mixins.createVarBasedRules($prefix, "background-color", "color");
+// // }

@@ -15,7 +15,7 @@ $selected-dark: hsl(205, $saturation-dark, $lightness-dark);
 $selected-disabled-dark: hsl(290, $saturation-dark, $lightness-dark);
 
 :host {
-  --#{prefixes.$button}-background-color: yellow;
+  // --#{prefixes.$button}-background-color: yellow;
 }
 
 :host ::ng-deep {
