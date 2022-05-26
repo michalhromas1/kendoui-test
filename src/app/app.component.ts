@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 const uiComponents = [
+  'custom-styles',
   'documents-page',
   'grid-cell-edit',
   'grid-row-edit',
@@ -14,5 +15,5 @@ type UIComponent = typeof uiComponents[number];
 })
 export class AppComponent {
   uiComponents = [...uiComponents];
-  selectedUiComponent: UIComponent = 'documents-page';
+  selectedUiComponent: UIComponent = 'custom-styles';
 }

@@ -1,0 +1,25 @@
+@use "sass:map";
+@use "sass:list";
+
+@function getProp($key) {
+  @return map.get($_propList, $key);
+}
+
+@function _createPropList($propNameKeyPairs...) {
+  $result: ();
+
+  @each $propNameKeyPair in $propNameKeyPairs {
+    $propName: list.nth($propNameKeyPair, 1);
+    $propKey: $propName;
+
+    @if list.length($propNameKeyPair) != 1 {
+      $propKey: list.nth($propNameKeyPair, 2);
+    }
+
+    $result: map.set($result, $propKey, $propName);
+  }
+
+  @return $result;
+}
+
+$_propList: _createPropList("color", "background-color");

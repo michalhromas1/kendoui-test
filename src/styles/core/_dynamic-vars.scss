@@ -1,0 +1,58 @@
+@use "sass:list";
+@use "./prop-list";
+
+@function createVarList($prefix, $propKeyValuePairs...) {
+  $result: ();
+
+  @each $propKeyValuePair in $propKeyValuePairs {
+    $propKey: list.nth($propKeyValuePair, 1);
+    $value: list.nth($propKeyValuePair, 2);
+    $prop: prop-list.getProp($propKey);
+
+    @if $prop {
+      $varName: --#{$prefix}-#{$prop};
+      $result: list.append($result, ($varName, $value, $prop));
+    } @else {
+      @error _createErrorInvalidPropertyKey($propKey);
+    }
+  }
+
+  @return $result;
+}
+
+@mixin useVarListAtRoot($varList) {
+  @each $item in $varList {
+    $varName: list.nth($item, 1);
+    $value: list.nth($item, 2);
+
+    #{$varName}: $value;
+  }
+}
+
+@mixin useVarListAtElement($varList) {
+  @each $item in $varList {
+    $varName: list.nth($item, 1);
+    $prop: list.nth($item, 3);
+
+    #{$prop}: var($varName);
+  }
+}
+
+@mixin overrideVars($prefix, $propKeyValuePairs...) {
+  @each $propKeyValuePair in $propKeyValuePairs {
+    $propKey: list.nth($propKeyValuePair, 1);
+    $value: list.nth($propKeyValuePair, 2);
+    $prop: prop-list.getProp($propKey);
+
+    @if $prop {
+      $varName: --#{$prefix}-#{$prop};
+      #{$varName}: $value;
+    } @else {
+      @error _createErrorInvalidPropertyKey($propKey);
+    }
+  }
+}
+
+@function _createErrorInvalidPropertyKey($propKey) {
+  @return "_dynamic-vars.scss: Property key not defined (#{$propKey}). Look at ./_prop-list.scss to see all defined property keys.";
+}

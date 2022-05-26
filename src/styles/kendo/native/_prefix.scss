@@ -1,0 +1,5 @@
+$_kendo-prefix: "kendo";
+
+@function withKendoPrefix($name) {
+  @return "#{$_kendo-prefix}-#{$name}";
+}

@@ -1,9 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+@use "styles/kendo/native/button/button" as nativeButton;
+@use "styles/kendo/override/button/button";
 
 html,
 body {
   height: 100%;
 }
+
 body {
   margin: 0;
   padding: 1rem;
