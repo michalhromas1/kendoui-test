@@ -1,5 +1,5 @@
-@use "/src/styles/kendo/native/grid/grid.override" as grid;
-@use "/src/styles/kendo/native/button/button.override" as button;
+@use "/src/styles/kendo/native/grid" as grid;
+@use "/src/styles/kendo/native/button" as button;
 
 $saturation-light: 47%;
 $lightness-light: 92%;
