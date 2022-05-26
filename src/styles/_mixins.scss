@@ -42,11 +42,25 @@ $kendo-prefix: "kendo";
   @return "#{$kendo-prefix}-#{$name}";
 }
 
-$props: (
-  "color": "color",
-  "background-color": "background-color",
-);
-
 @function getProp($key) {
-  @return map.get($props, $key);
+  @return map.get($propList, $key);
 }
+
+@function createPropList($propNameKeyPairs...) {
+  $result: ();
+
+  @each $propNameKeyPair in $propNameKeyPairs {
+    $propName: list.nth($propNameKeyPair, 1);
+    $propKey: $propName;
+
+    @if list.length($propNameKeyPair) != 1 {
+      $propKey: list.nth($propNameKeyPair, 2);
+    }
+
+    $result: map.set($result, $propKey, $propName);
+  }
+
+  @return $result;
+}
+
+$propList: createPropList("color", "background-color");
