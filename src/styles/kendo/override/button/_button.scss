@@ -1,9 +1,8 @@
 @use "./button.override" as override;
-@use "/src/styles/core/modifier-list";
 
 :root {
   @include override.overrideVars(
-    modifier-list.$NO_MODIFIER,
+    "none",
     ("background-color", #3b82f6),
     ("color", #ffffff),
     ("border-radius", 6px),
@@ -21,14 +20,11 @@
     ),
     ("font-weight", 700)
   );
-}
 
-// .k-button {
-//   &:hover {
-//     @include override.overrideVars(
-//       ("background-color", #2563eb),
-//       ("color", #ffffff),
-//       ("border-color", #2563eb)
-//     );
-//   }
-// }
+  @include override.overrideVars(
+    "hover",
+    ("background-color", #2563eb),
+    ("color", #ffffff),
+    ("border-color", #2563eb)
+  );
+}

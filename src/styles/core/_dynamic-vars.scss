@@ -68,7 +68,7 @@
   $result: --#{$prefix}-#{$prop};
 
   @if $modifier != modifier-list.$NO_MODIFIER {
-    $result: #{$result}-#{$modifier};
+    $result: #{$result}--#{$modifier};
   }
 
   @return $result;
