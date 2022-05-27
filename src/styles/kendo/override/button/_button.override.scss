@@ -1,1 +1,10 @@
-@forward "/src/styles/kendo/native/button";
+@use "./button.prefix" as prefix;
+@use "/src/styles/core/dynamic-vars";
+
+@mixin overrideVars($modifier, $propKeyValuePairs...) {
+  @include dynamic-vars.overrideVars(
+    prefix.$prefix,
+    $modifier,
+    $propKeyValuePairs...
+  );
+}

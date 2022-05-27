@@ -1,43 +1,16 @@
+@use "/src/styles/core/dynamic-vars";
 @use "./button.override" as override;
+@use "./button.vars" as vars;
 
 :root {
-  @include override.overrideVars(
-    "none",
-    ("background-color", #3b82f6),
-    ("color", #ffffff),
-    ("border-radius", 6px),
-    ("transition", background-color 0.2s, color 0.2s, border-color 0.2s),
-    ("line-height", normal),
-    ("font-size", 1rem),
-    ("padding-left", 1.25rem),
-    ("padding-right", 1.25rem),
-    ("padding-top", 0.75rem),
-    ("padding-bottom", 0.75rem),
-    ("border-color", #3b82f6),
-    ("background-image", none),
-    ("font-weight", 700)
-  );
-
-  @include override.overrideVars(
-    "hover",
-    ("background-color", #2563eb),
-    ("color", #ffffff),
-    ("border-color", #2563eb)
-  );
+  @include dynamic-vars.useVarListAtRoot(vars.$varList);
+  @include dynamic-vars.useVarListAtRoot(vars.$varListHover);
 }
 
-body.dark {
-  @include override.overrideVars(
-    "none",
-    ("background-color", #93c5fd),
-    ("border-color", #93c5fd),
-    ("color", #1c2127)
-  );
+.k-button {
+  @include dynamic-vars.useVarListAtElement(vars.$varList);
 
-  @include override.overrideVars(
-    "hover",
-    ("background-color", #7fbafd),
-    ("border-color", #7fbafd),
-    ("color", #1c2127)
-  );
+  &:hover {
+    @include dynamic-vars.useVarListAtElement(vars.$varListHover);
+  }
 }
