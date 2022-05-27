@@ -29,13 +29,15 @@
 body.dark {
   @include override.overrideVars(
     "none",
-    ("background-color", #444),
-    ("border-color", #444)
+    ("background-color", #93c5fd),
+    ("border-color", #93c5fd),
+    ("color", #1c2127)
   );
 
   @include override.overrideVars(
     "hover",
-    ("background-color", #111),
-    ("border-color", #111)
+    ("background-color", #7fbafd),
+    ("border-color", #7fbafd),
+    ("color", #1c2127)
   );
 }
