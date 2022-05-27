@@ -29,9 +29,12 @@ $_propList: _createPropList(
   "transition",
   "line-height",
   "font-size",
-  "padding-x",
-  "padding-y",
+  "padding-left",
+  "padding-right",
+  "padding-top",
+  "padding-bottom",
   "border-color",
   "background-image",
-  "font-weight"
+  "font-weight",
+  "font-family"
 );

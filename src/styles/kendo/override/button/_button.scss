@@ -1,5 +1,22 @@
 @use "./button.override" as override;
 
 :root {
-  // @include override.overrideVars(("color", yellow));
+  @include override.overrideVars(
+    ("background-color", #3b82f6),
+    ("color", #ffffff),
+    ("border-radius", 6px),
+    ("transition", background-color 0.2s, color 0.2s, border-color 0.2s),
+    ("line-height", normal),
+    ("font-size", 1rem),
+    ("padding-left", 1.25rem),
+    ("padding-right", 1.25rem),
+    ("padding-top", 0.75rem),
+    ("padding-bottom", 0.75rem),
+    ("border-color", #3b82f6),
+    (
+      "background-image",
+      linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.02))
+    ),
+    ("font-weight", 700)
+  );
 }
