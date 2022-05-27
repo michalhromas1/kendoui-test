@@ -1,16 +1,22 @@
 <kendo-switch
   class="mr-1"
-  [(ngModel)]="czech"
   onLabel="CZE"
   offLabel="ENG"
+  [(ngModel)]="czech"
 ></kendo-switch>
 
 <button class="mr-1" kendoButton (click)="openProfilePicker()">Profiles</button>
+<button class="mr-1" kendoButton (click)="reset()">Reset</button>
+<button class="mr-1" kendoButton (click)="deleteSelected()">
+  Delete selected
+</button>
 
-<kendo-buttongroup>
-  <button kendoButton (click)="reset()">Reset</button>
-  <button kendoButton (click)="deleteSelected()">Delete selected</button>
-</kendo-buttongroup>
+<kendo-switch
+  [onLabel]="'🌛'"
+  offLabel="🌞"
+  [(ngModel)]="darkmode"
+  (ngModelChange)="onDarkmodeChange($event)"
+></kendo-switch>
 
 <hr />
 

@@ -14,10 +14,7 @@
     ("padding-top", 0.75rem),
     ("padding-bottom", 0.75rem),
     ("border-color", #3b82f6),
-    (
-      "background-image",
-      linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.02))
-    ),
+    ("background-image", none),
     ("font-weight", 700)
   );
 
@@ -26,5 +23,19 @@
     ("background-color", #2563eb),
     ("color", #ffffff),
     ("border-color", #2563eb)
+  );
+}
+
+body.dark {
+  @include override.overrideVars(
+    "none",
+    ("background-color", #444),
+    ("border-color", #444)
+  );
+
+  @include override.overrideVars(
+    "hover",
+    ("background-color", #111),
+    ("border-color", #111)
   );
 }
