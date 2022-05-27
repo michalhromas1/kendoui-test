@@ -1,17 +1,23 @@
 @use "sass:list";
 @use "./prop-list";
+@use "./modifier-list";
 
-@function createVarList($prefix, $propKeyValuePairs...) {
+@function createVarList($prefix, $modifier, $propKeyValuePairs...) {
   $result: ();
 
   @each $propKeyValuePair in $propKeyValuePairs {
     $propKey: list.nth($propKeyValuePair, 1);
     $value: list.nth($propKeyValuePair, 2);
     $prop: prop-list.getProp($propKey);
+    $mod: modifier-list.getModifier($modifier);
 
     @if $prop {
-      $varName: --#{$prefix}-#{$prop};
-      $result: list.append($result, ($varName, $value, $prop));
+      @if $mod {
+        $varName: _createVarName($prefix, $prop, $modifier);
+        $result: list.append($result, ($varName, $value, $prop));
+      } @else {
+        @error _createErrorInvalidModifier($modifier);
+      }
     } @else {
       @error _createErrorInvalidPropertyKey($propKey);
     }
@@ -38,21 +44,40 @@
   }
 }
 
-@mixin overrideVars($prefix, $propKeyValuePairs...) {
+@mixin overrideVars($prefix, $modifier, $propKeyValuePairs...) {
   @each $propKeyValuePair in $propKeyValuePairs {
     $propKey: list.nth($propKeyValuePair, 1);
     $value: list.nth($propKeyValuePair, 2);
     $prop: prop-list.getProp($propKey);
+    $mod: modifier-list.getModifier($modifier);
 
     @if $prop {
-      $varName: --#{$prefix}-#{$prop};
-      #{$varName}: $value;
+      @if $mod {
+        $varName: _createVarName($prefix, $prop, $modifier);
+        #{$varName}: $value;
+      } @else {
+        @error _createErrorInvalidModifier($modifier);
+      }
     } @else {
       @error _createErrorInvalidPropertyKey($propKey);
     }
   }
 }
 
+@function _createVarName($prefix, $prop, $modifier) {
+  $result: --#{$prefix}-#{$prop};
+
+  @if $modifier != modifier-list.$NO_MODIFIER {
+    $result: #{$result}--#{$modifier};
+  }
+
+  @return $result;
+}
+
 @function _createErrorInvalidPropertyKey($propKey) {
   @return "_dynamic-vars.scss: Property key not defined (#{$propKey}). Look at ./_prop-list.scss to see all defined property keys.";
+}
+
+@function _createErrorInvalidModifier($modifier) {
+  @return "_dynamic-vars.scss: Modifier not defined (#{$modifier}). Look at ./modifier-list.scss to see all defined modifiers.";
 }

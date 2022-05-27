@@ -4,10 +4,12 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
+import { DOCUMENT } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  Inject,
   OnDestroy,
   OnInit,
   QueryList,
@@ -66,6 +68,7 @@ export class CustomStylesComponent implements OnInit, AfterViewInit, OnDestroy {
     this.initialWorkspacePickerData;
   workspacePickerCheckedKeys: string[] = this.initialWorkspacePickerCheckedKeys;
   workspacePickerCheckedKeysUponPickerOpen: string[] = [];
+  darkmode: boolean = false;
 
   private initialColumnWidths: ColumnWidth[] = [];
   private unsubscriber$ = new Subject<void>();
@@ -119,6 +122,8 @@ export class CustomStylesComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
+  constructor(@Inject(DOCUMENT) private document: Document) {}
+
   ngOnInit(): void {
     this.documents = this.checkedProfilesDocuments;
   }
@@ -138,6 +143,11 @@ export class CustomStylesComponent implements OnInit, AfterViewInit, OnDestroy {
   trackBy(_index: number, item: GridItem): number {
     const document = item.data as AppDocument;
     return document.id;
+  }
+
+  onDarkmodeChange(darkmode: boolean): void {
+    const { body } = this.document;
+    body.classList.toggle('dark', darkmode);
   }
 
   reset(): void {

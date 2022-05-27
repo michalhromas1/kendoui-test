@@ -22,4 +22,19 @@
   @return $result;
 }
 
-$_propList: _createPropList("color", "background-color");
+$_propList: _createPropList(
+  "color",
+  "background-color",
+  "border-radius",
+  "transition",
+  "line-height",
+  "font-size",
+  "padding-left",
+  "padding-right",
+  "padding-top",
+  "padding-bottom",
+  "border-color",
+  "background-image",
+  "font-weight",
+  "font-family"
+);

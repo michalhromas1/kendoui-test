@@ -1,10 +1,16 @@
 @use "/src/styles/core/dynamic-vars";
 @use "./button.vars" as vars;
+@use "./button.override" as override;
 
 :root {
   @include dynamic-vars.useVarListAtRoot(vars.$varList);
+  @include dynamic-vars.useVarListAtRoot(vars.$varListHover);
 }
 
 .k-button {
   @include dynamic-vars.useVarListAtElement(vars.$varList);
+
+  &:hover {
+    @include dynamic-vars.useVarListAtElement(vars.$varListHover);
+  }
 }
