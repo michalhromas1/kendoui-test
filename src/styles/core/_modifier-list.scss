@@ -1,0 +1,19 @@
+@use "sass:map";
+
+$NO_MODIFIER: "none";
+
+@function getModifier($key) {
+  @return map.get($_modifierList, $key);
+}
+
+@function _createModifierList($modifiers...) {
+  $result: ();
+
+  @each $modifier in $modifiers {
+    $result: map.set($result, $modifier, $modifier);
+  }
+
+  @return $result;
+}
+
+$_modifierList: _createModifierList($NO_MODIFIER, "hover");

@@ -1,6 +1,10 @@
 @use "./button.prefix" as prefix;
 @use "/src/styles/core/dynamic-vars";
 
-@mixin overrideVars($propKeyValuePairs...) {
-  @include dynamic-vars.overrideVars(prefix.$prefix, $propKeyValuePairs...);
+@mixin overrideVars($modifier, $propKeyValuePairs...) {
+  @include dynamic-vars.overrideVars(
+    prefix.$prefix,
+    $modifier,
+    $propKeyValuePairs...
+  );
 }

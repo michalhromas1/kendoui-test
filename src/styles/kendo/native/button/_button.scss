@@ -10,6 +10,6 @@
   @include dynamic-vars.useVarListAtElement(vars.$varList);
 
   &:hover {
-    @include dynamic-vars.useVarListAtElement(vars.$varListHover);
+    // @include dynamic-vars.useVarListAtElement(vars.$varListHover);
   }
 }
