@@ -2,6 +2,10 @@
 @use "styles/kendo/native/button/button" as nativeButton;
 @use "styles/kendo/override/button/button";
 
+html {
+  font-size: 14px;
+}
+
 html,
 body {
   height: 100%;
