@@ -19,3 +19,8 @@ $varList: dynamic-vars.createVarList(
   ("font-weight", 400),
   ("font-family", inherit)
 );
+
+$varListHover: dynamic-vars.createVarList(
+  prefix.$prefix,
+  ("background-color", #ebebeb)
+);

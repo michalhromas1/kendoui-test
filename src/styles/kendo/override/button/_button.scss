@@ -20,3 +20,13 @@
     ("font-weight", 700)
   );
 }
+
+.k-button {
+  &:hover {
+    @include override.overrideVars(
+      ("background-color", #2563eb),
+      ("color", #ffffff),
+      ("border-color", #2563eb)
+    );
+  }
+}
