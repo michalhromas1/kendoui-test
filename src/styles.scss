@@ -1,12 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
-@use "styles/kendo/native/button/button" as buttonNative;
-@use "styles/kendo/override/button/button";
-@use "styles/kendo/override/button" as buttonOverride;
+@use "styles/kendo/button";
+
+@include button.init();
 
 :root {
   --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol";
+
+  @include button.overrideVars("none", ("font-family", var(--font-family)));
 }
 
 html {
@@ -26,10 +27,7 @@ body {
 
   &.dark {
     background: #071426;
-  }
 
-  @include buttonOverride.overrideVars(
-    "none",
-    ("font-family", var(--font-family))
-  );
+    @include button.dark();
+  }
 }
