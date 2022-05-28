@@ -1,14 +1,14 @@
-@use "./button.override" as override;
+@use "./button" as *;
 
 @mixin dark() {
-  @include override.overrideVars(
+  @include overrideVars(
     "none",
     ("background-color", #93c5fd),
     ("border-color", #93c5fd),
     ("color", #1c2127)
   );
 
-  @include override.overrideVars(
+  @include overrideVars(
     "hover",
     ("background-color", #7fbafd),
     ("border-color", #7fbafd),
