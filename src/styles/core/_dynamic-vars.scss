@@ -12,13 +12,16 @@
 }
 
 @mixin overrideVars($prefix, $propKeyValuePairs...) {
-  $parsedData: _parsePropKeyValuePairs($prefix, $propKeyValuePairs...);
+  $varNamePropValueTuples: _createVarNamePropValueTuples(
+    $prefix,
+    $propKeyValuePairs...
+  );
 
-  @each $item in $parsedData {
+  @each $item in $varNamePropValueTuples {
     $varName: list.nth($item, 1);
     $value: list.nth($item, 3);
 
-    #{$varName}: $value;
+    @include _renderDefinition($varName, $value);
   }
 }
 
@@ -26,9 +29,12 @@
   $definitions: ();
   $usages: ();
 
-  $parsedData: _parsePropKeyValuePairs($prefix, $propKeyValuePairs...);
+  $varNamePropValueTuples: _createVarNamePropValueTuples(
+    $prefix,
+    $propKeyValuePairs...
+  );
 
-  @each $item in $parsedData {
+  @each $item in $varNamePropValueTuples {
     $varName: list.nth($item, 1);
     $prop: list.nth($item, 2);
     $value: list.nth($item, 3);
@@ -40,7 +46,7 @@
   @return ($definitions, $usages);
 }
 
-@function _parsePropKeyValuePairs($prefix, $propKeyValuePairs...) {
+@function _createVarNamePropValueTuples($prefix, $propKeyValuePairs...) {
   $result: ();
 
   @each $propKeyValuePair in $propKeyValuePairs {
@@ -60,12 +66,12 @@
   @return $result;
 }
 
-@function _createVarName($prefix, $prop) {
-  @return --#{$prefix}-#{$prop};
-}
-
 @function _createErrorInvalidPropertyKey($propKey) {
   @return "_dynamic-vars.scss: Property key not defined (#{$propKey}). Look at ./_prop-list.scss to see all defined property keys.";
+}
+
+@function _createVarName($prefix, $prop) {
+  @return --#{$prefix}-#{$prop};
 }
 
 @mixin _renderDefinitions($definitions) {
@@ -73,7 +79,7 @@
     $varName: list.nth($definition, 1);
     $value: list.nth($definition, 2);
 
-    #{$varName}: $value;
+    @include _renderDefinition($varName, $value);
   }
 }
 
@@ -82,6 +88,14 @@
     $prop: list.nth($usage, 1);
     $varName: list.nth($usage, 2);
 
-    #{$prop}: var($varName);
+    @include _renderUsage($prop, $varName);
   }
+}
+
+@mixin _renderDefinition($varName, $value) {
+  #{$varName}: $value;
+}
+
+@mixin _renderUsage($prop, $varName) {
+  #{$prop}: var($varName);
 }
