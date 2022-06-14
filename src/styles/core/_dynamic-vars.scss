@@ -1,20 +1,30 @@
 @use "sass:list";
 @use "./prop-list";
 
-@mixin defineVars($prefix, $propKeyValuePairs...) {
+@mixin defineVars($prefix, $propKeyValuePairs) {
   $definitionsAndUsages: _createDefinitionsAndUsages(
     $prefix,
-    $propKeyValuePairs...
+    $propKeyValuePairs
   );
 
   @include _renderDefinitions(list.nth($definitionsAndUsages, 1));
   @include _renderUsages(list.nth($definitionsAndUsages, 2));
 }
 
-@mixin overrideVars($prefix, $propKeyValuePairs...) {
+@mixin defineVars($prefix, $propKeyValuePairs) {
+  $definitionsAndUsages: _createDefinitionsAndUsages(
+    $prefix,
+    $propKeyValuePairs
+  );
+
+  @include _renderDefinitions(list.nth($definitionsAndUsages, 1));
+  @include _renderUsages(list.nth($definitionsAndUsages, 2));
+}
+
+@mixin overrideVars($prefix, $propKeyValuePairs) {
   $varNamePropValueTuples: _createVarNamePropValueTuples(
     $prefix,
-    $propKeyValuePairs...
+    $propKeyValuePairs
   );
 
   @each $item in $varNamePropValueTuples {
@@ -25,13 +35,13 @@
   }
 }
 
-@function _createDefinitionsAndUsages($prefix, $propKeyValuePairs...) {
+@function _createDefinitionsAndUsages($prefix, $propKeyValuePairs) {
   $definitions: ();
   $usages: ();
 
   $varNamePropValueTuples: _createVarNamePropValueTuples(
     $prefix,
-    $propKeyValuePairs...
+    $propKeyValuePairs
   );
 
   @each $item in $varNamePropValueTuples {
@@ -46,7 +56,7 @@
   @return ($definitions, $usages);
 }
 
-@function _createVarNamePropValueTuples($prefix, $propKeyValuePairs...) {
+@function _createVarNamePropValueTuples($prefix, $propKeyValuePairs) {
   $result: ();
 
   @each $propKeyValuePair in $propKeyValuePairs {

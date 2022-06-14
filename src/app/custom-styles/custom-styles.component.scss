@@ -14,15 +14,15 @@ $disabled-dark: hsl(0, $saturation-dark, $lightness-dark);
 $selected-dark: hsl(205, $saturation-dark, $lightness-dark);
 $selected-disabled-dark: hsl(290, $saturation-dark, $lightness-dark);
 
-::ng-deep body:not(.dark) {
-  #{button.$selector} {
-    @include button.overrideVars(("color", red));
+// ::ng-deep body:not(.dark) {
+//   #{button.$selector} {
+//     @include button.overrideVars((("color", red)));
 
-    &:nth-of-type(2) {
-      @include button.overrideVars(("color", blue));
-    }
-  }
-}
+//     &:nth-of-type(2) {
+//       @include button.overrideVars((("color", blue)));
+//     }
+//   }
+// }
 
 // button#{button.$selector} {
 
