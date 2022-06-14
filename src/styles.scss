@@ -1,15 +1,9 @@
 @use "styles/kendo/button";
 
-@include button.base();
-// @include button.overrideVars((("font-family", var(--font-family))));
-
 :root {
   --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol";
-
-  // @include button.overrideVars((("border-radius", "10px")));
-  // @include button.overrideVars("none", ("font-family", var(--font-family)));
 }
 
 html {
@@ -29,11 +23,27 @@ body {
 
   &[data-theme="light"] {
     background: #ffffff;
-    @include button.light();
   }
 
   &[data-theme="dark"] {
     background: #071426;
+  }
+}
+
+@include button.base();
+
+#{button.$selector} {
+  @include button.overrideVars(
+    (("font-family", var(--font-family)), ("background-color", red))
+  );
+}
+
+body {
+  &[data-theme="light"] {
+    @include button.light();
+  }
+
+  &[data-theme="dark"] {
     @include button.dark();
   }
 }
