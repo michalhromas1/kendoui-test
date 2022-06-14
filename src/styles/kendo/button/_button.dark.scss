@@ -3,25 +3,25 @@
 $_themeName: "dark";
 
 @mixin dark() {
-  #{$selector} {
-    @include defineVars(
-      (
-        ("background-color", #93c5fd),
-        ("border-color", #93c5fd),
-        ("color", #1c2127)
-      ),
-      $_themeName
-    );
+  // #{$selector} {
+  //   @include defineVars(
+  //     (
+  //       ("background-color", #93c5fd),
+  //       ("border-color", #93c5fd),
+  //       ("color", #1c2127)
+  //     ),
+  //     $_themeName
+  //   );
 
-    &:hover {
-      @include defineVars(
-        (
-          ("background-color", #7fbafd),
-          ("border-color", #7fbafd),
-          ("color", #1c2127)
-        ),
-        $_themeName
-      );
-    }
-  }
+  //   &:hover {
+  //     @include defineVars(
+  //       (
+  //         ("background-color", #7fbafd),
+  //         ("border-color", #7fbafd),
+  //         ("color", #1c2127)
+  //       ),
+  //       $_themeName
+  //     );
+  //   }
+  // }
 }

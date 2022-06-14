@@ -32,18 +32,18 @@ body {
 
 @include button.base();
 
-#{button.$selector} {
-  @include button.overrideVars(
-    (("font-family", var(--font-family)), ("background-color", red))
-  );
-}
+// #{button.$selector} {
+//   @include button.overrideVars(
+//     (("font-family", var(--font-family)), ("background-color", red))
+//   );
+// }
 
-body {
-  &[data-theme="light"] {
-    @include button.light();
-  }
+// body {
+//   &[data-theme="light"] {
+//     @include button.light();
+//   }
 
-  &[data-theme="dark"] {
-    @include button.dark();
-  }
-}
+//   &[data-theme="dark"] {
+//     @include button.dark();
+//   }
+// }
