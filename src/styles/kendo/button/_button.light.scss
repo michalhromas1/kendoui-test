@@ -3,25 +3,21 @@
 $_themeName: "light";
 
 @mixin light() {
-  // #{$selector} {
-  //   @include defineVars(
-  //     (
-  //       ("background-color", #3b82f6),
-  //       ("color", #ffffff),
-  //       ("border-color", #3b82f6)
-  //     ),
-  //     $_themeName
-  //   );
+  #{$selector} {
+    @include defineVarsThemed(
+      $_themeName,
+      ("background-color", #3b82f6),
+      ("color", #ffffff),
+      ("border-color", #3b82f6)
+    );
 
-  //   &:hover {
-  //     @include defineVars(
-  //       (
-  //         ("background-color", #2563eb),
-  //         ("color", #ffffff),
-  //         ("border-color", #2563eb)
-  //       ),
-  //       $_themeName
-  //     );
-  //   }
-  // }
+    &:hover {
+      @include defineVarsThemed(
+        $_themeName,
+        ("background-color", #2563eb),
+        ("color", #ffffff),
+        ("border-color", #2563eb)
+      );
+    }
+  }
 }

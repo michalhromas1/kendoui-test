@@ -2,11 +2,19 @@
 @use "./prop-list";
 
 @mixin defineVars($prefix, $propKeyValuePairs...) {
-  @include _renderVars($prefix, null, true, $propKeyValuePairs...);
+  @include defineVarsThemed($prefix, null, $propKeyValuePairs...);
 }
 
 @mixin overrideVars($prefix, $propKeyValuePairs...) {
-  @include _renderVars($prefix, null, false, $propKeyValuePairs...);
+  @include overrideVarsThemed($prefix, null, $propKeyValuePairs...);
+}
+
+@mixin defineVarsThemed($prefix, $theme, $propKeyValuePairs...) {
+  @include _renderVars($prefix, $theme, true, $propKeyValuePairs...);
+}
+
+@mixin overrideVarsThemed($prefix, $theme, $propKeyValuePairs...) {
+  @include _renderVars($prefix, $theme, false, $propKeyValuePairs...);
 }
 
 @mixin _renderVars($prefix, $theme, $renderUsages, $propKeyValuePairs...) {

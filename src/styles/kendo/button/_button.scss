@@ -11,3 +11,19 @@ $selector: ".k-button";
 @mixin overrideVars($propKeyValuePairs...) {
   @include dynamic-vars.overrideVars($prefix, $propKeyValuePairs...);
 }
+
+@mixin defineVarsThemed($theme, $propKeyValuePairs...) {
+  @include dynamic-vars.defineVarsThemed(
+    $prefix,
+    $theme,
+    $propKeyValuePairs...
+  );
+}
+
+@mixin overrideVarsThemed($theme, $propKeyValuePairs...) {
+  @include dynamic-vars.overrideVarsThemed(
+    $prefix,
+    $theme,
+    $propKeyValuePairs...
+  );
+}

@@ -38,12 +38,12 @@ body {
 //   );
 // }
 
-// body {
-//   &[data-theme="light"] {
-//     @include button.light();
-//   }
+body {
+  &[data-theme="light"] {
+    @include button.light();
+  }
 
-//   &[data-theme="dark"] {
-//     @include button.dark();
-//   }
-// }
+  &[data-theme="dark"] {
+    @include button.dark();
+  }
+}
