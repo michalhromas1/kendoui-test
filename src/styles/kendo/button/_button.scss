@@ -9,36 +9,57 @@ $selector: ".k-button";
 }
 
 @mixin init() {
-  $baseVars: dynamic-vars.createVarList(
-    $prefix,
-    ("background-color", #3b82f6),
-    ("color", #ffffff),
-    ("border-radius", 6px),
-    ("line-height", normal),
-    ("font-size", 1rem),
-    ("padding-left", 1.25rem),
-    ("padding-right", 1.25rem),
-    ("padding-top", 0.75rem),
-    ("padding-bottom", 0.75rem),
-    ("border-color", #3b82f6),
-    ("background-image", none),
-    ("font-weight", 700),
-    ("transition", background-color 0.2s, color 0.2s, border-color 0.2s),
-    ("font-family", inherit)
-  );
+  // $baseVars: dynamic-vars.createVarList(
+  //   $prefix,
+  //   ("background-color", #3b82f6),
+  //   ("color", #ffffff),
+  //   ("border-radius", 6px),
+  //   ("line-height", normal),
+  //   ("font-size", 1rem),
+  //   ("padding-left", 1.25rem),
+  //   ("padding-right", 1.25rem),
+  //   ("padding-top", 0.75rem),
+  //   ("padding-bottom", 0.75rem),
+  //   ("border-color", #3b82f6),
+  //   ("background-image", none),
+  //   ("font-weight", 700),
+  //   ("transition", background-color 0.2s, color 0.2s, border-color 0.2s),
+  //   ("font-family", inherit)
+  // );
 
-  $baseVarsHover: dynamic-vars.createVarList(
-    $prefix,
-    ("background-color", #2563eb),
-    ("color", #ffffff),
-    ("border-color", #2563eb)
-  );
+  // $baseVarsHover: dynamic-vars.createVarList(
+  //   $prefix,
+  //   ("background-color", #2563eb),
+  //   ("color", #ffffff),
+  //   ("border-color", #2563eb)
+  // );
 
   #{$selector} {
-    @include dynamic-vars.defineVars($baseVars);
+    @include dynamic-vars.defineVars(
+      $prefix,
+      ("background-color", #3b82f6),
+      ("color", #ffffff),
+      ("border-radius", 6px),
+      ("line-height", normal),
+      ("font-size", 1rem),
+      ("padding-left", 1.25rem),
+      ("padding-right", 1.25rem),
+      ("padding-top", 0.75rem),
+      ("padding-bottom", 0.75rem),
+      ("border-color", #3b82f6),
+      ("background-image", none),
+      ("font-weight", 700),
+      ("transition", background-color 0.2s, color 0.2s, border-color 0.2s),
+      ("font-family", inherit)
+    );
 
     &:hover {
-      @include dynamic-vars.defineVars($baseVarsHover);
+      @include dynamic-vars.defineVars(
+        $prefix,
+        ("background-color", #2563eb),
+        ("color", #ffffff),
+        ("border-color", #2563eb)
+      );
     }
   }
 }

@@ -1,7 +1,7 @@
 @use "sass:list";
 @use "./prop-list";
 
-@function createVarList($prefix, $propKeyValuePairs...) {
+@function _createVarList($prefix, $propKeyValuePairs...) {
   $result: ();
 
   @each $propKeyValuePair in $propKeyValuePairs {
@@ -9,18 +9,52 @@
     $value: list.nth($propKeyValuePair, 2);
     $prop: prop-list.getProp($propKey);
 
-    @if $prop {
-      $varName: _createVarName($prefix, $prop);
-      $result: list.append($result, ($varName, $value, $prop));
-    } @else {
+    @if not $prop {
       @error _createErrorInvalidPropertyKey($propKey);
     }
+
+    $varName: _createVarName($prefix, $prop);
+    $result: list.append($result, ($varName, $value, $prop));
   }
 
   @return $result;
 }
 
-@mixin defineVars($varList) {
+@mixin defineVars($prefix, $propKeyValuePairs...) {
+  $definitions: ();
+  $usages: ();
+
+  @each $propKeyValuePair in $propKeyValuePairs {
+    $propKey: list.nth($propKeyValuePair, 1);
+    $value: list.nth($propKeyValuePair, 2);
+    $prop: prop-list.getProp($propKey);
+
+    @if not $prop {
+      @error _createErrorInvalidPropertyKey($propKey);
+    }
+
+    $varName: _createVarName($prefix, $prop);
+
+    $definitions: list.append($definitions, ($varName, $value));
+    $usages: list.append($usages, ($prop, $varName));
+  }
+
+  @each $definition in $definitions {
+    $varName: list.nth($definition, 1);
+    $value: list.nth($definition, 2);
+
+    #{$varName}: $value;
+  }
+
+  @each $usage in $usages {
+    $prop: list.nth($usage, 1);
+    $varName: list.nth($usage, 2);
+
+    #{$prop}: var($varName);
+  }
+}
+
+@mixin _defineVars($varList) {
   @each $item in $varList {
     $varName: list.nth($item, 1);
     $value: list.nth($item, 2);
