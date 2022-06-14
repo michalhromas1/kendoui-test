@@ -1,30 +1,22 @@
 @use "sass:list";
 @use "./prop-list";
 
-@mixin defineVars($prefix, $propKeyValuePairs) {
+@mixin defineVars($prefix, $propKeyValuePairs, $theme: null) {
   $definitionsAndUsages: _createDefinitionsAndUsages(
     $prefix,
-    $propKeyValuePairs
+    $propKeyValuePairs,
+    $theme
   );
 
   @include _renderDefinitions(list.nth($definitionsAndUsages, 1));
   @include _renderUsages(list.nth($definitionsAndUsages, 2));
 }
 
-@mixin defineVars($prefix, $propKeyValuePairs) {
-  $definitionsAndUsages: _createDefinitionsAndUsages(
-    $prefix,
-    $propKeyValuePairs
-  );
-
-  @include _renderDefinitions(list.nth($definitionsAndUsages, 1));
-  @include _renderUsages(list.nth($definitionsAndUsages, 2));
-}
-
-@mixin overrideVars($prefix, $propKeyValuePairs) {
+@mixin overrideVars($prefix, $propKeyValuePairs, $theme: null) {
   $varNamePropValueTuples: _createVarNamePropValueTuples(
     $prefix,
-    $propKeyValuePairs
+    $propKeyValuePairs,
+    $theme
   );
 
   @each $item in $varNamePropValueTuples {
@@ -35,13 +27,18 @@
   }
 }
 
-@function _createDefinitionsAndUsages($prefix, $propKeyValuePairs) {
+@function _createDefinitionsAndUsages(
+  $prefix,
+  $propKeyValuePairs,
+  $theme: null
+) {
   $definitions: ();
   $usages: ();
 
   $varNamePropValueTuples: _createVarNamePropValueTuples(
     $prefix,
-    $propKeyValuePairs
+    $propKeyValuePairs,
+    $theme
   );
 
   @each $item in $varNamePropValueTuples {
@@ -56,7 +53,11 @@
   @return ($definitions, $usages);
 }
 
-@function _createVarNamePropValueTuples($prefix, $propKeyValuePairs) {
+@function _createVarNamePropValueTuples(
+  $prefix,
+  $propKeyValuePairs,
+  $theme: null
+) {
   $result: ();
 
   @each $propKeyValuePair in $propKeyValuePairs {
@@ -68,7 +69,7 @@
       @error _createErrorInvalidPropertyKey($propKey);
     }
 
-    $varName: _createVarName($prefix, $prop);
+    $varName: _createVarName($prefix, $prop, $theme);
 
     $result: list.append($result, ($varName, $prop, $value));
   }
@@ -80,8 +81,14 @@
   @return "_dynamic-vars.scss: Property key not defined (#{$propKey}). Look at ./_prop-list.scss to see all defined property keys.";
 }
 
-@function _createVarName($prefix, $prop) {
-  @return --#{$prefix}-#{$prop};
+@function _createVarName($prefix, $prop, $theme: null) {
+  $result: --#{$prefix}-#{$prop};
+
+  @if not $theme {
+    @return $result;
+  }
+
+  @return #{$result}-#{$theme};
 }
 
 @mixin _renderDefinitions($definitions) {
