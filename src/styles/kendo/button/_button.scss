@@ -4,10 +4,10 @@
 $prefix: prefix.withKendoPrefix("button");
 $selector: ".k-button";
 
-@mixin defineVars($propKeyValuePairs) {
-  @include dynamic-vars.defineVars($prefix, $propKeyValuePairs);
+@mixin defineVars($propKeyValuePairs, $theme: null) {
+  @include dynamic-vars.defineVars($prefix, $propKeyValuePairs, $theme);
 }
 
-@mixin overrideVars($propKeyValuePairs) {
-  @include dynamic-vars.overrideVars($prefix, $propKeyValuePairs);
+@mixin overrideVars($propKeyValuePairs, $theme: null) {
+  @include dynamic-vars.overrideVars($prefix, $propKeyValuePairs, $theme);
 }

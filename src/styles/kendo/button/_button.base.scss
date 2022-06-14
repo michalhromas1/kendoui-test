@@ -4,8 +4,6 @@
   #{$selector} {
     @include defineVars(
       (
-        ("background-color", #3b82f6),
-        ("color", #ffffff),
         ("border-radius", 6px),
         ("line-height", normal),
         ("font-size", 1rem),
@@ -13,22 +11,11 @@
         ("padding-right", 1.25rem),
         ("padding-top", 0.75rem),
         ("padding-bottom", 0.75rem),
-        ("border-color", #3b82f6),
         ("background-image", none),
         ("font-weight", 700),
         ("transition", background-color 0.2s, color 0.2s, border-color 0.2s),
         ("font-family", inherit)
       )
     );
-
-    &:hover {
-      @include defineVars(
-        (
-          ("background-color", #2563eb),
-          ("color", #ffffff),
-          ("border-color", #2563eb)
-        )
-      );
-    }
   }
 }

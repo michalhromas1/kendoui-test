@@ -88,7 +88,7 @@
     @return $result;
   }
 
-  @return #{$result}-#{$theme};
+  @return #{$result}-theme-#{$theme};
 }
 
 @mixin _renderDefinitions($definitions) {

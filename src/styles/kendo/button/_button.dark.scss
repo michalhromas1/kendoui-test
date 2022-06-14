@@ -1,19 +1,27 @@
 @use "button" as *;
 
+$_themeName: "dark";
+
 @mixin dark() {
   #{$selector} {
-    // @include overrideVars(
-    //   ("background-color", #93c5fd),
-    //   ("border-color", #93c5fd),
-    //   ("color", #1c2127)
-    // );
+    @include defineVars(
+      (
+        ("background-color", #93c5fd),
+        ("border-color", #93c5fd),
+        ("color", #1c2127)
+      ),
+      $_themeName
+    );
 
-    // &:hover {
-    //   @include overrideVars(
-    //     ("background-color", #7fbafd),
-    //     ("border-color", #7fbafd),
-    //     ("color", #1c2127)
-    //   );
-    // }
+    &:hover {
+      @include defineVars(
+        (
+          ("background-color", #7fbafd),
+          ("border-color", #7fbafd),
+          ("color", #1c2127)
+        ),
+        $_themeName
+      );
+    }
   }
 }

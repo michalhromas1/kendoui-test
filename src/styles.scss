@@ -25,9 +25,13 @@ body {
   -webkit-font-smoothing: antialiased;
   font-family: var(--font-family);
 
-  &.dark {
-    background: #071426;
+  &[data-theme="light"] {
+    background: #ffffff;
+    @include button.light();
+  }
 
+  &[data-theme="dark"] {
+    background: #071426;
     @include button.dark();
   }
 }
