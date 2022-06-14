@@ -2,6 +2,19 @@
 @use "./prop-list";
 
 @mixin defineVars($prefix, $propKeyValuePairs, $theme: null) {
+  @include _renderVars($prefix, $propKeyValuePairs, $theme);
+}
+
+@mixin overrideVars($prefix, $propKeyValuePairs, $theme: null) {
+  @include _renderVars($prefix, $propKeyValuePairs, $theme, false);
+}
+
+@mixin _renderVars(
+  $prefix,
+  $propKeyValuePairs,
+  $theme: null,
+  $renderUsages: true
+) {
   $definitionsAndUsages: _createDefinitionsAndUsages(
     $prefix,
     $propKeyValuePairs,
@@ -9,21 +22,9 @@
   );
 
   @include _renderDefinitions(list.nth($definitionsAndUsages, 1));
-  @include _renderUsages(list.nth($definitionsAndUsages, 2));
-}
 
-@mixin overrideVars($prefix, $propKeyValuePairs, $theme: null) {
-  $varNamePropValueTuples: _createVarNamePropValueTuples(
-    $prefix,
-    $propKeyValuePairs,
-    $theme
-  );
-
-  @each $item in $varNamePropValueTuples {
-    $varName: list.nth($item, 1);
-    $value: list.nth($item, 3);
-
-    @include _renderDefinition($varName, $value);
+  @if $renderUsages {
+    @include _renderUsages(list.nth($definitionsAndUsages, 2));
   }
 }
 
