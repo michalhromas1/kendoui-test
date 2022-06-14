@@ -1,6 +1,6 @@
 @use "styles/kendo/button";
 
-@include button.init();
+@include button.base();
 
 :root {
   --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
