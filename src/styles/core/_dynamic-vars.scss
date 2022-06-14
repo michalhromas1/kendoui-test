@@ -1,23 +1,17 @@
 @use "sass:list";
 @use "./prop-list";
-@use "./modifier-list";
 
-@function createVarList($prefix, $modifier, $propKeyValuePairs...) {
+@function createVarList($prefix, $propKeyValuePairs...) {
   $result: ();
 
   @each $propKeyValuePair in $propKeyValuePairs {
     $propKey: list.nth($propKeyValuePair, 1);
     $value: list.nth($propKeyValuePair, 2);
     $prop: prop-list.getProp($propKey);
-    $mod: modifier-list.getModifier($modifier);
 
     @if $prop {
-      @if $mod {
-        $varName: _createVarName($prefix, $prop, $modifier);
-        $result: list.append($result, ($varName, $value, $prop));
-      } @else {
-        @error _createErrorInvalidModifier($modifier);
-      }
+      $varName: _createVarName($prefix, $prop);
+      $result: list.append($result, ($varName, $value, $prop));
     } @else {
       @error _createErrorInvalidPropertyKey($propKey);
     }
@@ -26,16 +20,14 @@
   @return $result;
 }
 
-@mixin useVarListAtRoot($varList) {
+@mixin defineVars($varList) {
   @each $item in $varList {
     $varName: list.nth($item, 1);
     $value: list.nth($item, 2);
 
     #{$varName}: $value;
   }
-}
 
-@mixin useVarListAtElement($varList) {
   @each $item in $varList {
     $varName: list.nth($item, 1);
     $prop: list.nth($item, 3);
@@ -44,40 +36,25 @@
   }
 }
 
-@mixin overrideVars($prefix, $modifier, $propKeyValuePairs...) {
+@mixin overrideVars($prefix, $propKeyValuePairs...) {
   @each $propKeyValuePair in $propKeyValuePairs {
     $propKey: list.nth($propKeyValuePair, 1);
     $value: list.nth($propKeyValuePair, 2);
     $prop: prop-list.getProp($propKey);
-    $mod: modifier-list.getModifier($modifier);
 
     @if $prop {
-      @if $mod {
-        $varName: _createVarName($prefix, $prop, $modifier);
-        #{$varName}: $value;
-      } @else {
-        @error _createErrorInvalidModifier($modifier);
-      }
+      $varName: _createVarName($prefix, $prop);
+      #{$varName}: $value;
     } @else {
       @error _createErrorInvalidPropertyKey($propKey);
     }
   }
 }
 
-@function _createVarName($prefix, $prop, $modifier) {
-  $result: --#{$prefix}-#{$prop};
-
-  @if $modifier != modifier-list.$NO_MODIFIER {
-    $result: #{$result}--#{$modifier};
-  }
-
-  @return $result;
+@function _createVarName($prefix, $prop) {
+  @return --#{$prefix}-#{$prop};
 }
 
 @function _createErrorInvalidPropertyKey($propKey) {
   @return "_dynamic-vars.scss: Property key not defined (#{$propKey}). Look at ./_prop-list.scss to see all defined property keys.";
-}
-
-@function _createErrorInvalidModifier($modifier) {
-  @return "_dynamic-vars.scss: Modifier not defined (#{$modifier}). Look at ./modifier-list.scss to see all defined modifiers.";
 }
