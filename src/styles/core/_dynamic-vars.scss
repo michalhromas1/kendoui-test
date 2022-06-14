@@ -12,16 +12,12 @@
 }
 
 @mixin overrideVars($prefix, $propKeyValuePairs...) {
-  @each $propKeyValuePair in $propKeyValuePairs {
-    $propKey: list.nth($propKeyValuePair, 1);
-    $value: list.nth($propKeyValuePair, 2);
-    $prop: prop-list.getProp($propKey);
+  $parsedData: _parsePropKeyValuePairs($prefix, $propKeyValuePairs...);
 
-    @if not $prop {
-      @error _createErrorInvalidPropertyKey($propKey);
-    }
+  @each $item in $parsedData {
+    $varName: list.nth($item, 1);
+    $value: list.nth($item, 3);
 
-    $varName: _createVarName($prefix, $prop);
     #{$varName}: $value;
   }
 }
@@ -30,6 +26,23 @@
   $definitions: ();
   $usages: ();
 
+  $parsedData: _parsePropKeyValuePairs($prefix, $propKeyValuePairs...);
+
+  @each $item in $parsedData {
+    $varName: list.nth($item, 1);
+    $prop: list.nth($item, 2);
+    $value: list.nth($item, 3);
+
+    $definitions: list.append($definitions, ($varName, $value));
+    $usages: list.append($usages, ($prop, $varName));
+  }
+
+  @return ($definitions, $usages);
+}
+
+@function _parsePropKeyValuePairs($prefix, $propKeyValuePairs...) {
+  $result: ();
+
   @each $propKeyValuePair in $propKeyValuePairs {
     $propKey: list.nth($propKeyValuePair, 1);
     $value: list.nth($propKeyValuePair, 2);
@@ -41,11 +54,18 @@
 
     $varName: _createVarName($prefix, $prop);
 
-    $definitions: list.append($definitions, ($varName, $value));
-    $usages: list.append($usages, ($prop, $varName));
+    $result: list.append($result, ($varName, $prop, $value));
   }
 
-  @return ($definitions, $usages);
+  @return $result;
+}
+
+@function _createVarName($prefix, $prop) {
+  @return --#{$prefix}-#{$prop};
+}
+
+@function _createErrorInvalidPropertyKey($propKey) {
+  @return "_dynamic-vars.scss: Property key not defined (#{$propKey}). Look at ./_prop-list.scss to see all defined property keys.";
 }
 
 @mixin _renderDefinitions($definitions) {
@@ -64,12 +84,4 @@
 
     #{$prop}: var($varName);
   }
-}
-
-@function _createVarName($prefix, $prop) {
-  @return --#{$prefix}-#{$prop};
-}
-
-@function _createErrorInvalidPropertyKey($propKey) {
-  @return "_dynamic-vars.scss: Property key not defined (#{$propKey}). Look at ./_prop-list.scss to see all defined property keys.";
 }
