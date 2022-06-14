@@ -20,17 +20,12 @@ $selected-disabled-dark: hsl(290, $saturation-dark, $lightness-dark);
   }
 
   &:nth-of-type(3) {
-    @include button.overrideVarsThemed("light", ("background-color", green));
-    @include button.overrideVarsThemed("dark", ("background-color", yellow));
+    @include button.overrideVarsLight(("background-color", green));
+    @include button.overrideVarsDark(("background-color", yellow));
 
     &:hover {
-      @include button.overrideVarsThemed(
-        "light",
-        ("background-color", darkgreen)
-      );
-
-      @include button.overrideVarsThemed(
-        "dark",
+      @include button.overrideVarsLight(("background-color", darkgreen));
+      @include button.overrideVarsDark(
         ("background-color", black),
         ("color", white)
       );
