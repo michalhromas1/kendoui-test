@@ -1,3 +1,5 @@
+@use "/src/styles/kendo/button";
+
 $saturation-light: 47%;
 $lightness-light: 92%;
 
@@ -11,6 +13,25 @@ $selected-disabled-light: hsl(290, $saturation-light, $lightness-light);
 $disabled-dark: hsl(0, $saturation-dark, $lightness-dark);
 $selected-dark: hsl(205, $saturation-dark, $lightness-dark);
 $selected-disabled-dark: hsl(290, $saturation-dark, $lightness-dark);
+
+#{button.$selector}.mr-1 {
+  &:nth-of-type(2) {
+    @include button.overrideVars(("font-size", 3rem));
+  }
+
+  &:nth-of-type(3) {
+    @include button.overrideVarsLight(("background-color", green));
+    @include button.overrideVarsDark(("background-color", yellow));
+
+    &:hover {
+      @include button.overrideVarsLight(("background-color", darkgreen));
+      @include button.overrideVarsDark(
+        ("background-color", black),
+        ("color", white)
+      );
+    }
+  }
+}
 
 :host ::ng-deep {
   td.disabled {

@@ -1,74 +1,77 @@
 @use "sass:list";
 @use "./prop-list";
-@use "./modifier-list";
 
-@function createVarList($prefix, $modifier, $propKeyValuePairs...) {
+@mixin defineVars($prefix, $propKeyValuePairs...) {
+  @include defineVarsThemed($prefix, null, $propKeyValuePairs...);
+}
+
+@mixin overrideVars($prefix, $propKeyValuePairs...) {
+  @include overrideVarsThemed($prefix, null, $propKeyValuePairs...);
+}
+
+@mixin defineVarsThemed($prefix, $theme, $propKeyValuePairs...) {
+  @include _renderVars($prefix, $theme, true, $propKeyValuePairs...);
+}
+
+@mixin overrideVarsThemed($prefix, $theme, $propKeyValuePairs...) {
+  @include _renderVars($prefix, $theme, false, $propKeyValuePairs...);
+}
+
+@mixin _renderVars($prefix, $theme, $renderUsages, $propKeyValuePairs...) {
+  $definitionsAndUsages: _createDefinitionsAndUsages(
+    $prefix,
+    $theme,
+    $propKeyValuePairs...
+  );
+
+  @include _renderDefinitions(list.nth($definitionsAndUsages, 1));
+
+  @if $renderUsages {
+    @include _renderUsages(list.nth($definitionsAndUsages, 2));
+  }
+}
+
+@function _createDefinitionsAndUsages($prefix, $theme, $propKeyValuePairs...) {
+  $definitions: ();
+  $usages: ();
+
+  $varNamePropValueTuples: _createVarNamePropValueTuples(
+    $prefix,
+    $theme,
+    $propKeyValuePairs...
+  );
+
+  @each $item in $varNamePropValueTuples {
+    $varName: list.nth($item, 1);
+    $prop: list.nth($item, 2);
+    $value: list.nth($item, 3);
+
+    $definitions: list.append($definitions, ($varName, $value));
+    $usages: list.append($usages, ($prop, $varName));
+  }
+
+  @return ($definitions, $usages);
+}
+
+@function _createVarNamePropValueTuples(
+  $prefix,
+  $theme,
+  $propKeyValuePairs...
+) {
   $result: ();
 
   @each $propKeyValuePair in $propKeyValuePairs {
     $propKey: list.nth($propKeyValuePair, 1);
     $value: list.nth($propKeyValuePair, 2);
     $prop: prop-list.getProp($propKey);
-    $mod: modifier-list.getModifier($modifier);
 
-    @if $prop {
-      @if $mod {
-        $varName: _createVarName($prefix, $prop, $modifier);
-        $result: list.append($result, ($varName, $value, $prop));
-      } @else {
-        @error _createErrorInvalidModifier($modifier);
-      }
-    } @else {
+    @if not $prop {
       @error _createErrorInvalidPropertyKey($propKey);
     }
-  }
 
-  @return $result;
-}
+    $varName: _createVarName($prefix, $prop, $theme);
 
-@mixin useVarListAtRoot($varList) {
-  @each $item in $varList {
-    $varName: list.nth($item, 1);
-    $value: list.nth($item, 2);
-
-    #{$varName}: $value;
-  }
-}
-
-@mixin useVarListAtElement($varList) {
-  @each $item in $varList {
-    $varName: list.nth($item, 1);
-    $prop: list.nth($item, 3);
-
-    #{$prop}: var($varName);
-  }
-}
-
-@mixin overrideVars($prefix, $modifier, $propKeyValuePairs...) {
-  @each $propKeyValuePair in $propKeyValuePairs {
-    $propKey: list.nth($propKeyValuePair, 1);
-    $value: list.nth($propKeyValuePair, 2);
-    $prop: prop-list.getProp($propKey);
-    $mod: modifier-list.getModifier($modifier);
-
-    @if $prop {
-      @if $mod {
-        $varName: _createVarName($prefix, $prop, $modifier);
-        #{$varName}: $value;
-      } @else {
-        @error _createErrorInvalidModifier($modifier);
-      }
-    } @else {
-      @error _createErrorInvalidPropertyKey($propKey);
-    }
-  }
-}
-
-@function _createVarName($prefix, $prop, $modifier) {
-  $result: --#{$prefix}-#{$prop};
-
-  @if $modifier != modifier-list.$NO_MODIFIER {
-    $result: #{$result}--#{$modifier};
+    $result: list.append($result, ($varName, $prop, $value));
   }
 
   @return $result;
@@ -78,6 +81,38 @@
   @return "_dynamic-vars.scss: Property key not defined (#{$propKey}). Look at ./_prop-list.scss to see all defined property keys.";
 }
 
-@function _createErrorInvalidModifier($modifier) {
-  @return "_dynamic-vars.scss: Modifier not defined (#{$modifier}). Look at ./modifier-list.scss to see all defined modifiers.";
+@function _createVarName($prefix, $prop, $theme: null) {
+  $result: --#{$prefix}-#{$prop};
+
+  @if not $theme {
+    @return $result;
+  }
+
+  @return #{$result}-theme-#{$theme};
+}
+
+@mixin _renderDefinitions($definitions) {
+  @each $definition in $definitions {
+    $varName: list.nth($definition, 1);
+    $value: list.nth($definition, 2);
+
+    @include _renderDefinition($varName, $value);
+  }
+}
+
+@mixin _renderUsages($usages) {
+  @each $usage in $usages {
+    $prop: list.nth($usage, 1);
+    $varName: list.nth($usage, 2);
+
+    @include _renderUsage($prop, $varName);
+  }
+}
+
+@mixin _renderDefinition($varName, $value) {
+  #{$varName}: $value;
+}
+
+@mixin _renderUsage($prop, $varName) {
+  #{$prop}: var($varName);
 }

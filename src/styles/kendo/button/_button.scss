@@ -2,49 +2,28 @@
 @use "../prefix";
 
 $prefix: prefix.withKendoPrefix("button");
+$selector: ".k-button";
 
-@mixin overrideVars($modifier, $propKeyValuePairs...) {
-  @include dynamic-vars.overrideVars($prefix, $modifier, $propKeyValuePairs...);
+@mixin defineVars($propKeyValuePairs...) {
+  @include dynamic-vars.defineVars($prefix, $propKeyValuePairs...);
 }
 
-@mixin init() {
-  $baseVars: dynamic-vars.createVarList(
+@mixin overrideVars($propKeyValuePairs...) {
+  @include dynamic-vars.overrideVars($prefix, $propKeyValuePairs...);
+}
+
+@mixin defineVarsThemed($theme, $propKeyValuePairs...) {
+  @include dynamic-vars.defineVarsThemed(
     $prefix,
-    "none",
-    ("background-color", #3b82f6),
-    ("color", #ffffff),
-    ("border-radius", 6px),
-    ("line-height", normal),
-    ("font-size", 1rem),
-    ("padding-left", 1.25rem),
-    ("padding-right", 1.25rem),
-    ("padding-top", 0.75rem),
-    ("padding-bottom", 0.75rem),
-    ("border-color", #3b82f6),
-    ("background-image", none),
-    ("font-weight", 700),
-    ("transition", background-color 0.2s, color 0.2s, border-color 0.2s),
-    ("font-family", inherit)
+    $theme,
+    $propKeyValuePairs...
   );
+}
 
-  $baseVarsHover: dynamic-vars.createVarList(
+@mixin overrideVarsThemed($theme, $propKeyValuePairs...) {
+  @include dynamic-vars.overrideVarsThemed(
     $prefix,
-    "hover",
-    ("background-color", #2563eb),
-    ("color", #ffffff),
-    ("border-color", #2563eb)
+    $theme,
+    $propKeyValuePairs...
   );
-
-  :root {
-    @include dynamic-vars.useVarListAtRoot($baseVars);
-    @include dynamic-vars.useVarListAtRoot($baseVarsHover);
-  }
-
-  .k-button {
-    @include dynamic-vars.useVarListAtElement($baseVars);
-
-    &:hover {
-      @include dynamic-vars.useVarListAtElement($baseVarsHover);
-    }
-  }
 }

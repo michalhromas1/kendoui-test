@@ -126,6 +126,7 @@ export class CustomStylesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.documents = this.checkedProfilesDocuments;
+    this.toggleDarkmode(false);
   }
 
   ngAfterViewInit(): void {
@@ -145,9 +146,9 @@ export class CustomStylesComponent implements OnInit, AfterViewInit, OnDestroy {
     return document.id;
   }
 
-  onDarkmodeChange(darkmode: boolean): void {
+  toggleDarkmode(darkmode: boolean): void {
     const { body } = this.document;
-    body.classList.toggle('dark', darkmode);
+    body.dataset['theme'] = darkmode ? 'dark' : 'light';
   }
 
   reset(): void {

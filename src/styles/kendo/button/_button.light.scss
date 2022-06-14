@@ -1,0 +1,29 @@
+@use "button" as *;
+
+$_themeName: "light";
+
+@mixin defineVarsLight($propKeyValuePairs...) {
+  @include defineVarsThemed($_themeName, $propKeyValuePairs...);
+}
+
+@mixin overrideVarsLight($propKeyValuePairs...) {
+  @include overrideVarsThemed($_themeName, $propKeyValuePairs...);
+}
+
+@mixin light() {
+  #{$selector} {
+    @include defineVarsLight(
+      ("background-color", #3b82f6),
+      ("color", #ffffff),
+      ("border-color", #3b82f6)
+    );
+
+    &:hover {
+      @include defineVarsLight(
+        ("background-color", #2563eb),
+        ("color", #ffffff),
+        ("border-color", #2563eb)
+      );
+    }
+  }
+}

@@ -1,17 +1,29 @@
-@use "./button" as *;
+@use "button" as *;
+
+$_themeName: "dark";
+
+@mixin defineVarsDark($propKeyValuePairs...) {
+  @include defineVarsThemed($_themeName, $propKeyValuePairs...);
+}
+
+@mixin overrideVarsDark($propKeyValuePairs...) {
+  @include overrideVarsThemed($_themeName, $propKeyValuePairs...);
+}
 
 @mixin dark() {
-  @include overrideVars(
-    "none",
-    ("background-color", #93c5fd),
-    ("border-color", #93c5fd),
-    ("color", #1c2127)
-  );
+  #{$selector} {
+    @include defineVarsDark(
+      ("background-color", #93c5fd),
+      ("border-color", #93c5fd),
+      ("color", #1c2127)
+    );
 
-  @include overrideVars(
-    "hover",
-    ("background-color", #7fbafd),
-    ("border-color", #7fbafd),
-    ("color", #1c2127)
-  );
+    &:hover {
+      @include defineVarsDark(
+        ("background-color", #7fbafd),
+        ("border-color", #7fbafd),
+        ("color", #1c2127)
+      );
+    }
+  }
 }
