@@ -1,9 +1,17 @@
 @use "sass:list";
 @use "./prop-list";
 
-@function _createVarList($prefix, $propKeyValuePairs...) {
-  $result: ();
+@mixin defineVars($prefix, $propKeyValuePairs...) {
+  $definitionsAndUsages: _createDefinitionsAndUsages(
+    $prefix,
+    $propKeyValuePairs...
+  );
 
+  @include _renderDefinitions(list.nth($definitionsAndUsages, 1));
+  @include _renderUsages(list.nth($definitionsAndUsages, 2));
+}
+
+@mixin overrideVars($prefix, $propKeyValuePairs...) {
   @each $propKeyValuePair in $propKeyValuePairs {
     $propKey: list.nth($propKeyValuePair, 1);
     $value: list.nth($propKeyValuePair, 2);
@@ -14,13 +22,11 @@
     }
 
     $varName: _createVarName($prefix, $prop);
-    $result: list.append($result, ($varName, $value, $prop));
+    #{$varName}: $value;
   }
-
-  @return $result;
 }
 
-@mixin defineVars($prefix, $propKeyValuePairs...) {
+@function _createDefinitionsAndUsages($prefix, $propKeyValuePairs...) {
   $definitions: ();
   $usages: ();
 
@@ -39,49 +45,24 @@
     $usages: list.append($usages, ($prop, $varName));
   }
 
+  @return ($definitions, $usages);
+}
+
+@mixin _renderDefinitions($definitions) {
   @each $definition in $definitions {
     $varName: list.nth($definition, 1);
     $value: list.nth($definition, 2);
 
     #{$varName}: $value;
   }
+}
 
+@mixin _renderUsages($usages) {
   @each $usage in $usages {
     $prop: list.nth($usage, 1);
     $varName: list.nth($usage, 2);
 
     #{$prop}: var($varName);
-  }
-}
-
-@mixin _defineVars($varList) {
-  @each $item in $varList {
-    $varName: list.nth($item, 1);
-    $value: list.nth($item, 2);
-
-    #{$varName}: $value;
-  }
-
-  @each $item in $varList {
-    $varName: list.nth($item, 1);
-    $prop: list.nth($item, 3);
-
-    #{$prop}: var($varName);
-  }
-}
-
-@mixin overrideVars($prefix, $propKeyValuePairs...) {
-  @each $propKeyValuePair in $propKeyValuePairs {
-    $propKey: list.nth($propKeyValuePair, 1);
-    $value: list.nth($propKeyValuePair, 2);
-    $prop: prop-list.getProp($propKey);
-
-    @if $prop {
-      $varName: _createVarName($prefix, $prop);
-      #{$varName}: $value;
-    } @else {
-      @error _createErrorInvalidPropertyKey($propKey);
-    }
   }
 }
 
