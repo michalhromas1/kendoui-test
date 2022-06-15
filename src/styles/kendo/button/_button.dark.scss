@@ -13,16 +13,16 @@ $_themeName: "dark";
 @mixin dark() {
   #{$selector} {
     @include defineVarsDark(
-      ("background-color", #93c5fd),
-      ("border-color", #93c5fd),
-      ("color", #1c2127)
+      ("background-color", var(--c-lightblue)),
+      ("border-color", var(--c-lightblue)),
+      ("color", var(--c-blackish))
     );
 
     &:hover {
       @include defineVarsDark(
-        ("background-color", #7fbafd),
-        ("border-color", #7fbafd),
-        ("color", #1c2127)
+        ("background-color", var(--c-lightblue-dark)),
+        ("border-color", var(--c-lightblue-dark)),
+        ("color", var(--c-blackish))
       );
     }
   }
