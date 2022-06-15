@@ -4,12 +4,11 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
-import { DOCUMENT } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  Inject,
+  HostBinding,
   OnDestroy,
   OnInit,
   QueryList,
@@ -56,6 +55,8 @@ export class CustomStylesComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('grid') grid!: GridComponent;
   @ViewChild('nameField') nameField!: CdkDropList;
   @ViewChild('attachmentsField') attachmentsField!: CdkDropList;
+
+  @HostBinding('attr.data-theme') theme: string = 'light';
 
   documents = this.initialDocuments;
   preview: AppDocumentFile | undefined;
@@ -122,8 +123,6 @@ export class CustomStylesComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  constructor(@Inject(DOCUMENT) private document: Document) {}
-
   ngOnInit(): void {
     this.documents = this.checkedProfilesDocuments;
     this.toggleDarkmode(false);
@@ -147,8 +146,7 @@ export class CustomStylesComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   toggleDarkmode(darkmode: boolean): void {
-    const { body } = this.document;
-    body.dataset['theme'] = darkmode ? 'dark' : 'light';
+    this.theme = darkmode ? 'dark' : 'light';
   }
 
   reset(): void {
