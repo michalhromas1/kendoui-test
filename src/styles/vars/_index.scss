@@ -1,0 +1,11 @@
+@use "typography" as *;
+@use "spacing" as *;
+@use "other" as *;
+@use "colors" as *;
+
+@mixin vars() {
+  @include typography();
+  @include spacing();
+  @include other();
+  @include colors();
+}

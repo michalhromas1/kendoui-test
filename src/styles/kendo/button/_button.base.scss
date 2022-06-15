@@ -3,16 +3,22 @@
 @mixin base() {
   #{$selector} {
     @include defineVars(
-      ("border-radius", 6px),
-      ("line-height", normal),
-      ("font-size", 1rem),
-      ("padding-left", 1.25rem),
-      ("padding-right", 1.25rem),
-      ("padding-top", 0.75rem),
-      ("padding-bottom", 0.75rem),
-      ("background-image", none),
-      ("font-weight", 700),
-      ("transition", background-color 0.2s, color 0.2s, border-color 0.2s)
+      ("line-height", var(--line-height-reset)),
+      ("background-image", var(--background-image-reset)),
+      ("border-radius", var(--border-radius-sm)),
+      ("font-size", var(--font-size-default)),
+      ("padding-left", var(--spacing-sm)),
+      ("padding-right", var(--spacing-sm)),
+      ("padding-top", var(--spacing-xs)),
+      ("padding-bottom", var(--spacing-xs)),
+      ("font-weight", var(--font-weight-strong)),
+      ("font-family", var(--font-family-default)),
+      (
+        "transition",
+        background-color var(--transition-duration),
+        color var(--transition-duration),
+        border-color var(--transition-duration)
+      )
     );
   }
 }
