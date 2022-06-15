@@ -15,10 +15,9 @@ $disabled-dark: hsl(0, $saturation-dark, $lightness-dark);
 $selected-dark: hsl(205, $saturation-dark, $lightness-dark);
 $selected-disabled-dark: hsl(290, $saturation-dark, $lightness-dark);
 
-@include button.base();
-
 :host {
   @include vars.vars();
+  @include button.base();
 
   font-family: var(--font-family-default);
   -webkit-font-smoothing: antialiased;
@@ -29,13 +28,19 @@ $selected-disabled-dark: hsl(290, $saturation-dark, $lightness-dark);
 
   &[data-theme="light"] {
     background: #ffffff;
-    @include button.light();
   }
 
   &[data-theme="dark"] {
     background: #071426;
-    @include button.dark();
   }
+}
+
+:host[data-theme="light"] ::ng-deep {
+  @include button.light();
+}
+
+:host[data-theme="dark"] ::ng-deep {
+  @include button.dark();
 }
 
 :host ::ng-deep {
