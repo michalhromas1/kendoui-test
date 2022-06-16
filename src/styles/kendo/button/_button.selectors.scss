@@ -1,0 +1,11 @@
+@use "/src/styles/core/selector" as *;
+
+@function _variantSelector($variant) {
+  @return createVariantSelector($selector, $_variantSelectorBase, $variant);
+}
+
+$_variantSelectorBase: ".btn";
+
+$selector: ".k-button";
+$selector-warning: _variantSelector("warning");
+$selector-danger: _variantSelector("danger");

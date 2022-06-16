@@ -1,0 +1,60 @@
+@use "../button" as *;
+
+$_themeName: "dark";
+
+@mixin defineVarsDark($propKeyValuePairs...) {
+  @include defineVarsThemed($_themeName, $propKeyValuePairs...);
+}
+
+@mixin overrideVarsDark($propKeyValuePairs...) {
+  @include overrideVarsThemed($_themeName, $propKeyValuePairs...);
+}
+
+@mixin dark() {
+  #{$selector} {
+    @include defineVarsDark(
+      ("background-color", var(--c-lightblue)),
+      ("border-color", var(--c-lightblue)),
+      ("color", var(--c-blackish))
+    );
+
+    &:hover {
+      @include overrideVarsDark(
+        ("background-color", var(--c-lightblue-dark)),
+        ("border-color", var(--c-lightblue-dark))
+      );
+    }
+
+    &:disabled {
+      @include defineVarsDark(("opacity", 0.4));
+    }
+  }
+
+  #{$selector-warning} {
+    @include overrideVarsDark(
+      ("background-color", var(--c-lightorange)),
+      ("border-color", var(--c-lightorange))
+    );
+
+    &:hover {
+      @include overrideVarsDark(
+        ("background-color", var(--c-lightorange-dark)),
+        ("border-color", var(--c-lightorange-dark))
+      );
+    }
+  }
+
+  #{$selector-danger} {
+    @include overrideVarsDark(
+      ("background-color", var(--c-lightred)),
+      ("border-color", var(--c-lightred))
+    );
+
+    &:hover {
+      @include overrideVarsDark(
+        ("background-color", var(--c-lightred-dark)),
+        ("border-color", var(--c-lightred-dark))
+      );
+    }
+  }
+}

@@ -4,7 +4,7 @@ Select component:
   [(ngModel)]="selectedUiComponent"
 ></kendo-dropdownlist>
 
-<hr />
+<hr style="position: relative; z-index: 1" />
 
 <ng-container [ngSwitch]="selectedUiComponent">
   <app-custom-styles *ngSwitchCase="'custom-styles'"></app-custom-styles>

@@ -1,0 +1,60 @@
+@use "../button" as *;
+
+$_themeName: "light";
+
+@mixin defineVarsLight($propKeyValuePairs...) {
+  @include defineVarsThemed($_themeName, $propKeyValuePairs...);
+}
+
+@mixin overrideVarsLight($propKeyValuePairs...) {
+  @include overrideVarsThemed($_themeName, $propKeyValuePairs...);
+}
+
+@mixin light() {
+  #{$selector} {
+    @include defineVarsLight(
+      ("background-color", var(--c-blue)),
+      ("color", var(--c-white)),
+      ("border-color", var(--c-blue))
+    );
+
+    &:hover {
+      @include overrideVarsLight(
+        ("background-color", var(--c-blue-dark)),
+        ("border-color", var(--c-blue-dark))
+      );
+    }
+
+    &:disabled {
+      @include defineVarsLight(("opacity", 0.6));
+    }
+  }
+
+  #{$selector-warning} {
+    @include overrideVarsLight(
+      ("background-color", var(--c-orange)),
+      ("border-color", var(--c-orange))
+    );
+
+    &:hover {
+      @include overrideVarsLight(
+        ("background-color", var(--c-orange-dark)),
+        ("border-color", var(--c-orange-dark))
+      );
+    }
+  }
+
+  #{$selector-danger} {
+    @include overrideVarsLight(
+      ("background-color", var(--c-red)),
+      ("border-color", var(--c-red))
+    );
+
+    &:hover {
+      @include overrideVarsLight(
+        ("background-color", var(--c-red-dark)),
+        ("border-color", var(--c-red-dark))
+      );
+    }
+  }
+}
