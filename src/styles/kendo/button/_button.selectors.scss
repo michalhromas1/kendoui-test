@@ -7,4 +7,5 @@
 $_variantSelectorBase: ".btn";
 
 $selector: ".k-button";
+$selector-warning: _variantSelector("warning");
 $selector-danger: _variantSelector("danger");

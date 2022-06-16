@@ -26,6 +26,20 @@ $_themeName: "light";
     }
   }
 
+  #{$selector-warning} {
+    @include overrideVarsLight(
+      ("background-color", var(--c-orange)),
+      ("border-color", var(--c-orange))
+    );
+
+    &:hover {
+      @include overrideVarsLight(
+        ("background-color", var(--c-orange-dark)),
+        ("border-color", var(--c-orange-dark))
+      );
+    }
+  }
+
   #{$selector-danger} {
     @include overrideVarsLight(
       ("background-color", var(--c-red)),
