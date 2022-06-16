@@ -10,6 +10,9 @@
 <button class="mr-1 btn-danger" kendoButton (click)="deleteSelected()">
   Delete selected
 </button>
+<button class="mr-1" kendoButton [disabled]="true" (click)="deleteSelected()">
+  Disabled button
+</button>
 
 <kendo-switch
   [onLabel]="'🌛'"
