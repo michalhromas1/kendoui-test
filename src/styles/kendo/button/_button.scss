@@ -1,16 +1,8 @@
+@forward "button.selectors";
 @use "/src/styles/core/dynamic-vars";
-@use "/src/styles/core/selector" as *;
 @use "../prefix" as *;
 
-@function _variantSelector($variant) {
-  @return createVariantSelector($selector, $_variantSelectorBase, $variant);
-}
-
 $prefix: withKendoPrefix("button");
-$selector: ".k-button";
-
-$_variantSelectorBase: ".btn";
-$selector-danger: _variantSelector("danger");
 
 @mixin defineVars($propKeyValuePairs...) {
   @include dynamic-vars.defineVars($prefix, $propKeyValuePairs...);
