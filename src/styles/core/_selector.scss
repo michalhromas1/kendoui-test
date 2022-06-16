@@ -1,0 +1,3 @@
+@function createVariantSelector($baseSelector, $variantSelectorBase, $variant) {
+  @return "#{$baseSelector}#{$variantSelectorBase}-#{$variant}";
+}

@@ -19,10 +19,23 @@ $_themeName: "light";
     );
 
     &:hover {
-      @include defineVarsLight(
+      @include overrideVarsLight(
         ("background-color", var(--c-blue-dark)),
-        ("color", var(--c-white)),
         ("border-color", var(--c-blue-dark))
+      );
+    }
+  }
+
+  #{$selector-danger} {
+    @include overrideVarsLight(
+      ("background-color", var(--c-red)),
+      ("border-color", var(--c-red))
+    );
+
+    &:hover {
+      @include overrideVarsLight(
+        ("background-color", var(--c-red-dark)),
+        ("border-color", var(--c-red-dark))
       );
     }
   }
