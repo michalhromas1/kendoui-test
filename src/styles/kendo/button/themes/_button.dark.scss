@@ -24,6 +24,10 @@ $_themeName: "dark";
         ("border-color", var(--c-lightblue-dark))
       );
     }
+
+    &:disabled {
+      @include defineVarsDark(("opacity", 0.4));
+    }
   }
 
   #{$selector-warning} {

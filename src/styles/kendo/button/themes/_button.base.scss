@@ -20,5 +20,9 @@
         border-color var(--transition-duration)
       )
     );
+
+    &:disabled {
+      @include defineVars(("filter", none));
+    }
   }
 }
