@@ -29,7 +29,7 @@ export class TestBtnComponent
   private baseInstance!: TestBtnBaseComponent;
   private baseCd!: ChangeDetectorRef;
 
-  private inputNames: (keyof TestBtnComponent)[] = [];
+  private registeredInputs: (keyof TestBtnComponent)[] = [];
   private relevantInputs: (keyof TestBtnBaseComponent)[] = [];
   private relevantOutputs: (keyof TestBtnBaseComponent)[] = [];
 
@@ -39,9 +39,7 @@ export class TestBtnComponent
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!this.baseInstance) {
-      this.inputNames = Object.getOwnPropertyNames(
-        changes
-      ) as (keyof TestBtnComponent)[];
+      this.registeredInputs = this.getRegisteredInputs(changes);
       return;
     }
 
@@ -78,9 +76,15 @@ export class TestBtnComponent
     this.baseCd.markForCheck();
   }
 
+  private getRegisteredInputs(
+    changes: SimpleChanges
+  ): (keyof TestBtnComponent)[] {
+    return Object.getOwnPropertyNames(changes) as (keyof TestBtnComponent)[];
+  }
+
   private getRelevantInputs(): (keyof TestBtnBaseComponent)[] {
     const allBaseProps = this.getBaseProperties();
-    return this.inputNames.filter((inputName) =>
+    return this.registeredInputs.filter((inputName) =>
       allBaseProps.includes(inputName as keyof TestBtnBaseComponent)
     ) as (keyof TestBtnBaseComponent)[];
   }
