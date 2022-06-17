@@ -23,6 +23,13 @@
 
 <hr />
 
+{{ tyjo }}
+<app-test-btn
+  [tyjo]="tyjo"
+  (tyjoChange)="tyjo = $event"
+  noNeke="nojo"
+></app-test-btn>
+
 <kendo-splitter class="page">
   <kendo-splitter-pane>
     <div class="grid-wrapper h-100">

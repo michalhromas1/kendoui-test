@@ -58,6 +58,8 @@ export class CustomStylesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @HostBinding('attr.data-theme') theme: string = 'light';
 
+  tyjo: string = 'ok';
+
   documents = this.initialDocuments;
   preview: AppDocumentFile | undefined;
   selectedRowsDocumentIds: number[] = [];

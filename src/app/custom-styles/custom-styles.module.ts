@@ -11,9 +11,11 @@ import { LayoutModule } from '@progress/kendo-angular-layout';
 import { TreeViewModule } from '@progress/kendo-angular-treeview';
 import { ForceAutofocusModule } from '../force-autofocus/force-autofocus.module';
 import { CustomStylesComponent } from './custom-styles.component';
+import { TestBtnBaseComponent } from './test-btn-base/test-btn-base.component';
+import { TestBtnComponent } from './test-btn/test-btn.component';
 
 @NgModule({
-  declarations: [CustomStylesComponent],
+  declarations: [CustomStylesComponent, TestBtnBaseComponent, TestBtnComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
