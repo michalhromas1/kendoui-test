@@ -7,7 +7,7 @@ import {
   QueryList,
   ViewChild,
 } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import {
   CellCloseEvent,
   CheckboxColumnComponent,
@@ -48,7 +48,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
   selectedRowsProductIds: number[] = [];
 
   private initialColumnWidths: ColumnWidth[] = [];
-  private activeProductFormGroup: FormGroup | undefined;
+  private activeProductFormGroup: UntypedFormGroup | undefined;
   private activeRowIndex: number | undefined;
   private unsubscriber$ = new Subject<void>();
 
@@ -85,7 +85,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
   }
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private cd: ChangeDetectorRef
   ) {}
 
@@ -543,7 +543,7 @@ export class GridCellEditComponent implements AfterViewInit, OnDestroy {
     return 'isCheckboxColumn' in component;
   }
 
-  private createProductFormGroup = (product: Product): FormGroup => {
+  private createProductFormGroup = (product: Product): UntypedFormGroup => {
     const {
       ProductID,
       ProductName,

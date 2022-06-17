@@ -6,7 +6,7 @@ import {
   OnDestroy,
   ViewChild,
 } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { GridComponent, GridItem } from '@progress/kendo-angular-grid';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -22,12 +22,12 @@ export class GridRowEditComponent implements AfterViewInit, OnDestroy {
 
   products = getProducts().slice(0, 10);
 
-  private currentlyEditingFormGroup: FormGroup | undefined;
+  private currentlyEditingFormGroup: UntypedFormGroup | undefined;
   private currentlyEditingRowIndex: number | undefined;
   private unsubscriber$ = new Subject<void>();
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private cd: ChangeDetectorRef
   ) {}
 
@@ -118,7 +118,7 @@ export class GridRowEditComponent implements AfterViewInit, OnDestroy {
     this.currentlyEditingRowIndex = undefined;
   }
 
-  private createProductFormGroup = (product: Product): FormGroup => {
+  private createProductFormGroup = (product: Product): UntypedFormGroup => {
     const { ProductID, ProductName, UnitPrice, UnitsInStock } = product;
 
     return this.formBuilder.group({
