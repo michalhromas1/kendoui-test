@@ -8,14 +8,13 @@ import {
   inject,
   OnChanges,
   SimpleChanges,
-  ViewChild,
   ViewContainerRef,
 } from '@angular/core';
 import { TestBtnBaseComponent } from '../test-btn-base/test-btn-base.component';
 
 @Component({
   selector: 'app-test-btn',
-  templateUrl: './test-btn.component.html',
+  template: '',
   styleUrls: ['./test-btn.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -23,12 +22,10 @@ export class TestBtnComponent
   extends TestBtnBaseComponent
   implements OnChanges, AfterViewInit
 {
-  @ViewChild('placeholder', { read: ViewContainerRef })
-  private viewRef!: ViewContainerRef;
-
   private cd = inject(ChangeDetectorRef);
-  private baseInstance!: TestBtnBaseComponent;
+  private viewRef = inject(ViewContainerRef);
 
+  private baseInstance!: TestBtnBaseComponent;
   private registeredInputs: (keyof TestBtnComponent)[] = [];
   private relevantInputs: (keyof TestBtnBaseComponent)[] = [];
   private relevantOutputs: (keyof TestBtnBaseComponent)[] = [];
@@ -57,7 +54,6 @@ export class TestBtnComponent
   }
 
   private createBaseRef(): ComponentRef<TestBtnBaseComponent> {
-    this.viewRef.clear();
     return this.viewRef.createComponent(TestBtnBaseComponent);
   }
 
