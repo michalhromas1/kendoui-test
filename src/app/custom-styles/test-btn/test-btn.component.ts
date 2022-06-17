@@ -5,6 +5,7 @@ import {
   Component,
   ComponentRef,
   EventEmitter,
+  inject,
   OnChanges,
   SimpleChanges,
   ViewChild,
@@ -25,8 +26,8 @@ export class TestBtnComponent
   @ViewChild('placeholder', { read: ViewContainerRef })
   private viewRef!: ViewContainerRef;
 
+  private cd = inject(ChangeDetectorRef);
   private baseInstance!: TestBtnBaseComponent;
-  private baseCd!: ChangeDetectorRef;
 
   private registeredInputs: (keyof TestBtnComponent)[] = [];
   private relevantInputs: (keyof TestBtnBaseComponent)[] = [];
@@ -49,8 +50,6 @@ export class TestBtnComponent
     const baseRef = this.createBaseRef();
 
     this.baseInstance = baseRef.instance;
-    this.baseCd = baseRef.changeDetectorRef;
-
     this.relevantInputs = this.getRelevantInputs();
     this.relevantOutputs = this.getRelevantOutputs();
 
@@ -67,7 +66,7 @@ export class TestBtnComponent
       (io) => ((this.baseInstance as any)[io] = this[io])
     );
 
-    this.baseCd.markForCheck();
+    this.cd.markForCheck();
   }
 
   private getRegisteredInputs(
