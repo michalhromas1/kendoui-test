@@ -1,6 +1,7 @@
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ComponentFactoryResolver,
   ComponentRef,
@@ -24,61 +25,82 @@ export class TestBtnComponent
 {
   @ViewChild('placeholder', { read: ViewContainerRef })
   private viewRef!: ViewContainerRef;
-  private componentRef!: ComponentRef<TestBtnBaseComponent>;
+
+  private baseInstance!: TestBtnBaseComponent;
+  private baseCd!: ChangeDetectorRef;
+
   private inputNames: (keyof TestBtnComponent)[] = [];
+  private relevantInputs: (keyof TestBtnBaseComponent)[] = [];
+  private relevantOutputs: (keyof TestBtnBaseComponent)[] = [];
 
   constructor(private cfr: ComponentFactoryResolver) {
     super();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.componentRef) {
-      this.setInputsAndOutputs();
-      this.componentRef.changeDetectorRef.markForCheck();
+    if (!this.baseInstance) {
+      this.inputNames = Object.getOwnPropertyNames(
+        changes
+      ) as (keyof TestBtnComponent)[];
       return;
     }
 
-    this.inputNames = Object.getOwnPropertyNames(
-      changes
-    ) as (keyof TestBtnComponent)[];
+    this.setBaseInputsAndOutputs();
   }
 
   ngAfterViewInit(): void {
-    this.loadComponent();
+    this.createBase();
   }
 
-  private loadComponent(): void {
+  private createBase(): void {
+    const baseRef = this.createBaseRef();
+
+    this.baseInstance = baseRef.instance;
+    this.baseCd = baseRef.changeDetectorRef;
+
+    this.relevantInputs = this.getRelevantInputs();
+    this.relevantOutputs = this.getRelevantOutputs();
+
+    this.setBaseInputsAndOutputs();
+  }
+
+  private createBaseRef(): ComponentRef<TestBtnBaseComponent> {
     this.viewRef.clear();
-
-    const componentFactory =
-      this.cfr.resolveComponentFactory(TestBtnBaseComponent);
-    this.componentRef = this.viewRef.createComponent(componentFactory);
-
-    this.setInputsAndOutputs();
-    this.componentRef.changeDetectorRef.markForCheck();
+    const baseFactory = this.cfr.resolveComponentFactory(TestBtnBaseComponent);
+    return this.viewRef.createComponent(baseFactory);
   }
 
-  private setInputsAndOutputs(): void {
-    const instance = this.componentRef.instance;
-
-    const ownProps = Object.getOwnPropertyNames(
-      this.componentRef.instance
-    ).filter((p) => p !== '__ngContext__') as (keyof TestBtnBaseComponent)[];
-
-    const outputs = ownProps.filter(
-      (p) => this.componentRef.instance[p] instanceof EventEmitter
+  private setBaseInputsAndOutputs(): void {
+    [...this.relevantInputs, ...this.relevantOutputs].forEach(
+      (io) => ((this.baseInstance as any)[io] = this[io])
     );
 
-    outputs.forEach((output) => {
-      if (Object.hasOwnProperty.call(this, output)) {
-        (instance as any)[output] = this[output];
-      }
-    });
+    this.baseCd.markForCheck();
+  }
 
-    this.inputNames.forEach((inputName) => {
-      if (ownProps.includes(inputName as any)) {
-        (instance as any)[inputName] = this[inputName];
-      }
-    });
+  private getRelevantInputs(): (keyof TestBtnBaseComponent)[] {
+    const allBaseProps = this.getBaseProperties();
+    return this.inputNames.filter((inputName) =>
+      allBaseProps.includes(inputName as keyof TestBtnBaseComponent)
+    ) as (keyof TestBtnBaseComponent)[];
+  }
+
+  private getRelevantOutputs(): (keyof TestBtnBaseComponent)[] {
+    const allBaseOutpus = this.getAllBaseOutputs();
+    return allBaseOutpus.filter((outputName) =>
+      Object.hasOwnProperty.call(this, outputName)
+    );
+  }
+
+  private getAllBaseOutputs(): (keyof TestBtnBaseComponent)[] {
+    return this.getBaseProperties().filter(
+      (propName) => this.baseInstance[propName] instanceof EventEmitter
+    );
+  }
+
+  private getBaseProperties(): (keyof TestBtnBaseComponent)[] {
+    return Object.getOwnPropertyNames(this.baseInstance).filter(
+      (propName) => propName !== '__ngContext__'
+    ) as (keyof TestBtnBaseComponent)[];
   }
 }

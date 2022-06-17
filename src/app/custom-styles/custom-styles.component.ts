@@ -80,6 +80,11 @@ export class CustomStylesComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.grid.headerColumns;
   }
 
+  noNeke = 'noJo';
+  c(e: any) {
+    console.log('e', e);
+    this.noNeke += 'o';
+  }
   private get initialDocuments(): AppDocument[] {
     return getDocuments();
   }
