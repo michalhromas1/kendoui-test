@@ -24,11 +24,7 @@
 <hr />
 
 {{ tyjo }}
-<app-test-btn
-  [tyjo]="tyjo"
-  (tyjoChange)="tyjo = $event"
-  noNeke="nojo"
-></app-test-btn>
+<app-test-btn [(tyjo)]="tyjo" noNeke="nojo"></app-test-btn>
 
 <kendo-splitter class="page">
   <kendo-splitter-pane>

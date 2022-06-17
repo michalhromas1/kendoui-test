@@ -24,9 +24,7 @@ export class TestBtnComponent
 {
   @ViewChild('placeholder', { read: ViewContainerRef })
   private viewRef!: ViewContainerRef;
-
   private componentRef!: ComponentRef<TestBtnBaseComponent>;
-
   private inputNames: (keyof TestBtnComponent)[] = [];
 
   constructor(private cfr: ComponentFactoryResolver) {
@@ -49,11 +47,7 @@ export class TestBtnComponent
     this.loadComponent();
   }
 
-  public test(): void {
-    console.log('pjwegpwejogpjg');
-  }
-
-  loadComponent(): void {
+  private loadComponent(): void {
     this.viewRef.clear();
 
     const componentFactory =
@@ -75,10 +69,6 @@ export class TestBtnComponent
       (p) => this.componentRef.instance[p] instanceof EventEmitter
     );
 
-    console.log(this);
-    console.log(instance);
-    console.log('---');
-
     outputs.forEach((output) => {
       if (Object.hasOwnProperty.call(this, output)) {
         (instance as any)[output] = this[output];
@@ -90,8 +80,5 @@ export class TestBtnComponent
         (instance as any)[inputName] = this[inputName];
       }
     });
-
-    console.log(this);
-    console.log(instance);
   }
 }
