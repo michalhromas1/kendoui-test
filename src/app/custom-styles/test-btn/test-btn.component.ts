@@ -3,7 +3,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ComponentFactoryResolver,
   ComponentRef,
   EventEmitter,
   OnChanges,
@@ -33,10 +32,6 @@ export class TestBtnComponent
   private relevantInputs: (keyof TestBtnBaseComponent)[] = [];
   private relevantOutputs: (keyof TestBtnBaseComponent)[] = [];
 
-  constructor(private cfr: ComponentFactoryResolver) {
-    super();
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
     if (!this.baseInstance) {
       this.registeredInputs = this.getRegisteredInputs(changes);
@@ -64,8 +59,7 @@ export class TestBtnComponent
 
   private createBaseRef(): ComponentRef<TestBtnBaseComponent> {
     this.viewRef.clear();
-    const baseFactory = this.cfr.resolveComponentFactory(TestBtnBaseComponent);
-    return this.viewRef.createComponent(baseFactory);
+    return this.viewRef.createComponent(TestBtnBaseComponent);
   }
 
   private setBaseInputsAndOutputs(): void {
