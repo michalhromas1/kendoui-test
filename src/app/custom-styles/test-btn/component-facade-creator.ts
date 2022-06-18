@@ -6,24 +6,38 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 
-export class ComponentFacadeCreator<
-  BaseComponent extends Type<BaseComponent>,
-  FacadeComponent extends Type<FacadeComponent>
-> {
+type Config<BaseComponent, FacadeComponent> = {
+  baseComponent: BaseComponent;
+  facadeComponent: FacadeComponent;
+  facadeViewRef: ViewContainerRef;
+  facadeChanges: SimpleChanges;
+  facadeCd: ChangeDetectorRef;
+};
+
+export class ComponentFacadeCreator<BaseComponent, FacadeComponent> {
   private baseInstance!: BaseComponent;
   private relevantInputs: (keyof BaseComponent)[] = [];
   private relevantOutputs: (keyof BaseComponent)[] = [];
 
-  constructor(
-    private baseComponent: BaseComponent,
-    private facadeComponent: FacadeComponent,
-    private facadeViewRef: ViewContainerRef,
-    private facadeCd: ChangeDetectorRef,
-    private changes: SimpleChanges
-  ) {}
+  constructor(private config: Config<BaseComponent, FacadeComponent>) {
+    this.createBase();
+  }
 
-  createBase(): void {
-    const baseRef = this.facadeViewRef.createComponent(this.baseComponent);
+  setBaseInputsAndOutputs(): void {
+    [...this.relevantInputs, ...this.relevantOutputs].forEach(
+      (io) =>
+        ((this.baseInstance as any)[io] = (this.config.facadeComponent as any)[
+          io
+        ])
+    );
+
+    this.config.facadeCd.markForCheck();
+  }
+
+  private createBase(): void {
+    const baseRef = this.config.facadeViewRef.createComponent(
+      this.config.baseComponent as unknown as Type<BaseComponent>
+    );
 
     this.baseInstance = baseRef.instance;
     this.relevantInputs = this.getRelevantInputs();
@@ -32,32 +46,23 @@ export class ComponentFacadeCreator<
     this.setBaseInputsAndOutputs();
   }
 
-  setBaseInputsAndOutputs(): void {
-    [...this.relevantInputs, ...this.relevantOutputs].forEach(
-      (io) =>
-        ((this.baseInstance as any)[io] = (this.facadeComponent as any)[io])
-    );
-
-    this.facadeCd.markForCheck();
-  }
-
   private getRelevantInputs(): (keyof BaseComponent)[] {
     const allBaseProps = this.getBaseProperties();
     return this.getRegisteredInputs().filter((inputName) =>
-      allBaseProps.includes(inputName as keyof BaseComponent)
-    ) as (keyof BaseComponent)[];
+      allBaseProps.includes(inputName as unknown as keyof BaseComponent)
+    ) as unknown as (keyof BaseComponent)[];
   }
 
   private getRelevantOutputs(): (keyof BaseComponent)[] {
     const allBaseOutpus = this.getAllBaseOutputs();
     return allBaseOutpus.filter((outputName) =>
-      Object.hasOwnProperty.call(this.facadeComponent, outputName)
+      Object.hasOwnProperty.call(this.config.facadeComponent, outputName)
     );
   }
 
   private getRegisteredInputs(): (keyof FacadeComponent)[] {
     return Object.getOwnPropertyNames(
-      this.changes
+      this.config.facadeChanges
     ) as (keyof FacadeComponent)[];
   }
 

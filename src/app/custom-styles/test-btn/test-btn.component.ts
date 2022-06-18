@@ -23,19 +23,21 @@ export class TestBtnComponent
   private cd = inject(ChangeDetectorRef);
   private viewRef = inject(ViewContainerRef);
 
-  private baseFC!: ComponentFacadeCreator<any, any>;
+  private baseFC!: ComponentFacadeCreator<
+    TestBtnBaseComponent,
+    TestBtnComponent
+  >;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!this.baseFC) {
-      this.baseFC = new ComponentFacadeCreator(
-        TestBtnBaseComponent as any,
-        this as any,
-        this.viewRef,
-        this.cd,
-        changes
-      );
+      this.baseFC = new ComponentFacadeCreator({
+        baseComponent: TestBtnBaseComponent as any,
+        facadeComponent: this as any,
+        facadeChanges: changes,
+        facadeViewRef: this.viewRef,
+        facadeCd: this.cd,
+      });
 
-      this.baseFC.createBase();
       return;
     }
 
