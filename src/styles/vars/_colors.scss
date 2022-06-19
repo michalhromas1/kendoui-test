@@ -1,16 +1,29 @@
 @mixin colors() {
+  --c-transparent: transparent;
   --c-white: #ffffff;
   --c-blackish: #1c2127;
+
   --c-blue: #3b82f6;
   --c-blue-dark: #2563eb;
+  --c-blue-ultra-light: #f8fafe;
+
   --c-lightblue: #93c5fd;
   --c-lightblue-dark: #7fbafd;
-  --c-red: #ef4444;
-  --c-red-dark: #dc2626;
-  --c-lightred: #fca5a5;
-  --c-lightred-dark: #fb7d7d;
+  --c-lightblue-ultra-light: #0d1a2f;
+
   --c-orange: #f59e0b;
   --c-orange-dark: #d97706;
+  --c-orange-ultra-light: #fefbf7;
+
   --c-lightorange: #fcd34d;
   --c-lightorange-dark: #fbcb2d;
+  --c-lightorange-ultra-light: #111b28;
+
+  --c-red: #ef4444;
+  --c-red-dark: #dc2626;
+  --c-red-ultra-light: #fef8f8;
+
+  --c-lightred: #fca5a5;
+  --c-lightred-dark: #fb7d7d;
+  --c-lightred-ultra-light: #11182b;
 }

@@ -26,7 +26,7 @@ $_themeName: "light";
     }
 
     &:disabled {
-      @include defineVarsLight(("opacity", 0.6));
+      @include defineVarsLight(("opacity", var(--opacity-sm)));
     }
 
     &#{$selector--outlined} {
@@ -35,7 +35,7 @@ $_themeName: "light";
       &:hover {
         @include overrideVarsLight(("border-color", var(--c-blue)));
         @include defineVarsLight(
-          ("background-color", rgba(59, 130, 246, 0.04))
+          ("background-color", var(--c-blue-ultra-light))
         );
       }
     }
@@ -60,7 +60,7 @@ $_themeName: "light";
       &:hover {
         @include overrideVarsLight(
           ("border-color", var(--c-orange)),
-          ("background-color", rgba(245, 158, 11, 0.04))
+          ("background-color", var(--c-orange-ultra-light))
         );
       }
     }
@@ -85,7 +85,7 @@ $_themeName: "light";
       &:hover {
         @include overrideVarsLight(
           ("border-color", var(--c-red)),
-          ("background-color", rgba(239, 68, 68, 0.04))
+          ("background-color", var(--c-red-ultra-light))
         );
       }
     }
