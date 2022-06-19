@@ -10,10 +10,11 @@ import { InputsModule } from '@progress/kendo-angular-inputs';
 import { LayoutModule } from '@progress/kendo-angular-layout';
 import { TreeViewModule } from '@progress/kendo-angular-treeview';
 import { ForceAutofocusModule } from '../force-autofocus/force-autofocus.module';
-import { CustomStylesComponent } from './custom-styles.component';
+import { CustomStylesWrapperComponent } from './custom-styles-wrapper.component';
+import { CustomStylesComponent } from './custom-styles/custom-styles.component';
 
 @NgModule({
-  declarations: [CustomStylesComponent],
+  declarations: [CustomStylesWrapperComponent, CustomStylesComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -28,6 +29,6 @@ import { CustomStylesComponent } from './custom-styles.component';
     FormsModule,
     TreeViewModule,
   ],
-  exports: [CustomStylesComponent],
+  exports: [CustomStylesWrapperComponent],
 })
 export class CustomStylesModule {}

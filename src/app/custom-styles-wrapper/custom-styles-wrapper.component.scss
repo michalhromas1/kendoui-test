@@ -1,0 +1,35 @@
+@use "/src/styles/vars";
+@use "/src/styles/kendo/button";
+
+:host {
+  @include vars.vars();
+
+  font-family: var(--font-family-default);
+  -webkit-font-smoothing: antialiased;
+  display: block;
+  padding: 1rem;
+  margin: -1rem;
+  height: 100%;
+
+  &[data-theme="light"] {
+    background: #ffffff;
+    color: #000000;
+  }
+
+  &[data-theme="dark"] {
+    background: #071426;
+    color: #ffffff;
+  }
+}
+
+:host ::ng-deep {
+  @include button.base();
+}
+
+:host[data-theme="light"] ::ng-deep {
+  @include button.light();
+}
+
+:host[data-theme="dark"] ::ng-deep {
+  @include button.dark();
+}

@@ -8,7 +8,6 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  HostBinding,
   OnDestroy,
   OnInit,
   QueryList,
@@ -25,7 +24,7 @@ import {
   GroupDescriptor,
 } from '@progress/kendo-data-query';
 import { Subject } from 'rxjs';
-import { deepCopy } from '../helpers';
+import { deepCopy } from '../../helpers';
 import {
   AppDocument,
   AppDocumentFile,
@@ -55,8 +54,6 @@ export class CustomStylesComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('grid') grid!: GridComponent;
   @ViewChild('nameField') nameField!: CdkDropList;
   @ViewChild('attachmentsField') attachmentsField!: CdkDropList;
-
-  @HostBinding('attr.data-theme') theme: string = 'light';
 
   documents = this.initialDocuments;
   preview: AppDocumentFile | undefined;
@@ -125,7 +122,6 @@ export class CustomStylesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.documents = this.checkedProfilesDocuments;
-    this.toggleDarkmode(false);
   }
 
   ngAfterViewInit(): void {
@@ -143,10 +139,6 @@ export class CustomStylesComponent implements OnInit, AfterViewInit, OnDestroy {
   trackBy(_index: number, item: GridItem): number {
     const document = item.data as AppDocument;
     return document.id;
-  }
-
-  toggleDarkmode(darkmode: boolean): void {
-    this.theme = darkmode ? 'dark' : 'light';
   }
 
   reset(): void {
