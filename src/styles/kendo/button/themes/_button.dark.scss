@@ -35,7 +35,7 @@ $_themeName: "dark";
       &:hover {
         @include overrideVarsDark(("border-color", var(--c-lightblue)));
         @include defineVarsDark(
-          ("background-color", rgba(147, 197, 253, 0.04))
+          ("background-color", var(--c-lightblue-ultra-light))
         );
       }
     }
@@ -60,7 +60,7 @@ $_themeName: "dark";
       &:hover {
         @include overrideVarsDark(
           ("border-color", var(--c-lightorange)),
-          ("background-color", rgba(252, 211, 77, 0.04))
+          ("background-color", var(--c-lightorange-ultra-light))
         );
       }
     }
@@ -85,7 +85,7 @@ $_themeName: "dark";
       &:hover {
         @include overrideVarsDark(
           ("border-color", var(--c-lightred)),
-          ("background-color", rgba(252, 165, 165, 0.04))
+          ("background-color", var(--c-lightred-ultra-light))
         );
       }
     }
