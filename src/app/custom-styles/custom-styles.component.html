@@ -1,4 +1,6 @@
-<button class="mr-1 my" kendoButton [disabled]="true">Disabled button</button>
+<button class="mr-1 my btn-primary" kendoButton [disabled]="true">
+  Disabled button
+</button>
 <button class="mr-1 my btn-warning" kendoButton [disabled]="true">
   Disabled button 2
 </button>
@@ -6,7 +8,9 @@
   Disabled button 3
 </button>
 
-<button class="mr-1 my btn--outlined" kendoButton>Outlined button</button>
+<button class="mr-1 my btn-primary btn--outlined" kendoButton>
+  Outlined button
+</button>
 <button class="mr-1 my btn-warning btn--outlined" kendoButton>
   Outlined button 2
 </button>
@@ -14,7 +18,7 @@
   Outlined button 3
 </button>
 
-<button class="mr-1 my btn--outlined" kendoButton [disabled]="true">
+<button class="mr-1 my btn-primary btn--outlined" kendoButton [disabled]="true">
   Outlined disabled button
 </button>
 <button class="mr-1 my btn-warning btn--outlined" kendoButton [disabled]="true">
@@ -24,24 +28,32 @@
   Outlined disabled button 3
 </button>
 
-<button class="mr-1 my btn--rounded" kendoButton>Rounded button</button>
-<button class="mr-1 my btn--rounded btn--outlined" kendoButton>
+<button class="mr-1 my btn-primary btn--rounded" kendoButton>
+  Rounded button
+</button>
+<button class="mr-1 my btn-primary btn--rounded btn--outlined" kendoButton>
   Rounded outlined button
 </button>
 
-<button class="mr-1 my btn--icon" kendoButton><i>#</i>Icon left</button>
-<button class="mr-1 my btn--icon" kendoButton>Icon right<i>#</i></button>
-<button class="mr-1 my btn--icon" kendoButton><i>#</i>Icon both<i>#</i></button>
+<button class="mr-1 my btn-primary btn--icon" kendoButton>
+  <i>#</i>Icon left
+</button>
+<button class="mr-1 my btn-primary btn--icon" kendoButton>
+  Icon right<i>#</i>
+</button>
+<button class="mr-1 my btn-primary btn--icon" kendoButton>
+  <i>#</i>Icon both<i>#</i>
+</button>
 
 <button
-  class="mr-1 my btn--icon btn-warning btn--outlined btn--rounded"
+  class="mr-1 my btn-warning btn--icon btn--outlined btn--rounded"
   kendoButton
   [disabled]="true"
 >
   <i>#</i>Icon both outlined rounded disabled<i>#</i>
 </button>
 
-<button class="mr-1 my btn--icon-only" kendoButton><i>#</i></button>
+<button class="mr-1 my btn-primary btn--icon-only" kendoButton><i>#</i></button>
 <button class="mr-1 my btn-warning btn--icon-only btn--rounded" kendoButton>
   <i>#</i>
 </button>
@@ -62,7 +74,7 @@
     [(ngModel)]="czech"
   ></kendo-switch>
 
-  <button class="mr-1 my" kendoButton (click)="openProfilePicker()">
+  <button class="mr-1 my btn-primary" kendoButton (click)="openProfilePicker()">
     Profiles
   </button>
   <button class="mr-1 my btn-warning" kendoButton (click)="reset()">

@@ -13,6 +13,9 @@
       ("padding-bottom", var(--spacing-xs)),
       ("font-weight", var(--font-weight-strong)),
       ("font-family", var(--font-family-default)),
+      ("width", auto),
+      ("height", auto),
+      ("filter", none),
       (
         "transition",
         (
@@ -23,21 +26,21 @@
       )
     );
 
-    &:disabled {
-      @include defineVars(("filter", none));
+    .k-button-text {
+      @include defineVars(("display", block), ("column-gap", none));
     }
 
-    &#{$selector--outlined} {
-      @include defineVars(("background-color", transparent));
+    &:disabled {
+      @include overrideVars(("filter", none));
     }
 
     &#{$selector--rounded} {
-      @include defineVars(("border-radius", var(--border-radius-lg)));
+      @include overrideVars(("border-radius", var(--border-radius-lg)));
     }
 
     &#{$selector--icon} {
       .k-button-text {
-        @include defineVars(
+        @include overrideVars(
           ("display", flex),
           ("column-gap", var(--spacing-xxs))
         );
@@ -45,7 +48,7 @@
     }
 
     &#{$selector--icon-only} {
-      @include defineVars(
+      @include overrideVars(
         ("width", var(--btn-icon-only-size)),
         ("height", var(--btn-icon-only-size)),
         ("padding-left", 0),
@@ -55,7 +58,7 @@
       );
 
       &#{$selector--rounded} {
-        @include defineVars(("border-radius", 100%));
+        @include overrideVars(("border-radius", 100%));
       }
     }
   }

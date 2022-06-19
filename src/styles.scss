@@ -1,3 +1,10 @@
+@use "styles/vars";
+@use "styles/kendo/button";
+
+:root {
+  @include vars.vars();
+}
+
 html {
   font-size: 14px;
 }
@@ -10,5 +17,26 @@ body {
 body {
   margin: 0;
   padding: 1rem;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-family: var(--font-family-default);
+
+  &[data-theme="light"] {
+    background: #ffffff;
+  }
+
+  &[data-theme="dark"] {
+    background: #071426;
+  }
+}
+
+@include button.base();
+
+body {
+  &[data-theme="light"] {
+    @include button.light();
+  }
+
+  &[data-theme="dark"] {
+    @include button.dark();
+  }
 }

@@ -11,6 +11,7 @@
 $_variantSelectorBase: ".btn";
 
 $selector: ".k-button";
+$selector-primary: _variantSelector("primary");
 $selector-warning: _variantSelector("warning");
 $selector-danger: _variantSelector("danger");
 $selector--outlined: _modifierSelector("outlined");

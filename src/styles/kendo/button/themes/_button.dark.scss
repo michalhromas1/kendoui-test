@@ -13,9 +13,21 @@ $_themeName: "dark";
 @mixin dark() {
   #{$selector} {
     @include defineVarsDark(
+      ("color", var(--c-blackish)),
+      ("opacity", inherit),
+      ("background-color", inherit),
+      ("border-color", inherit)
+    );
+
+    &:disabled {
+      @include overrideVarsDark(("opacity", var(--opacity-md)));
+    }
+  }
+
+  #{$selector-primary} {
+    @include overrideVarsDark(
       ("background-color", var(--c-lightblue)),
-      ("border-color", var(--c-lightblue)),
-      ("color", var(--c-blackish))
+      ("border-color", var(--c-lightblue))
     );
 
     &:hover {
@@ -25,16 +37,15 @@ $_themeName: "dark";
       );
     }
 
-    &:disabled {
-      @include defineVarsDark(("opacity", var(--opacity-md)));
-    }
-
     &#{$selector--outlined} {
-      @include overrideVarsDark(("color", var(--c-lightblue)));
+      @include overrideVarsDark(
+        ("color", var(--c-lightblue)),
+        ("background-color", transparent)
+      );
 
       &:hover {
         @include overrideVarsDark(("border-color", var(--c-lightblue)));
-        @include defineVarsDark(
+        @include overrideVarsDark(
           ("background-color", var(--c-lightblue-ultra-light))
         );
       }
@@ -55,7 +66,10 @@ $_themeName: "dark";
     }
 
     &#{$selector--outlined} {
-      @include overrideVarsDark(("color", var(--c-lightorange)));
+      @include overrideVarsDark(
+        ("color", var(--c-lightorange)),
+        ("background-color", transparent)
+      );
 
       &:hover {
         @include overrideVarsDark(
@@ -80,7 +94,10 @@ $_themeName: "dark";
     }
 
     &#{$selector--outlined} {
-      @include overrideVarsDark(("color", var(--c-lightred)));
+      @include overrideVarsDark(
+        ("color", var(--c-lightred)),
+        ("background-color", transparent)
+      );
 
       &:hover {
         @include overrideVarsDark(
