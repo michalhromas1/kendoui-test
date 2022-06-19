@@ -27,14 +27,6 @@
       )
     );
 
-    #{$selectorText} {
-      @include dynamic-vars.defineVars(
-        $prefixText,
-        ("display", block),
-        ("column-gap", none)
-      );
-    }
-
     &:disabled {
       @include overrideVars(("filter", none));
     }
@@ -67,5 +59,13 @@
         @include overrideVars(("border-radius", 100%));
       }
     }
+  }
+
+  #{$selectorText} {
+    @include dynamic-vars.defineVars(
+      $prefixText,
+      ("display", block),
+      ("column-gap", none)
+    );
   }
 }
