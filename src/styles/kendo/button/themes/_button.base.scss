@@ -3,8 +3,8 @@
 @mixin base() {
   #{$selector} {
     @include defineVars(
-      ("line-height", var(--line-height-reset)),
-      ("background-image", var(--background-image-reset)),
+      ("line-height", normal),
+      ("background-image", none),
       ("border-radius", var(--border-radius-sm)),
       ("font-size", var(--font-size-default)),
       ("padding-left", var(--spacing-sm)),
@@ -24,11 +24,11 @@
     );
 
     &:disabled {
-      @include defineVars(("filter", var(--filter-reset)));
+      @include defineVars(("filter", none));
     }
 
     &#{$selector--outlined} {
-      @include defineVars(("background-color", var(--c-transparent)));
+      @include defineVars(("background-color", transparent));
     }
 
     &#{$selector--rounded} {
