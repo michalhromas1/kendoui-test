@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { AppComponent } from './app.component';
-import { CustomStylesModule } from './custom-styles/custom-styles.module';
+import { CustomStylesModule } from './custom-styles-wrapper/custom-styles.module';
 import { DocumentsPageModule } from './documents-page/documents-page.module';
 import { GridCellEditModule } from './grid-cell-edit/grid-cell-edit.module';
 import { GridRowEditModule } from './grid-row-edit/grid-row-edit.module';

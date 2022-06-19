@@ -1,0 +1,14 @@
+<div style="display: flex; align-items: center; column-gap: 0.75rem">
+  Light
+  <kendo-switch
+    class="my"
+    [onLabel]="'🌛'"
+    offLabel="🌞"
+    [(ngModel)]="darkmode"
+    (ngModelChange)="toggleDarkmode($event)"
+  ></kendo-switch>
+  Dark
+</div>
+
+<hr />
+<app-custom-styles></app-custom-styles>
