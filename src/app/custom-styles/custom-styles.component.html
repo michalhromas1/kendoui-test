@@ -1,20 +1,3 @@
-<kendo-switch
-  class="mr-1 my"
-  onLabel="CZE"
-  offLabel="ENG"
-  [(ngModel)]="czech"
-></kendo-switch>
-
-<button class="mr-1 my" kendoButton (click)="openProfilePicker()">
-  Profiles
-</button>
-<button class="mr-1 my btn-warning" kendoButton (click)="reset()">Reset</button>
-<button class="mr-1 my btn-danger" kendoButton (click)="deleteSelected()">
-  Delete selected
-</button>
-
-<span class="mr-1">||</span>
-
 <button class="mr-1 my" kendoButton [disabled]="true">Disabled button</button>
 <button class="mr-1 my btn-warning" kendoButton [disabled]="true">
   Disabled button 2
@@ -63,19 +46,40 @@
   <i>#</i>
 </button>
 <button
-  class="mr-1 my btn-danger btn--outlined btn--icon-only btn--rounded"
+  class="my btn-danger btn--outlined btn--icon-only btn--rounded"
   kendoButton
 >
   <i>#</i>
 </button>
 
-<kendo-switch
-  class="my"
-  [onLabel]="'🌛'"
-  offLabel="🌞"
-  [(ngModel)]="darkmode"
-  (ngModelChange)="toggleDarkmode($event)"
-></kendo-switch>
+<hr />
+
+<div>
+  <kendo-switch
+    class="mr-1 my"
+    onLabel="CZE"
+    offLabel="ENG"
+    [(ngModel)]="czech"
+  ></kendo-switch>
+
+  <button class="mr-1 my" kendoButton (click)="openProfilePicker()">
+    Profiles
+  </button>
+  <button class="mr-1 my btn-warning" kendoButton (click)="reset()">
+    Reset
+  </button>
+  <button class="mr-1 my btn-danger" kendoButton (click)="deleteSelected()">
+    Delete selected
+  </button>
+
+  <kendo-switch
+    class="my mr-1"
+    [onLabel]="'🌛'"
+    offLabel="🌞"
+    [(ngModel)]="darkmode"
+    (ngModelChange)="toggleDarkmode($event)"
+  ></kendo-switch>
+</div>
 
 <hr />
 
