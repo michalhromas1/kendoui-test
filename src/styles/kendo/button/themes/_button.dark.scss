@@ -26,7 +26,7 @@ $_themeName: "dark";
     }
 
     &:disabled {
-      @include defineVarsDark(("opacity", 0.4));
+      @include defineVarsDark(("opacity", var(--opacity-md)));
     }
 
     &#{$selector--outlined} {

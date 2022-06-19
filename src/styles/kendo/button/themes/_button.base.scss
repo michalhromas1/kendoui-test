@@ -24,15 +24,15 @@
     );
 
     &:disabled {
-      @include defineVars(("filter", none));
+      @include defineVars(("filter", var(--filter-reset)));
     }
 
     &#{$selector--outlined} {
-      @include defineVars(("background-color", transparent));
+      @include defineVars(("background-color", var(--c-transparent)));
     }
 
     &#{$selector--rounded} {
-      @include defineVars(("border-radius", 2rem));
+      @include defineVars(("border-radius", var(--border-radius-lg)));
     }
   }
 }
