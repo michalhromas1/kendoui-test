@@ -4,8 +4,13 @@
   @return createVariantSelector($selector, $_variantSelectorBase, $variant);
 }
 
+@function _modifierSelector($modifier) {
+  @return createModifierSelector($_variantSelectorBase, $modifier);
+}
+
 $_variantSelectorBase: ".btn";
 
 $selector: ".k-button";
 $selector-warning: _variantSelector("warning");
 $selector-danger: _variantSelector("danger");
+$selector--outlined: _modifierSelector("outlined");

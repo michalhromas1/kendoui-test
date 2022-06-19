@@ -61,6 +61,10 @@
   $result: ();
 
   @each $propKeyValuePair in $propKeyValuePairs {
+    @if list.length($propKeyValuePair) != 2 {
+      @error _createErrorInvalidPropertyKeyValuePairLength($propKeyValuePair);
+    }
+
     $propKey: list.nth($propKeyValuePair, 1);
     $value: list.nth($propKeyValuePair, 2);
     $prop: prop-list.getProp($propKey);
@@ -75,6 +79,10 @@
   }
 
   @return $result;
+}
+
+@function _createErrorInvalidPropertyKeyValuePairLength($propKeyValuePair) {
+  @return "_dynamic-vars.scss: Property key-value pair has invalid length - which should be 2 (#{$propKeyValuePair}). This might happen when the css value is itself comma-separated (e.g. for the transition property) - in that case, wrap the whole value in parenthesis.";
 }
 
 @function _createErrorInvalidPropertyKey($propKey) {

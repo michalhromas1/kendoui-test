@@ -1,3 +1,7 @@
 @function createVariantSelector($baseSelector, $variantSelectorBase, $variant) {
   @return "#{$baseSelector}#{$variantSelectorBase}-#{$variant}";
 }
+
+@function createModifierSelector($modifierSelectorBase, $modifier) {
+  @return "#{$modifierSelectorBase}--#{$modifier}";
+}

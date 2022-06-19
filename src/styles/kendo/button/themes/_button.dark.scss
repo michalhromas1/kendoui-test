@@ -28,6 +28,17 @@ $_themeName: "dark";
     &:disabled {
       @include defineVarsDark(("opacity", 0.4));
     }
+
+    &#{$selector--outlined} {
+      @include overrideVarsDark(("color", var(--c-lightblue)));
+
+      &:hover {
+        @include overrideVarsDark(("border-color", var(--c-lightblue)));
+        @include defineVarsDark(
+          ("background-color", rgba(147, 197, 253, 0.04))
+        );
+      }
+    }
   }
 
   #{$selector-warning} {
@@ -42,6 +53,17 @@ $_themeName: "dark";
         ("border-color", var(--c-lightorange-dark))
       );
     }
+
+    &#{$selector--outlined} {
+      @include overrideVarsDark(("color", var(--c-lightorange)));
+
+      &:hover {
+        @include overrideVarsDark(
+          ("border-color", var(--c-lightorange)),
+          ("background-color", rgba(252, 211, 77, 0.04))
+        );
+      }
+    }
   }
 
   #{$selector-danger} {
@@ -55,6 +77,17 @@ $_themeName: "dark";
         ("background-color", var(--c-lightred-dark)),
         ("border-color", var(--c-lightred-dark))
       );
+    }
+
+    &#{$selector--outlined} {
+      @include overrideVarsDark(("color", var(--c-lightred)));
+
+      &:hover {
+        @include overrideVarsDark(
+          ("border-color", var(--c-lightred)),
+          ("background-color", rgba(252, 165, 165, 0.04))
+        );
+      }
     }
   }
 }
