@@ -34,5 +34,14 @@
     &#{$selector--rounded} {
       @include defineVars(("border-radius", var(--border-radius-lg)));
     }
+
+    &#{$selector--icon} {
+      .k-button-text {
+        @include defineVars(
+          ("display", flex),
+          ("column-gap", var(--spacing-xxs))
+        );
+      }
+    }
   }
 }
