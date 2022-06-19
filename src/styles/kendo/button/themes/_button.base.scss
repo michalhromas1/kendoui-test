@@ -3,8 +3,8 @@
 @mixin base() {
   #{$selector} {
     @include defineVars(
-      ("line-height", var(--line-height-reset)),
-      ("background-image", var(--background-image-reset)),
+      ("line-height", normal),
+      ("background-image", none),
       ("border-radius", var(--border-radius-sm)),
       ("font-size", var(--font-size-default)),
       ("padding-left", var(--spacing-sm)),
@@ -24,15 +24,39 @@
     );
 
     &:disabled {
-      @include defineVars(("filter", var(--filter-reset)));
+      @include defineVars(("filter", none));
     }
 
     &#{$selector--outlined} {
-      @include defineVars(("background-color", var(--c-transparent)));
+      @include defineVars(("background-color", transparent));
     }
 
     &#{$selector--rounded} {
       @include defineVars(("border-radius", var(--border-radius-lg)));
+    }
+
+    &#{$selector--icon} {
+      .k-button-text {
+        @include defineVars(
+          ("display", flex),
+          ("column-gap", var(--spacing-xxs))
+        );
+      }
+    }
+
+    &#{$selector--icon-only} {
+      @include defineVars(
+        ("width", var(--btn-icon-only-size)),
+        ("height", var(--btn-icon-only-size)),
+        ("padding-left", 0),
+        ("padding-right", 0),
+        ("padding-top", 0),
+        ("padding-bottom", 0)
+      );
+
+      &#{$selector--rounded} {
+        @include defineVars(("border-radius", 100%));
+      }
     }
   }
 }

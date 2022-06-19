@@ -1,20 +1,3 @@
-<kendo-switch
-  class="mr-1 my"
-  onLabel="CZE"
-  offLabel="ENG"
-  [(ngModel)]="czech"
-></kendo-switch>
-
-<button class="mr-1 my" kendoButton (click)="openProfilePicker()">
-  Profiles
-</button>
-<button class="mr-1 my btn-warning" kendoButton (click)="reset()">Reset</button>
-<button class="mr-1 my btn-danger" kendoButton (click)="deleteSelected()">
-  Delete selected
-</button>
-
-<span class="mr-1">||</span>
-
 <button class="mr-1 my" kendoButton [disabled]="true">Disabled button</button>
 <button class="mr-1 my btn-warning" kendoButton [disabled]="true">
   Disabled button 2
@@ -42,18 +25,61 @@
 </button>
 
 <button class="mr-1 my btn--rounded" kendoButton>Rounded button</button>
-
 <button class="mr-1 my btn--rounded btn--outlined" kendoButton>
   Rounded outlined button
 </button>
 
-<kendo-switch
-  class="my"
-  [onLabel]="'🌛'"
-  offLabel="🌞"
-  [(ngModel)]="darkmode"
-  (ngModelChange)="toggleDarkmode($event)"
-></kendo-switch>
+<button class="mr-1 my btn--icon" kendoButton><i>#</i>Icon left</button>
+<button class="mr-1 my btn--icon" kendoButton>Icon right<i>#</i></button>
+<button class="mr-1 my btn--icon" kendoButton><i>#</i>Icon both<i>#</i></button>
+
+<button
+  class="mr-1 my btn--icon btn-warning btn--outlined btn--rounded"
+  kendoButton
+  [disabled]="true"
+>
+  <i>#</i>Icon both outlined rounded disabled<i>#</i>
+</button>
+
+<button class="mr-1 my btn--icon-only" kendoButton><i>#</i></button>
+<button class="mr-1 my btn-warning btn--icon-only btn--rounded" kendoButton>
+  <i>#</i>
+</button>
+<button
+  class="my btn-danger btn--outlined btn--icon-only btn--rounded"
+  kendoButton
+>
+  <i>#</i>
+</button>
+
+<hr />
+
+<div>
+  <kendo-switch
+    class="mr-1 my"
+    onLabel="CZE"
+    offLabel="ENG"
+    [(ngModel)]="czech"
+  ></kendo-switch>
+
+  <button class="mr-1 my" kendoButton (click)="openProfilePicker()">
+    Profiles
+  </button>
+  <button class="mr-1 my btn-warning" kendoButton (click)="reset()">
+    Reset
+  </button>
+  <button class="mr-1 my btn-danger" kendoButton (click)="deleteSelected()">
+    Delete selected
+  </button>
+
+  <kendo-switch
+    class="my mr-1"
+    [onLabel]="'🌛'"
+    offLabel="🌞"
+    [(ngModel)]="darkmode"
+    (ngModelChange)="toggleDarkmode($event)"
+  ></kendo-switch>
+</div>
 
 <hr />
 
