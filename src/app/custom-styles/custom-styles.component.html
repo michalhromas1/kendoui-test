@@ -1,20 +1,48 @@
 <kendo-switch
-  class="mr-1"
+  class="mr-1 my"
   onLabel="CZE"
   offLabel="ENG"
   [(ngModel)]="czech"
 ></kendo-switch>
 
-<button class="mr-1" kendoButton (click)="openProfilePicker()">Profiles</button>
-<button class="mr-1 btn-warning" kendoButton (click)="reset()">Reset</button>
-<button class="mr-1 btn-danger" kendoButton (click)="deleteSelected()">
+<button class="mr-1 my" kendoButton (click)="openProfilePicker()">
+  Profiles
+</button>
+<button class="mr-1 my btn-warning" kendoButton (click)="reset()">Reset</button>
+<button class="mr-1 my btn-danger" kendoButton (click)="deleteSelected()">
   Delete selected
 </button>
-<button class="mr-1" kendoButton [disabled]="true" (click)="deleteSelected()">
-  Disabled button
+
+<span class="mr-1">||</span>
+
+<button class="mr-1 my" kendoButton [disabled]="true">Disabled button</button>
+<button class="mr-1 my btn-warning" kendoButton [disabled]="true">
+  Disabled button 2
+</button>
+<button class="mr-1 my btn-danger" kendoButton [disabled]="true">
+  Disabled button 3
+</button>
+
+<button class="mr-1 my btn--outlined" kendoButton>Outlined button</button>
+<button class="mr-1 my btn-warning btn--outlined" kendoButton>
+  Outlined button 2
+</button>
+<button class="mr-1 my btn-danger btn--outlined" kendoButton>
+  Outlined button 3
+</button>
+
+<button class="mr-1 my btn--outlined" kendoButton [disabled]="true">
+  Outlined disabled button
+</button>
+<button class="mr-1 my btn-warning btn--outlined" kendoButton [disabled]="true">
+  Outlined disabled button 2
+</button>
+<button class="mr-1 my btn-danger btn--outlined" kendoButton [disabled]="true">
+  Outlined disabled button 3
 </button>
 
 <kendo-switch
+  class="my"
   [onLabel]="'🌛'"
   offLabel="🌞"
   [(ngModel)]="darkmode"

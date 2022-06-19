@@ -24,5 +24,9 @@
     &:disabled {
       @include defineVars(("filter", none));
     }
+
+    &#{$selector--outlined} {
+      @include defineVars(("background-color", transparent));
+    }
   }
 }
