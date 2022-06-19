@@ -43,5 +43,20 @@
         );
       }
     }
+
+    &#{$selector--icon-only} {
+      @include defineVars(
+        ("width", var(--btn-icon-only-size)),
+        ("height", var(--btn-icon-only-size)),
+        ("padding-left", 0),
+        ("padding-right", 0),
+        ("padding-top", 0),
+        ("padding-bottom", 0)
+      );
+
+      &#{$selector--rounded} {
+        @include defineVars(("border-radius", 100%));
+      }
+    }
   }
 }
