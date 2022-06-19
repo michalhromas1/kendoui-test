@@ -1,0 +1,4 @@
+@use "../prefix" as *;
+
+$prefix: withKendoPrefix("button");
+$prefixText: withKendoPrefix("buttonText");

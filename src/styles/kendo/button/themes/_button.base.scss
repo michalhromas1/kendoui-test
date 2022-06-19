@@ -1,3 +1,4 @@
+@use "/src/styles/core/dynamic-vars";
 @use "../button" as *;
 
 @mixin base() {
@@ -26,8 +27,12 @@
       )
     );
 
-    .k-button-text {
-      @include defineVars(("display", block), ("column-gap", none));
+    #{$selectorText} {
+      @include dynamic-vars.defineVars(
+        $prefixText,
+        ("display", block),
+        ("column-gap", none)
+      );
     }
 
     &:disabled {
@@ -39,8 +44,9 @@
     }
 
     &#{$selector--icon} {
-      .k-button-text {
-        @include overrideVars(
+      #{$selectorText} {
+        @include dynamic-vars.overrideVars(
+          $prefixText,
           ("display", flex),
           ("column-gap", var(--spacing-xxs))
         );
