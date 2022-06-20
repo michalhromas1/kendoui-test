@@ -1,5 +1,5 @@
 @use "/src/styles/core/dynamic-vars";
-@use "../button" as *;
+@use "../config" as *;
 
 @mixin base() {
   #{$selector} {
