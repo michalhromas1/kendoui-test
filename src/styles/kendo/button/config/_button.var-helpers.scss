@@ -5,12 +5,20 @@
   @include usetVars($prefix, $propKeyValuePairs...);
 }
 
+@mixin useVarsPrefixed($propKeyValuePairs...) {
+  @include useVars($prefix, $propKeyValuePairs...);
+}
+
 @mixin setVarsPrefixed($propKeyValuePairs...) {
   @include setVars($prefix, $propKeyValuePairs...);
 }
 
 @mixin usetVarsThemedPrefixed($theme, $propKeyValuePairs...) {
   @include usetVarsThemed($prefix, $theme, $propKeyValuePairs...);
+}
+
+@mixin useVarsThemedPrefixed($theme, $propKeyValuePairs...) {
+  @include useVarsThemed($prefix, $theme, $propKeyValuePairs...);
 }
 
 @mixin setVarsThemedPrefixed($theme, $propKeyValuePairs...) {

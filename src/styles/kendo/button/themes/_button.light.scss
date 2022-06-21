@@ -6,6 +6,10 @@ $_themeName: "light";
   @include usetVarsThemedPrefixed($_themeName, $propKeyValuePairs...);
 }
 
+@mixin useVarsLight($propKeyValuePairs...) {
+  @include useVarsThemedPrefixed($_themeName, $propKeyValuePairs...);
+}
+
 @mixin setVarsLight($propKeyValuePairs...) {
   @include setVarsThemedPrefixed($_themeName, $propKeyValuePairs...);
 }
