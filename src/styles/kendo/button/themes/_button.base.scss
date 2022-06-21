@@ -3,7 +3,7 @@
 
 @mixin base() {
   #{$selector} {
-    @include defineVars(
+    @include usetVarsPrefixed(
       ("line-height", normal),
       ("background-image", none),
       ("border-radius", var(--border-radius-sm)),
@@ -28,25 +28,23 @@
     );
 
     &:disabled {
-      @include overrideVars(("filter", none));
+      @include setVarsPrefixed(("filter", none));
     }
 
     &#{$selector--rounded} {
-      @include overrideVars(("border-radius", var(--border-radius-lg)));
+      @include setVarsPrefixed(("border-radius", var(--border-radius-lg)));
     }
 
     &#{$selector--icon} {
-      #{$selectorText} {
-        @include dynamic-vars.overrideVars(
-          $prefixText,
-          ("display", flex),
-          ("column-gap", var(--spacing-xxs))
-        );
-      }
+      @include setVars(
+        $prefixText,
+        ("display", flex),
+        ("column-gap", var(--spacing-xxs))
+      );
     }
 
     &#{$selector--icon-only} {
-      @include overrideVars(
+      @include setVarsPrefixed(
         ("width", var(--btn-icon-only-size)),
         ("height", var(--btn-icon-only-size)),
         ("padding-left", 0),
@@ -56,16 +54,16 @@
       );
 
       &#{$selector--rounded} {
-        @include overrideVars(("border-radius", 100%));
+        @include setVarsPrefixed(("border-radius", 100%));
       }
     }
   }
 
-  #{$selectorText} {
-    @include dynamic-vars.defineVars(
-      $prefixText,
-      ("display", block),
-      ("column-gap", none)
-    );
+  #{$selector} {
+    @include setVars($prefixText, ("display", block), ("column-gap", none));
+
+    #{$selectorText} {
+      @include useVars($prefixText, ("display"), ("column-gap"));
+    }
   }
 }

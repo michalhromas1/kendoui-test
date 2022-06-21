@@ -2,17 +2,21 @@
 
 $_themeName: "light";
 
-@mixin defineVarsLight($propKeyValuePairs...) {
-  @include defineVarsThemed($_themeName, $propKeyValuePairs...);
+@mixin usetVarsLight($propKeyValuePairs...) {
+  @include usetVarsThemedPrefixed($_themeName, $propKeyValuePairs...);
 }
 
-@mixin overrideVarsLight($propKeyValuePairs...) {
-  @include overrideVarsThemed($_themeName, $propKeyValuePairs...);
+@mixin useVarsLight($propKeyValuePairs...) {
+  @include useVarsThemedPrefixed($_themeName, $propKeyValuePairs...);
+}
+
+@mixin setVarsLight($propKeyValuePairs...) {
+  @include setVarsThemedPrefixed($_themeName, $propKeyValuePairs...);
 }
 
 @mixin light() {
   #{$selector} {
-    @include defineVarsLight(
+    @include usetVarsLight(
       ("color", var(--c-white)),
       ("opacity", inherit),
       ("background-color", inherit),
@@ -20,59 +24,57 @@ $_themeName: "light";
     );
 
     &:disabled {
-      @include overrideVarsLight(("opacity", var(--opacity-sm)));
+      @include setVarsLight(("opacity", var(--opacity-sm)));
     }
   }
 
   #{$selector-primary} {
-    @include overrideVarsLight(
+    @include setVarsLight(
       ("background-color", var(--c-blue)),
       ("border-color", var(--c-blue))
     );
 
     &:hover {
-      @include overrideVarsLight(
+      @include setVarsLight(
         ("background-color", var(--c-blue-dark)),
         ("border-color", var(--c-blue-dark))
       );
     }
 
     &#{$selector--outlined} {
-      @include overrideVarsLight(
+      @include setVarsLight(
         ("color", var(--c-blue)),
         ("background-color", transparent)
       );
 
       &:hover {
-        @include overrideVarsLight(("border-color", var(--c-blue)));
-        @include overrideVarsLight(
-          ("background-color", var(--c-blue-ultra-light))
-        );
+        @include setVarsLight(("border-color", var(--c-blue)));
+        @include setVarsLight(("background-color", var(--c-blue-ultra-light)));
       }
     }
   }
 
   #{$selector-warning} {
-    @include overrideVarsLight(
+    @include setVarsLight(
       ("background-color", var(--c-orange)),
       ("border-color", var(--c-orange))
     );
 
     &:hover {
-      @include overrideVarsLight(
+      @include setVarsLight(
         ("background-color", var(--c-orange-dark)),
         ("border-color", var(--c-orange-dark))
       );
     }
 
     &#{$selector--outlined} {
-      @include overrideVarsLight(
+      @include setVarsLight(
         ("color", var(--c-orange)),
         ("background-color", transparent)
       );
 
       &:hover {
-        @include overrideVarsLight(
+        @include setVarsLight(
           ("border-color", var(--c-orange)),
           ("background-color", var(--c-orange-ultra-light))
         );
@@ -81,26 +83,26 @@ $_themeName: "light";
   }
 
   #{$selector-danger} {
-    @include overrideVarsLight(
+    @include setVarsLight(
       ("background-color", var(--c-red)),
       ("border-color", var(--c-red))
     );
 
     &:hover {
-      @include overrideVarsLight(
+      @include setVarsLight(
         ("background-color", var(--c-red-dark)),
         ("border-color", var(--c-red-dark))
       );
     }
 
     &#{$selector--outlined} {
-      @include overrideVarsLight(
+      @include setVarsLight(
         ("color", var(--c-red)),
         ("background-color", transparent)
       );
 
       &:hover {
-        @include overrideVarsLight(
+        @include setVarsLight(
           ("border-color", var(--c-red)),
           ("background-color", var(--c-red-ultra-light))
         );

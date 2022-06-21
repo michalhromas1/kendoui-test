@@ -1,5 +1,9 @@
 @use "/src/styles/core/selector" as *;
 
+@function _selector($baseSelector) {
+  @return "#{$_variantSelectorBase}#{$baseSelector}";
+}
+
 @function _variantSelector($variant) {
   @return createVariantSelector($selector, $_variantSelectorBase, $variant);
 }
@@ -10,7 +14,7 @@
 
 $_variantSelectorBase: ".btn";
 
-$selector: ".k-button.btn";
+$selector: _selector(".k-button");
 $selectorText: ".k-button-text";
 
 $selector-primary: _variantSelector("primary");

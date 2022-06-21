@@ -1,26 +1,26 @@
 @use "button.prefixes" as *;
-@use "/src/styles/core/dynamic-vars";
+@use "/src/styles/core/dynamic-vars" as *;
 
-@mixin defineVars($propKeyValuePairs...) {
-  @include dynamic-vars.defineVars($prefix, $propKeyValuePairs...);
+@mixin usetVarsPrefixed($propKeyValuePairs...) {
+  @include usetVars($prefix, $propKeyValuePairs...);
 }
 
-@mixin overrideVars($propKeyValuePairs...) {
-  @include dynamic-vars.overrideVars($prefix, $propKeyValuePairs...);
+@mixin useVarsPrefixed($propKeyValuePairs...) {
+  @include useVars($prefix, $propKeyValuePairs...);
 }
 
-@mixin defineVarsThemed($theme, $propKeyValuePairs...) {
-  @include dynamic-vars.defineVarsThemed(
-    $prefix,
-    $theme,
-    $propKeyValuePairs...
-  );
+@mixin setVarsPrefixed($propKeyValuePairs...) {
+  @include setVars($prefix, $propKeyValuePairs...);
 }
 
-@mixin overrideVarsThemed($theme, $propKeyValuePairs...) {
-  @include dynamic-vars.overrideVarsThemed(
-    $prefix,
-    $theme,
-    $propKeyValuePairs...
-  );
+@mixin usetVarsThemedPrefixed($theme, $propKeyValuePairs...) {
+  @include usetVarsThemed($prefix, $theme, $propKeyValuePairs...);
+}
+
+@mixin useVarsThemedPrefixed($theme, $propKeyValuePairs...) {
+  @include useVarsThemed($prefix, $theme, $propKeyValuePairs...);
+}
+
+@mixin setVarsThemedPrefixed($theme, $propKeyValuePairs...) {
+  @include setVarsThemed($prefix, $theme, $propKeyValuePairs...);
 }
