@@ -3,11 +3,11 @@
 $_themeName: "dark";
 
 @mixin defineVarsDark($propKeyValuePairs...) {
-  @include defineVarsThemed($_themeName, $propKeyValuePairs...);
+  @include defineVarsThemedPrefixed($_themeName, $propKeyValuePairs...);
 }
 
 @mixin overrideVarsDark($propKeyValuePairs...) {
-  @include overrideVarsThemed($_themeName, $propKeyValuePairs...);
+  @include overrideVarsThemedPrefixed($_themeName, $propKeyValuePairs...);
 }
 
 @mixin dark() {

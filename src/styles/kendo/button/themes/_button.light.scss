@@ -3,11 +3,11 @@
 $_themeName: "light";
 
 @mixin defineVarsLight($propKeyValuePairs...) {
-  @include defineVarsThemed($_themeName, $propKeyValuePairs...);
+  @include defineVarsThemedPrefixed($_themeName, $propKeyValuePairs...);
 }
 
 @mixin overrideVarsLight($propKeyValuePairs...) {
-  @include overrideVarsThemed($_themeName, $propKeyValuePairs...);
+  @include overrideVarsThemedPrefixed($_themeName, $propKeyValuePairs...);
 }
 
 @mixin light() {
