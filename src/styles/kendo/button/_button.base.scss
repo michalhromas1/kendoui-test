@@ -2,9 +2,8 @@
 @use "./button.children" as *;
 
 @mixin base() {
-  @include children();
-
   #{$selector} {
+    @include children();
     @include usetVarsPrefixed(
       ("line-height", normal),
       ("background-image", none),
