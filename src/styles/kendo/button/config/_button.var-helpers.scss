@@ -1,4 +1,4 @@
-@use "button.prefixes" as *;
+@use "./button.prefixes" as *;
 @use "/src/styles/core/dynamic-vars" as *;
 
 @mixin usetVarsPrefixed($propKeyValuePairs...) {

@@ -1,7 +1,9 @@
-@use "/src/styles/core/dynamic-vars";
-@use "../config" as *;
+@use "./config" as *;
+@use "./button.children" as *;
 
 @mixin base() {
+  @include children();
+
   #{$selector} {
     @include usetVarsPrefixed(
       ("line-height", normal),
@@ -56,14 +58,6 @@
       &#{$selector--rounded} {
         @include setVarsPrefixed(("border-radius", 100%));
       }
-    }
-  }
-
-  #{$selector} {
-    @include setVars($prefixText, ("display", block), ("column-gap", none));
-
-    #{$selectorText} {
-      @include useVars($prefixText, ("display"), ("column-gap"));
     }
   }
 }
