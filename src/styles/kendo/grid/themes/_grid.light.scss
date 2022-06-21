@@ -1,6 +1,6 @@
 @use "../config" as *;
 
-$_themeName: "light";
+$_themeName: $themeName-light;
 
 @mixin usetVarsLight($propKeyValuePairs...) {
   @include usetVarsThemedPrefixed($_themeName, $propKeyValuePairs...);

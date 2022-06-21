@@ -1,6 +1,6 @@
 @use "../config" as *;
 
-$_themeName: "dark";
+$_themeName: $themeName-dark;
 
 @mixin usetVarsDark($propKeyValuePairs...) {
   @include usetVarsThemedPrefixed($_themeName, $propKeyValuePairs...);
