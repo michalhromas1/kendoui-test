@@ -3,7 +3,7 @@
 
 @mixin base() {
   #{$selector} {
-    @include defineVarsPrefixed(
+    @include usetVarsPrefixed(
       ("line-height", normal),
       ("background-image", none),
       ("border-radius", var(--border-radius-sm)),
@@ -28,11 +28,11 @@
     );
 
     &:disabled {
-      @include overrideVarsPrefixed(("filter", none));
+      @include setVarsPrefixed(("filter", none));
     }
 
     &#{$selector--rounded} {
-      @include overrideVarsPrefixed(("border-radius", var(--border-radius-lg)));
+      @include setVarsPrefixed(("border-radius", var(--border-radius-lg)));
     }
 
     &#{$selector--icon} {
@@ -46,7 +46,7 @@
     }
 
     &#{$selector--icon-only} {
-      @include overrideVarsPrefixed(
+      @include setVarsPrefixed(
         ("width", var(--btn-icon-only-size)),
         ("height", var(--btn-icon-only-size)),
         ("padding-left", 0),
@@ -56,12 +56,12 @@
       );
 
       &#{$selector--rounded} {
-        @include overrideVarsPrefixed(("border-radius", 100%));
+        @include setVarsPrefixed(("border-radius", 100%));
       }
     }
   }
 
   #{$selectorText} {
-    @include regsetVars($prefixText, ("display", block), ("column-gap", none));
+    @include usetVars($prefixText, ("display", block), ("column-gap", none));
   }
 }

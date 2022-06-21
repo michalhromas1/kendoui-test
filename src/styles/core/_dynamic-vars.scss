@@ -1,8 +1,8 @@
 @use "sass:list";
 @use "./prop-list";
 
-@mixin regsetVars($prefix, $propKeyValuePairs...) {
-  @include regsetVarsThemed($prefix, null, $propKeyValuePairs...);
+@mixin usetVars($prefix, $propKeyValuePairs...) {
+  @include usetVarsThemed($prefix, null, $propKeyValuePairs...);
 }
 
 @mixin useVars($prefix, $propKeyValuePairs...) {
@@ -13,7 +13,7 @@
   @include setVarsThemed($prefix, null, $propKeyValuePairs...);
 }
 
-@mixin regsetVarsThemed($prefix, $theme, $propKeyValuePairs...) {
+@mixin usetVarsThemed($prefix, $theme, $propKeyValuePairs...) {
   @include _renderVars($prefix, $theme, true, true, $propKeyValuePairs...);
 }
 
