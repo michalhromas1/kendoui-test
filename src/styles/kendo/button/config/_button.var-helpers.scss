@@ -2,17 +2,17 @@
 @use "/src/styles/core/dynamic-vars" as *;
 
 @mixin defineVarsPrefixed($propKeyValuePairs...) {
-  @include defineVars($prefix, $propKeyValuePairs...);
+  @include regsetVars($prefix, $propKeyValuePairs...);
 }
 
 @mixin overrideVarsPrefixed($propKeyValuePairs...) {
-  @include overrideVars($prefix, $propKeyValuePairs...);
+  @include setVars($prefix, $propKeyValuePairs...);
 }
 
 @mixin defineVarsThemedPrefixed($theme, $propKeyValuePairs...) {
-  @include defineVarsThemed($prefix, $theme, $propKeyValuePairs...);
+  @include regsetVarsThemed($prefix, $theme, $propKeyValuePairs...);
 }
 
 @mixin overrideVarsThemedPrefixed($theme, $propKeyValuePairs...) {
-  @include overrideVarsThemed($prefix, $theme, $propKeyValuePairs...);
+  @include setVarsThemed($prefix, $theme, $propKeyValuePairs...);
 }

@@ -37,7 +37,7 @@
 
     &#{$selector--icon} {
       #{$selectorText} {
-        @include overrideVars(
+        @include setVars(
           $prefixText,
           ("display", flex),
           ("column-gap", var(--spacing-xxs))
@@ -62,6 +62,6 @@
   }
 
   #{$selectorText} {
-    @include defineVars($prefixText, ("display", block), ("column-gap", none));
+    @include regsetVars($prefixText, ("display", block), ("column-gap", none));
   }
 }

@@ -1,39 +1,55 @@
 @use "sass:list";
 @use "./prop-list";
 
-@mixin defineVars($prefix, $propKeyValuePairs...) {
-  @include defineVarsThemed($prefix, null, $propKeyValuePairs...);
+@mixin regsetVars($prefix, $propKeyValuePairs...) {
+  @include regsetVarsThemed($prefix, null, $propKeyValuePairs...);
 }
 
-@mixin overrideVars($prefix, $propKeyValuePairs...) {
-  @include overrideVarsThemed($prefix, null, $propKeyValuePairs...);
+@mixin useVars($prefix, $propKeyValuePairs...) {
+  @include useVarsThemed($prefix, null, $propKeyValuePairs...);
 }
 
-@mixin defineVarsThemed($prefix, $theme, $propKeyValuePairs...) {
-  @include _renderVars($prefix, $theme, true, $propKeyValuePairs...);
+@mixin setVars($prefix, $propKeyValuePairs...) {
+  @include setVarsThemed($prefix, null, $propKeyValuePairs...);
 }
 
-@mixin overrideVarsThemed($prefix, $theme, $propKeyValuePairs...) {
-  @include _renderVars($prefix, $theme, false, $propKeyValuePairs...);
+@mixin regsetVarsThemed($prefix, $theme, $propKeyValuePairs...) {
+  @include _renderVars($prefix, $theme, true, true, $propKeyValuePairs...);
 }
 
-@mixin _renderVars($prefix, $theme, $renderUsages, $propKeyValuePairs...) {
-  $definitionsAndUsages: _createDefinitionsAndUsages(
+@mixin useVarsThemed($prefix, $theme, $propKeyValuePairs...) {
+  @include _renderVars($prefix, $theme, true, false, $propKeyValuePairs...);
+}
+
+@mixin setVarsThemed($prefix, $theme, $propKeyValuePairs...) {
+  @include _renderVars($prefix, $theme, false, true, $propKeyValuePairs...);
+}
+
+@mixin _renderVars(
+  $prefix,
+  $theme,
+  $renderUsages,
+  $renderSetups,
+  $propKeyValuePairs...
+) {
+  $usagesAndSetups: _createUsagesAndSetups(
     $prefix,
     $theme,
     $propKeyValuePairs...
   );
 
-  @include _renderDefinitions(list.nth($definitionsAndUsages, 1));
-
   @if $renderUsages {
-    @include _renderUsages(list.nth($definitionsAndUsages, 2));
+    @include _renderUsages(list.nth($usagesAndSetups, 1));
+  }
+
+  @if $renderSetups {
+    @include _renderSetups(list.nth($usagesAndSetups, 2));
   }
 }
 
-@function _createDefinitionsAndUsages($prefix, $theme, $propKeyValuePairs...) {
-  $definitions: ();
+@function _createUsagesAndSetups($prefix, $theme, $propKeyValuePairs...) {
   $usages: ();
+  $setups: ();
 
   $varNamePropValueTuples: _createVarNamePropValueTuples(
     $prefix,
@@ -46,11 +62,11 @@
     $prop: list.nth($item, 2);
     $value: list.nth($item, 3);
 
-    $definitions: list.append($definitions, ($varName, $value));
     $usages: list.append($usages, ($prop, $varName));
+    $setups: list.append($setups, ($varName, $value));
   }
 
-  @return ($definitions, $usages);
+  @return ($usages, $setups);
 }
 
 @function _createVarNamePropValueTuples(
@@ -99,15 +115,6 @@
   @return #{$result}-theme-#{$theme};
 }
 
-@mixin _renderDefinitions($definitions) {
-  @each $definition in $definitions {
-    $varName: list.nth($definition, 1);
-    $value: list.nth($definition, 2);
-
-    @include _renderDefinition($varName, $value);
-  }
-}
-
 @mixin _renderUsages($usages) {
   @each $usage in $usages {
     $prop: list.nth($usage, 1);
@@ -117,10 +124,19 @@
   }
 }
 
-@mixin _renderDefinition($varName, $value) {
-  #{$varName}: $value;
+@mixin _renderSetups($setups) {
+  @each $setup in $setups {
+    $varName: list.nth($setup, 1);
+    $value: list.nth($setup, 2);
+
+    @include _renderSetup($varName, $value);
+  }
 }
 
 @mixin _renderUsage($prop, $varName) {
   #{$prop}: var($varName);
+}
+
+@mixin _renderSetup($varName, $value) {
+  #{$varName}: $value;
 }
