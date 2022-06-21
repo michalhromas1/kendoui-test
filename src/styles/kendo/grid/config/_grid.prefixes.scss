@@ -4,5 +4,4 @@
   @return "#{$prefix}#{$childPrefix}";
 }
 
-$prefix: withKendoPrefix("button");
-$prefixText: _child("Text");
+$prefix: withKendoPrefix("grid");

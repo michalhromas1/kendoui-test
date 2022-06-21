@@ -1,0 +1,8 @@
+@use "./config" as *;
+@use "./grid.children" as *;
+
+@mixin base() {
+  #{$selector} {
+    @include children();
+  }
+}
