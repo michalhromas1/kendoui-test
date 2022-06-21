@@ -1,8 +1,8 @@
 @use "../../prefix" as *;
 
-@function _innerElement($innerElementPrefix) {
+@function _child($innerElementPrefix) {
   @return "#{$prefix}#{$innerElementPrefix}";
 }
 
 $prefix: withKendoPrefix("button");
-$prefixText: _innerElement("Text");
+$prefixText: _child("Text");
