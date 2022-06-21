@@ -27,12 +27,6 @@
       )
     );
 
-    @include setVars($prefixText, ("display", block), ("column-gap", none));
-
-    #{$selectorText} {
-      @include useVars($prefixText, ("display"), ("column-gap"));
-    }
-
     &:disabled {
       @include setVarsPrefixed(("filter", none));
     }
@@ -62,6 +56,14 @@
       &#{$selector--rounded} {
         @include setVarsPrefixed(("border-radius", 100%));
       }
+    }
+  }
+
+  #{$selector} {
+    @include setVars($prefixText, ("display", block), ("column-gap", none));
+
+    #{$selectorText} {
+      @include useVars($prefixText, ("display"), ("column-gap"));
     }
   }
 }
