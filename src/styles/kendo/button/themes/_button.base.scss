@@ -27,6 +27,12 @@
       )
     );
 
+    @include setVars($prefixText, ("display", block), ("column-gap", none));
+
+    #{$selectorText} {
+      @include useVars($prefixText, ("display"), ("column-gap"));
+    }
+
     &:disabled {
       @include setVarsPrefixed(("filter", none));
     }
@@ -36,13 +42,11 @@
     }
 
     &#{$selector--icon} {
-      #{$selectorText} {
-        @include setVars(
-          $prefixText,
-          ("display", flex),
-          ("column-gap", var(--spacing-xxs))
-        );
-      }
+      @include setVars(
+        $prefixText,
+        ("display", flex),
+        ("column-gap", var(--spacing-xxs))
+      );
     }
 
     &#{$selector--icon-only} {
@@ -59,9 +63,5 @@
         @include setVarsPrefixed(("border-radius", 100%));
       }
     }
-  }
-
-  #{$selectorText} {
-    @include usetVars($prefixText, ("display", block), ("column-gap", none));
   }
 }
