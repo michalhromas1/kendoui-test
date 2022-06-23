@@ -1,4 +1,103 @@
 @use "./config" as *;
 
+$border: 1px solid rgb(238, 238, 238);
+$bg: white;
+
 @mixin children() {
+  font-family: Roboto, sans-serif;
+  border: none;
+  font-size: 1.4rem;
+
+  .k-checkbox {
+    width: 1.8rem;
+    height: 1.8rem;
+    border: 2px solid rgb(158 158 158);
+    border-radius: 2px;
+    box-shadow: none;
+    position: relative;
+    top: 2px;
+
+    &:hover {
+      box-shadow: 0 0 0 9px rgba(33, 150, 243, 0.04);
+      background-color: rgba(33, 150, 243, 0.04);
+    }
+
+    &:checked,
+    &:indeterminate {
+      background-color: rgb(33, 150, 243);
+      border-color: rgb(33, 150, 243);
+    }
+
+    &:checked {
+      background-size: 16px;
+    }
+
+    &:indeterminate {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='square' stroke-linejoin='square' stroke-width='2' d='M4,8 h8'/%3e%3c/svg%3e");
+      background-size: 17px;
+    }
+  }
+
+  .k-filter-row {
+    // TODO: odebrat
+    display: none;
+  }
+
+  .k-grid-container {
+    color: rgb(97, 97, 97);
+  }
+
+  .k-grouping-header {
+    background: $bg;
+    border-bottom: $border;
+  }
+
+  .k-grid-header {
+    background: $bg;
+    border: none;
+    border-bottom: $border;
+  }
+
+  .k-grid-draggable-header {
+    cursor: grab;
+  }
+
+  tbody tr {
+    background: $bg;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.04);
+    }
+  }
+
+  tr.k-state-selected {
+    & > td {
+      background: rgba(33, 150, 243, 0.08);
+    }
+
+    &:hover > td {
+      background: rgba(33, 150, 243, 0.12);
+    }
+  }
+
+  th,
+  td {
+    border: none;
+    border-bottom: $border;
+    padding: 1.6rem;
+    line-height: 2.4rem;
+
+    &:first-child {
+      padding-left: 2.4rem;
+    }
+
+    &:last-child {
+      padding-right: 2.4rem;
+    }
+  }
+
+  th {
+    font-weight: 500;
+    color: rgb(33, 33, 33);
+  }
 }
