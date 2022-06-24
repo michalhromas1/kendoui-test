@@ -102,11 +102,11 @@ $bg: white;
     line-height: 2.4rem;
 
     &:first-child {
-      padding-left: 2.4rem;
+      border-left: $border;
     }
 
     &:last-child {
-      padding-right: 2.4rem;
+      border-right: $border;
     }
   }
 
@@ -150,6 +150,10 @@ $bg: white;
       i {
         background-color: rgb(227, 242, 253);
         color: rgb(30, 136, 229);
+
+        &:hover {
+          background: darken(rgb(227, 242, 253), 12%);
+        }
       }
     }
 
@@ -183,6 +187,10 @@ $bg: white;
         i {
           background: rgb(255, 248, 225);
           color: rgb(255, 193, 7);
+
+          &:hover {
+            background: darken(rgb(255, 248, 225), 12%);
+          }
         }
       }
     }
