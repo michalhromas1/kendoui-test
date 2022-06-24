@@ -123,4 +123,21 @@ $bg: white;
   tbody tr:first-child td {
     border-top: $border;
   }
+
+  .file {
+    color: rgb(33, 150, 243);
+    background: rgb(227, 242, 253);
+    border-radius: 1.6rem;
+    height: 3.2rem;
+    display: flex;
+    align-items: center;
+    padding-left: 1.2rem;
+    padding-right: 1.2rem;
+    white-space: nowrap;
+    width: fit-content;
+
+    & + .file {
+      margin-top: 0.8rem;
+    }
+  }
 }

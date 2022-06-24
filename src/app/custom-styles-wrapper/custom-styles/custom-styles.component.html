@@ -70,11 +70,14 @@
               (cdkDropListDropped)="drop($event)"
               data-droplist="file"
             >
-              <div cdkDrag *ngIf="dataItem.title">
+              <div
+                cdkDrag
+                *ngIf="dataItem.title"
+                class="file"
+                (click)="openPreview(dataItem)"
+              >
                 <i cdkDragHandle>#</i
-                ><span class="filename" (click)="openPreview(dataItem)">{{
-                  dataItem.title
-                }}</span>
+                ><span class="filename">{{ dataItem.title }}</span>
               </div>
             </div>
           </ng-template>
@@ -93,14 +96,14 @@
               (cdkDropListDropped)="drop($event)"
               data-droplist="attachments"
             >
-              <div *ngFor="let attachment of dataItem.attachments" cdkDrag>
-                <ng-container *ngIf="attachment.title"
-                  ><i cdkDragHandle>#</i>
+              <ng-container *ngFor="let attachment of dataItem.attachments">
+                <div *ngIf="attachment.title" cdkDrag class="file">
+                  <i cdkDragHandle>#</i>
                   <span class="filename" (click)="openPreview(attachment)">{{
                     attachment.title
-                  }}</span></ng-container
-                >
-              </div>
+                  }}</span>
+                </div>
+              </ng-container>
             </div>
           </ng-template>
         </kendo-grid-column>
