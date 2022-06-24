@@ -3,6 +3,9 @@
 $border: 1px solid rgb(238, 238, 238);
 $bg: white;
 
+$transition-duration: 0.12s;
+$transition-function: cubic-bezier(0.4, 0, 0.2, 1);
+
 @mixin children() {
   font-family: Roboto, sans-serif;
   border: none;
@@ -16,6 +19,9 @@ $bg: white;
     box-shadow: none;
     position: relative;
     top: 2px;
+    transition: background-color $transition-duration $transition-function,
+      box-shadow $transition-duration $transition-function,
+      border-color $transition-duration $transition-function;
 
     &:hover {
       box-shadow: 0 0 0 9px rgba(33, 150, 243, 0.04);
@@ -85,6 +91,7 @@ $bg: white;
 
   tbody tr {
     background: $bg;
+    transition: background-color $transition-duration $transition-function;
 
     &:hover {
       background: rgba(0, 0, 0, 0.04);
@@ -134,7 +141,6 @@ $bg: white;
     color: rgb(33, 150, 243);
     background: rgb(227, 242, 253);
     border-radius: 1.6rem;
-    // height: 3.2rem;
     height: 2.4rem;
     font-size: 1.3rem;
     display: flex;
@@ -143,8 +149,8 @@ $bg: white;
     padding-right: 0.8rem;
     white-space: nowrap;
     width: fit-content;
-    transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
-      box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    transition: background-color $transition-duration $transition-function,
+      color $transition-duration $transition-function;
 
     & + .file {
       margin-top: 0.6rem;
@@ -175,8 +181,8 @@ $bg: white;
       color: rgb(227, 242, 253);
       border-radius: 100%;
       margin-right: 0.6rem;
-      transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
-        box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      transition: background-color $transition-duration $transition-function,
+        color $transition-duration $transition-function;
     }
 
     &.attachment {
