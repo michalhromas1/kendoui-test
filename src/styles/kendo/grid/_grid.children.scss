@@ -56,6 +56,9 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
   .k-grouping-header {
     background: $bg;
     border: none;
+    border-top: $border;
+    border-left: $border;
+    border-right: $border;
   }
 
   .k-grid-header {
