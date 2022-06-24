@@ -134,18 +134,20 @@ $bg: white;
     color: rgb(33, 150, 243);
     background: rgb(227, 242, 253);
     border-radius: 1.6rem;
-    height: 3.2rem;
+    // height: 3.2rem;
+    height: 2.4rem;
+    font-size: 1.3rem;
     display: flex;
     align-items: center;
-    padding-left: 1.2rem;
-    padding-right: 1.2rem;
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
     white-space: nowrap;
     width: fit-content;
     transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
       box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 
     & + .file {
-      margin-top: 0.8rem;
+      margin-top: 0.6rem;
     }
 
     &:hover {
@@ -164,15 +166,15 @@ $bg: white;
     }
 
     i {
-      height: 1.8rem;
-      width: 1.8rem;
+      height: 1.5rem;
+      width: 1.5rem;
       display: flex;
       align-items: center;
       justify-content: center;
       background: rgb(33, 150, 243);
       color: rgb(227, 242, 253);
       border-radius: 100%;
-      margin-right: 0.8rem;
+      margin-right: 0.6rem;
       transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
         box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     }
