@@ -59,6 +59,8 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
     border-top: $border;
     border-left: $border;
     border-right: $border;
+    width: fit-content;
+    color: rgb(97, 97, 97);
   }
 
   .k-grid-header {
