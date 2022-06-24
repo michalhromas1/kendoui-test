@@ -79,6 +79,11 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
       height: 1em;
       width: 2px;
       background-color: rgb(238, 238, 238);
+      transition: background-color $transition-duration $transition-function;
+    }
+
+    &:hover::after {
+      background-color: darken(rgb(238, 238, 238), 15%);
     }
   }
 
@@ -133,6 +138,11 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
     font-weight: 500;
     color: rgb(33, 33, 33);
     border-top: $border;
+    transition: color $transition-duration $transition-function;
+
+    &:hover {
+      color: lighten(rgb(33, 33, 33), 40%);
+    }
   }
 
   td {
