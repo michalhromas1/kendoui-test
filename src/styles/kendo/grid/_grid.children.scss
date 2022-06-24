@@ -135,9 +135,56 @@ $bg: white;
     padding-right: 1.2rem;
     white-space: nowrap;
     width: fit-content;
+    transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+      box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 
     & + .file {
       margin-top: 0.8rem;
+    }
+
+    &:hover {
+      color: rgb(227, 242, 253);
+      background: rgb(30, 136, 229);
+      cursor: pointer;
+
+      i {
+        background-color: rgb(227, 242, 253);
+        color: rgb(30, 136, 229);
+      }
+    }
+
+    i {
+      height: 1.8rem;
+      width: 1.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgb(33, 150, 243);
+      color: rgb(227, 242, 253);
+      border-radius: 100%;
+      margin-right: 0.8rem;
+      transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+        box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    }
+
+    &.attachment {
+      background: rgb(255, 248, 225);
+      color: rgb(255, 193, 7);
+
+      i {
+        background: rgb(255, 193, 7);
+        color: rgb(255, 248, 225);
+      }
+
+      &:hover {
+        color: rgb(255, 248, 225);
+        background: rgb(255, 193, 7);
+
+        i {
+          background: rgb(255, 248, 225);
+          color: rgb(255, 193, 7);
+        }
+      }
     }
   }
 }

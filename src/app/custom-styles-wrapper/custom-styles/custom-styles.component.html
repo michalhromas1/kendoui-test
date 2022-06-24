@@ -97,7 +97,7 @@
               data-droplist="attachments"
             >
               <ng-container *ngFor="let attachment of dataItem.attachments">
-                <div *ngIf="attachment.title" cdkDrag class="file">
+                <div *ngIf="attachment.title" cdkDrag class="file attachment">
                   <i cdkDragHandle>#</i>
                   <span class="filename" (click)="openPreview(attachment)">{{
                     attachment.title
