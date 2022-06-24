@@ -73,6 +73,12 @@ $bg: white;
     }
   }
 
+  th:last-child {
+    .k-column-resizer::after {
+      content: none;
+    }
+  }
+
   .k-grid-draggable-header {
     cursor: grab;
   }
