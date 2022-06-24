@@ -113,6 +113,9 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
     border: none;
     padding: 1.6rem;
     line-height: 2.4rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 
     &:first-child {
       border-left: $border;
