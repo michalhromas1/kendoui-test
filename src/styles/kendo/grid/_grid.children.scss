@@ -58,6 +58,22 @@ $bg: white;
     border-bottom: $border;
   }
 
+  .k-column-resizer {
+    background: white;
+    height: 100%;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      height: 1em;
+      width: 2px;
+      background-color: rgb(238, 238, 238);
+    }
+  }
+
   .k-grid-draggable-header {
     cursor: grab;
   }
