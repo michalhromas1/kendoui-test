@@ -49,13 +49,12 @@ $bg: white;
 
   .k-grouping-header {
     background: $bg;
-    border-bottom: $border;
+    border: none;
   }
 
   .k-grid-header {
     background: $bg;
     border: none;
-    border-bottom: $border;
   }
 
   .k-column-resizer {
@@ -99,7 +98,6 @@ $bg: white;
   th,
   td {
     border: none;
-    border-bottom: $border;
     padding: 1.6rem;
     line-height: 2.4rem;
 
@@ -115,5 +113,14 @@ $bg: white;
   th {
     font-weight: 500;
     color: rgb(33, 33, 33);
+    border-top: $border;
+  }
+
+  td {
+    border-bottom: $border;
+  }
+
+  tbody tr:first-child td {
+    border-top: $border;
   }
 }
