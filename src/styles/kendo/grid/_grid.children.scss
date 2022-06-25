@@ -117,6 +117,7 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
     color: rgb(97, 97, 97);
     border-top-left-radius: $brad;
     border-top-right-radius: $brad;
+    gap: 0;
   }
 
   .k-group-cell {
@@ -256,6 +257,29 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
           }
         }
       }
+    }
+  }
+
+  .k-grouping-header {
+    padding-left: 1.6rem;
+    padding-right: 1.6rem;
+    height: 4.1rem;
+
+    &::before {
+      content: none;
+    }
+  }
+
+  .k-indicator-container {
+    margin: 0;
+    padding: 0;
+
+    & + .k-indicator-container:not(:last-of-type) {
+      margin-left: 0.6rem;
+    }
+
+    &:last-of-type {
+      margin-right: -3px;
     }
   }
 
