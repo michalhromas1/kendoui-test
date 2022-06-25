@@ -98,11 +98,6 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
     }
   }
 
-  .k-filter-row {
-    // TODO: odebrat
-    display: none;
-  }
-
   .k-grid-container {
     color: rgb(97, 97, 97);
   }
@@ -332,6 +327,36 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
 
       &:hover {
         background-color: darken(rgb(227, 242, 253), 12%) !important;
+      }
+    }
+  }
+
+  .k-filter-row {
+    td {
+      border-top: $border;
+      position: relative;
+      overflow: visible;
+
+      .k-filtercell {
+        &::before,
+        &::after {
+          content: "";
+          width: 2px;
+          height: 1em;
+          background-color: #eeeeee;
+          position: absolute;
+          top: 50%;
+        }
+
+        &::after {
+          right: 5px;
+          transform: translate(100%, -50%);
+        }
+
+        &::before {
+          left: -3px;
+          transform: translate(-100%, -50%);
+        }
       }
     }
   }
