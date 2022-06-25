@@ -7,6 +7,59 @@ $brad: 8px;
 $transition-duration: 0.12s;
 $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
 
+%chip-icon {
+  height: 1.5rem;
+  width: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(33, 150, 243);
+  color: rgb(227, 242, 253);
+  border-radius: 100%;
+  margin-right: 0.6rem;
+  transition: background-color $transition-duration $transition-function,
+    color $transition-duration $transition-function;
+}
+
+%chip {
+  color: rgb(33, 150, 243);
+  background: rgb(227, 242, 253);
+  border-radius: 1.6rem;
+  height: 2.4rem;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
+  white-space: nowrap;
+  width: fit-content;
+  transition: background-color $transition-duration $transition-function,
+    color $transition-duration $transition-function;
+
+  & + & {
+    margin-top: 0.6rem;
+  }
+
+  &:hover {
+    color: rgb(227, 242, 253);
+    background: rgb(30, 136, 229);
+    cursor: pointer;
+
+    i {
+      background-color: rgb(227, 242, 253);
+      color: rgb(30, 136, 229);
+
+      &:hover {
+        background: darken(rgb(227, 242, 253), 12%);
+      }
+    }
+  }
+
+  i {
+    @extend %chip-icon;
+  }
+}
+
 @mixin children() {
   font-family: Roboto, sans-serif;
   border: none;
@@ -179,52 +232,7 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .file {
-    color: rgb(33, 150, 243);
-    background: rgb(227, 242, 253);
-    border-radius: 1.6rem;
-    height: 2.4rem;
-    font-size: 1.3rem;
-    display: flex;
-    align-items: center;
-    padding-left: 0.8rem;
-    padding-right: 0.8rem;
-    white-space: nowrap;
-    width: fit-content;
-    transition: background-color $transition-duration $transition-function,
-      color $transition-duration $transition-function;
-
-    & + .file {
-      margin-top: 0.6rem;
-    }
-
-    &:hover {
-      color: rgb(227, 242, 253);
-      background: rgb(30, 136, 229);
-      cursor: pointer;
-
-      i {
-        background-color: rgb(227, 242, 253);
-        color: rgb(30, 136, 229);
-
-        &:hover {
-          background: darken(rgb(227, 242, 253), 12%);
-        }
-      }
-    }
-
-    i {
-      height: 1.5rem;
-      width: 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgb(33, 150, 243);
-      color: rgb(227, 242, 253);
-      border-radius: 100%;
-      margin-right: 0.6rem;
-      transition: background-color $transition-duration $transition-function,
-        color $transition-duration $transition-function;
-    }
+    @extend %chip;
 
     &.attachment {
       background: rgb(255, 248, 225);
@@ -247,6 +255,37 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
             background: darken(rgb(255, 248, 225), 12%);
           }
         }
+      }
+    }
+  }
+
+  .k-group-indicator {
+    @extend %chip;
+    border: none;
+
+    .k-link .k-icon {
+      margin: 0;
+      margin-right: 0.3rem;
+    }
+
+    .k-button {
+      @extend %chip-icon;
+      background-color: rgb(33, 150, 243) !important;
+      opacity: 1;
+      margin-right: 0;
+      margin-left: 0.6rem;
+
+      .k-button-icon {
+        font-size: 13px;
+      }
+    }
+
+    &:hover .k-button {
+      background-color: rgb(227, 242, 253) !important;
+      color: rgb(30, 136, 229);
+
+      &:hover {
+        background-color: darken(rgb(227, 242, 253), 12%) !important;
       }
     }
   }
