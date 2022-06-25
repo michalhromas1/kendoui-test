@@ -235,6 +235,28 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
   .file {
     @extend %chip;
 
+    background: rgb(237, 231, 246);
+    color: rgb(103, 58, 183);
+
+    i {
+      background: rgb(103, 58, 183);
+      color: rgb(237, 231, 246);
+    }
+
+    &:hover {
+      color: rgb(237, 231, 246);
+      background: rgb(103, 58, 183);
+
+      i {
+        background: rgb(237, 231, 246);
+        color: rgb(103, 58, 183);
+
+        &:hover {
+          background: darken(rgb(237, 231, 246), 12%);
+        }
+      }
+    }
+
     &.attachment {
       background: rgb(255, 248, 225);
       color: rgb(255, 193, 7);
