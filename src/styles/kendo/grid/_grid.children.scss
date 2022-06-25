@@ -290,6 +290,9 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
   .k-indicator-container {
     margin: 0;
     padding: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 
     & + .k-indicator-container:not(:last-of-type) {
       margin-left: 0.6rem;
