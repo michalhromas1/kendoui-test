@@ -23,6 +23,7 @@
       <kendo-grid
         #grid
         class="h-100 grid"
+        [class.preview-open]="preview"
         [kendoGridBinding]="documents"
         [trackBy]="trackBy"
         [resizable]="true"
