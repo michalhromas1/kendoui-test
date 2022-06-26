@@ -363,4 +363,58 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
       }
     }
   }
+
+  .k-input-button {
+    padding: 0;
+  }
+
+  .k-input {
+    font-size: 1.4rem;
+    color: rgb(97, 97, 97);
+    background-color: rgb(250, 250, 250);
+    font-family: Roboto, sans-serif;
+    font-weight: 500;
+    border-radius: 4px;
+    border: 1px solid rgb(189, 189, 189);
+    height: 100%;
+    box-shadow: none;
+    transition: border-color $transition-duration $transition-function;
+
+    &:hover {
+      border-color: rgb(97, 97, 97);
+    }
+
+    &:focus {
+      border-color: rgb(33, 150, 243);
+      border-width: 2px;
+    }
+  }
+
+  .k-filtercell-wrapper {
+    align-items: flex-start;
+    box-shadow: none;
+    height: 3rem;
+  }
+
+  .k-filtercell-operator {
+    height: 100%;
+  }
+
+  .k-dropdownlist {
+    border: 1px solid rgb(33, 150, 243);
+    background-color: rgb(33, 150, 243);
+    border-radius: 4px;
+    box-shadow: rgb(0 0 0 / 20%) 0px 3px 1px -2px,
+      rgb(0 0 0 / 14%) 0px 2px 2px 0px, rgb(0 0 0 / 12%) 0px 1px 5px 0px;
+    color: white;
+    height: calc(100% - 1px);
+    transition: box-shadow $transition-duration $transition-function,
+      background-color $transition-duration $transition-function;
+
+    &:hover {
+      background-color: rgb(30, 136, 229);
+      box-shadow: rgb(0 0 0 / 20%) 0px 2px 4px -1px,
+        rgb(0 0 0 / 14%) 0px 4px 5px 0px, rgb(0 0 0 / 12%) 0px 1px 10px 0px;
+    }
+  }
 }
