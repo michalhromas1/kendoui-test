@@ -413,13 +413,25 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
         rgb(0 0 0 / 14%) 0px 2px 2px 0px, rgb(0 0 0 / 12%) 0px 1px 5px 0px;
       color: white;
       height: calc(100% - 1px);
-      transition: box-shadow $transition-duration $transition-function,
+      transition: border-color $transition-duration $transition-function,
+        box-shadow $transition-duration $transition-function,
         background-color $transition-duration $transition-function;
 
       &:hover {
         background-color: rgb(30, 136, 229);
+        border-color: rgb(30, 136, 229);
         box-shadow: rgb(0 0 0 / 20%) 0px 2px 4px -1px,
           rgb(0 0 0 / 14%) 0px 4px 5px 0px, rgb(0 0 0 / 12%) 0px 1px 10px 0px;
+      }
+    }
+
+    & + .k-button {
+      background-color: rgb(244, 67, 54);
+      border-color: rgb(244, 67, 54);
+
+      &:hover {
+        background-color: rgb(198, 40, 40);
+        border-color: rgb(198, 40, 40);
       }
     }
   }
