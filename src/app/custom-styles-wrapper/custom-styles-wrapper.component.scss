@@ -1,5 +1,6 @@
 @use "/src/styles/vars";
 @use "/src/styles/kendo/button";
+@use "/src/styles/kendo/grid";
 
 :host {
   @include vars.vars();
@@ -24,12 +25,15 @@
 
 :host ::ng-deep {
   @include button.base();
+  @include grid.base();
 }
 
 :host[data-theme="light"] ::ng-deep {
   @include button.light();
+  @include grid.light();
 }
 
 :host[data-theme="dark"] ::ng-deep {
   @include button.dark();
+  @include grid.dark();
 }

@@ -1,0 +1,9 @@
+@use "./config" as *;
+
+@mixin children() {
+  @include setVars($prefixText, ("display", block), ("column-gap", none));
+
+  #{$selectorText} {
+    @include useVars($prefixText, ("display"), ("column-gap"));
+  }
+}
