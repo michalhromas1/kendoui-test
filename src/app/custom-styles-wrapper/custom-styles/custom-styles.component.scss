@@ -128,6 +128,13 @@ kendo-splitter-pane.preview-pane {
   }
 }
 
+.page-wrapper {
+  background: rgb(227, 242, 253);
+  padding: 2.3rem;
+  margin-top: 1.6rem;
+  border-radius: 8px;
+}
+
 .preview-body {
   padding: 2rem;
   display: flex;
@@ -146,7 +153,6 @@ kendo-splitter-pane.preview-pane {
   border-radius: 8px;
   overflow: hidden;
   border: 1px solid rgba(144, 202, 249, 0.46);
-  margin-top: 5.5rem;
 }
 
 ::ng-deep {

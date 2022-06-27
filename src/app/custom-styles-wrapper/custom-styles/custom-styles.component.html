@@ -1,4 +1,4 @@
-<div>
+<div style="margin-top: 0.8rem">
   <kendo-switch
     class="mr-1 my"
     onLabel="CZE"
@@ -15,134 +15,136 @@
   </button>
 </div>
 
-<kendo-splitter class="page">
-  <kendo-splitter-pane>
-    <div class="grid-wrapper h-100">
-      <kendo-grid
-        #grid
-        class="h-100 grid"
-        [class.preview-open]="preview"
-        [kendoGridBinding]="documents"
-        [trackBy]="trackBy"
-        [resizable]="true"
-        [reorderable]="true"
-        kendoGridSelectBy="id"
-        [(selectedKeys)]="selectedRowsDocumentIds"
-        [selectable]="{
-          checkboxOnly: true,
-          mode: 'multiple'
-        }"
-        [groupable]="true"
-        [group]="groups"
-        [filterable]="true"
-        [filter]="filter"
-        cdkDropListGroup
-      >
-        <kendo-grid-checkbox-column [width]="58" [showSelectAll]="true">
-        </kendo-grid-checkbox-column>
+<div class="page-wrapper">
+  <kendo-splitter class="page">
+    <kendo-splitter-pane>
+      <div class="grid-wrapper h-100">
+        <kendo-grid
+          #grid
+          class="h-100 grid"
+          [class.preview-open]="preview"
+          [kendoGridBinding]="documents"
+          [trackBy]="trackBy"
+          [resizable]="true"
+          [reorderable]="true"
+          kendoGridSelectBy="id"
+          [(selectedKeys)]="selectedRowsDocumentIds"
+          [selectable]="{
+            checkboxOnly: true,
+            mode: 'multiple'
+          }"
+          [groupable]="true"
+          [group]="groups"
+          [filterable]="true"
+          [filter]="filter"
+          cdkDropListGroup
+        >
+          <kendo-grid-checkbox-column [width]="58" [showSelectAll]="true">
+          </kendo-grid-checkbox-column>
 
-        <kendo-grid-column
-          field="id"
-          title="Id"
-          [width]="50"
-          [filterable]="false"
-        ></kendo-grid-column>
+          <kendo-grid-column
+            field="id"
+            title="Id"
+            [width]="50"
+            [filterable]="false"
+          ></kendo-grid-column>
 
-        <kendo-grid-column
-          field="workspace"
-          title="Workspace"
-          [width]="150"
-        ></kendo-grid-column>
+          <kendo-grid-column
+            field="workspace"
+            title="Workspace"
+            [width]="150"
+          ></kendo-grid-column>
 
-        <kendo-grid-column
-          field="profile"
-          title="Profil"
-          [width]="150"
-        ></kendo-grid-column>
+          <kendo-grid-column
+            field="profile"
+            title="Profil"
+            [width]="150"
+          ></kendo-grid-column>
 
-        <kendo-grid-column field="title" title="Název souboru">
-          <ng-template kendoGridCellTemplate let-dataItem>
-            <div
-              cdkDropList
-              #nameField="cdkDropList"
-              [cdkDropListData]="dataItem"
-              (cdkDropListDropped)="drop($event)"
-              data-droplist="file"
-            >
+          <kendo-grid-column field="title" title="Název souboru">
+            <ng-template kendoGridCellTemplate let-dataItem>
               <div
-                cdkDrag
-                *ngIf="dataItem.title"
-                class="file"
-                (click)="openPreview(dataItem)"
+                cdkDropList
+                #nameField="cdkDropList"
+                [cdkDropListData]="dataItem"
+                (cdkDropListDropped)="drop($event)"
+                data-droplist="file"
               >
-                <i cdkDragHandle>#</i
-                ><span class="filename">{{ dataItem.title }}</span>
-              </div>
-            </div>
-          </ng-template>
-        </kendo-grid-column>
-
-        <kendo-grid-column
-          field="attachments"
-          title="Přílohy"
-          [filterable]="false"
-        >
-          <ng-template kendoGridCellTemplate let-dataItem>
-            <div
-              cdkDropList
-              #attachmentsField="cdkDropList"
-              [cdkDropListData]="dataItem.attachments"
-              (cdkDropListDropped)="drop($event)"
-              data-droplist="attachments"
-            >
-              <ng-container *ngFor="let attachment of dataItem.attachments">
-                <div *ngIf="attachment.title" cdkDrag class="file attachment">
-                  <i cdkDragHandle>#</i>
-                  <span class="filename" (click)="openPreview(attachment)">{{
-                    attachment.title
-                  }}</span>
+                <div
+                  cdkDrag
+                  *ngIf="dataItem.title"
+                  class="file"
+                  (click)="openPreview(dataItem)"
+                >
+                  <i cdkDragHandle>#</i
+                  ><span class="filename">{{ dataItem.title }}</span>
                 </div>
-              </ng-container>
-            </div>
-          </ng-template>
-        </kendo-grid-column>
+              </div>
+            </ng-template>
+          </kendo-grid-column>
 
-        <kendo-grid-messages
-          [groupPanelEmpty]="
-            czech
-              ? 'Přetáhněte sloupec k seskupení'
-              : 'Drag a column header and drop it here to group by that column'
-          "
-          [noRecords]="czech ? 'Zde nic není.' : 'No records available.'"
+          <kendo-grid-column
+            field="attachments"
+            title="Přílohy"
+            [filterable]="false"
+          >
+            <ng-template kendoGridCellTemplate let-dataItem>
+              <div
+                cdkDropList
+                #attachmentsField="cdkDropList"
+                [cdkDropListData]="dataItem.attachments"
+                (cdkDropListDropped)="drop($event)"
+                data-droplist="attachments"
+              >
+                <ng-container *ngFor="let attachment of dataItem.attachments">
+                  <div *ngIf="attachment.title" cdkDrag class="file attachment">
+                    <i cdkDragHandle>#</i>
+                    <span class="filename" (click)="openPreview(attachment)">{{
+                      attachment.title
+                    }}</span>
+                  </div>
+                </ng-container>
+              </div>
+            </ng-template>
+          </kendo-grid-column>
+
+          <kendo-grid-messages
+            [groupPanelEmpty]="
+              czech
+                ? 'Přetáhněte sloupec k seskupení'
+                : 'Drag a column header and drop it here to group by that column'
+            "
+            [noRecords]="czech ? 'Zde nic není.' : 'No records available.'"
+          >
+          </kendo-grid-messages>
+        </kendo-grid>
+      </div>
+    </kendo-splitter-pane>
+
+    <kendo-splitter-pane
+      *ngIf="preview"
+      size="20%"
+      min="20%"
+      max="80%"
+      class="preview-pane"
+    >
+      <div class="preview-header">
+        <h3 class="preview-title">{{ preview.title }}</h3>
+        <button
+          class="close-preview"
+          (click)="closePreview()"
+          class="close-preview"
         >
-        </kendo-grid-messages>
-      </kendo-grid>
-    </div>
-  </kendo-splitter-pane>
+          <i>&times;</i>
+        </button>
+      </div>
 
-  <kendo-splitter-pane
-    *ngIf="preview"
-    size="20%"
-    min="20%"
-    max="80%"
-    class="preview-pane"
-  >
-    <div class="preview-header">
-      <h3 class="preview-title">{{ preview.title }}</h3>
-      <button
-        class="close-preview"
-        (click)="closePreview()"
-        class="close-preview"
-      >
-        <i>&times;</i>
-      </button>
-    </div>
-
-    <div class="preview-body">
-      <img [src]="preview.url" />
-    </div>
-  </kendo-splitter-pane>
-</kendo-splitter>
+      <div class="preview-body">
+        <img [src]="preview.url" />
+      </div>
+    </kendo-splitter-pane>
+  </kendo-splitter>
+</div>
 
 <kendo-dialog
   *ngIf="profilePickerOpened"
