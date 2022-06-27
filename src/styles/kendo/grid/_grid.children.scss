@@ -140,8 +140,7 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     &:hover::after {
-      background-color: rgb(158, 158, 158);
-      background-color: rgb(33, 33, 33);
+      background-color: rgb(33, 150, 243);
     }
   }
 
@@ -196,7 +195,7 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition: color $transition-duration $transition-function;
 
     &:hover {
-      color: rgb(158, 158, 158);
+      color: rgb(33, 150, 243);
     }
   }
 
