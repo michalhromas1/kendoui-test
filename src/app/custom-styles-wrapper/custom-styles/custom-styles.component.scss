@@ -67,6 +67,8 @@ $selected-disabled-dark: hsl(290, $saturation-dark, $lightness-dark);
   background-color: #eeeeee;
   transition: background-color 0.12s cubic-bezier(0.4, 0, 0.2, 1);
   width: 3px;
+  position: relative;
+  left: -1px;
 
   .k-resize-handle {
     display: none;
@@ -83,6 +85,7 @@ $selected-disabled-dark: hsl(290, $saturation-dark, $lightness-dark);
 
 kendo-splitter-pane.preview-pane {
   overflow: visible;
+  margin-left: -1px;
 }
 
 .preview-header {
@@ -113,9 +116,7 @@ kendo-splitter-pane.preview-pane {
     color: rgb(158, 158, 158);
     height: 29px;
     width: 30px;
-    transition: border-color 0.12s cubic-bezier(0.4, 0, 0.2, 1),
-      box-shadow 0.12s cubic-bezier(0.4, 0, 0.2, 1),
-      background-color 0.12s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: color 0.12s cubic-bezier(0.4, 0, 0.2, 1);
     font-size: 2.4rem;
     display: flex;
     align-items: center;
