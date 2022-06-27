@@ -78,8 +78,7 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
       border-color $transition-duration $transition-function;
 
     &:hover {
-      box-shadow: 0 0 0 9px rgba(33, 150, 243, 0.04);
-      background-color: rgba(33, 150, 243, 0.04);
+      border-color: rgb(33, 150, 243);
     }
 
     &:checked,
