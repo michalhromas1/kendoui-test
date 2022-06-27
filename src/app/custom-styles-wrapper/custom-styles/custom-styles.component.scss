@@ -76,7 +76,7 @@ kendo-splitter-pane.preview-pane {
   align-items: center;
   justify-content: space-between;
   padding-left: 2rem;
-  padding-right: 2rem;
+  padding-right: 1.1rem;
   height: 5.6rem;
   border-bottom: 1px solid #eeeeee;
 
@@ -114,13 +114,14 @@ kendo-splitter-pane.preview-pane {
 }
 
 .preview-body {
-  padding: 1rem;
+  padding: 2rem;
   display: flex;
   justify-content: center;
   align-items: flex-start;
 
   img {
-    // border-radius: 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(144, 202, 249, 0.46);
   }
 }
 
