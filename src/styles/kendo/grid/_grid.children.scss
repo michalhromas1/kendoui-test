@@ -339,6 +339,14 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
           transform: translate(-100%, -50%);
         }
       }
+
+      &:first-child .k-filtercell::before {
+        content: none;
+      }
+
+      &:last-child .k-filtercell::after {
+        content: none;
+      }
     }
   }
 
