@@ -63,13 +63,11 @@ $selected-disabled-dark: hsl(290, $saturation-dark, $lightness-dark);
   cursor: pointer;
 }
 
-$height-header: 4.2rem;
+$height-header: 4.1rem;
 $height-grid: 65vh;
 
 :host ::ng-deep .k-splitbar {
-  margin-top: 4.1rem;
   background: #eeeeee;
-  height: calc((#{$height-grid} - #{$height-header}) + 1px);
 }
 
 kendo-splitter-pane.preview-pane {
@@ -80,13 +78,10 @@ kendo-splitter-pane.preview-pane {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-left: 2.8rem;
+  padding-left: 2rem;
   padding-right: 2rem;
   height: $height-header;
-  border: 1px solid #eeeeee;
-  border-top-left-radius: 8px;
-  margin-left: -0.8rem;
-  border-top-right-radius: 8px;
+  border-bottom: 1px solid #eeeeee;
 
   .preview-title {
     margin: auto;
@@ -111,9 +106,6 @@ kendo-splitter-pane.preview-pane {
   justify-content: center;
   height: calc(#{$height-grid} - #{$height-header});
   align-items: flex-start;
-  border-right: 1px solid #eeeeee;
-  border-bottom: 1px solid #eeeeee;
-  border-bottom-right-radius: 8px;
 
   img {
     border-radius: 8px;
@@ -123,6 +115,10 @@ kendo-splitter-pane.preview-pane {
 .page {
   max-height: $height-grid;
   height: $height-grid;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(144, 202, 249, 0.46);
+  margin-top: 5.5rem;
 }
 
 ::ng-deep {
@@ -155,26 +151,5 @@ kendo-splitter-pane.preview-pane {
   .my {
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
-  }
-}
-
-:host ::ng-deep .grid.preview-open {
-  th:last-child,
-  td:last-child {
-    border-right: none;
-  }
-
-  kendo-grid-list {
-    border-bottom: 1px solid #eeeeee;
-    border-left: 1px solid #eeeeee;
-    border-bottom-left-radius: 8px;
-  }
-
-  tbody td:first-child {
-    border-left: none;
-  }
-
-  tbody tr:last-child td:first-child {
-    border-bottom-left-radius: 0;
   }
 }
