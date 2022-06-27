@@ -64,7 +64,21 @@ $selected-disabled-dark: hsl(290, $saturation-dark, $lightness-dark);
 }
 
 :host ::ng-deep .k-splitbar {
-  background: #eeeeee;
+  background-color: #eeeeee;
+  transition: background-color 0.12s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 3px;
+
+  .k-resize-handle {
+    display: none;
+  }
+
+  &:hover {
+    background-color: rgb(33, 150, 243);
+
+    .k-resize-handle {
+      background-color: white;
+    }
+  }
 }
 
 kendo-splitter-pane.preview-pane {
