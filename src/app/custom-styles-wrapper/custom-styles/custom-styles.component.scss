@@ -85,15 +85,31 @@ kendo-splitter-pane.preview-pane {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-weight: 500;
+    color: #212121;
+    font-size: 1.4rem;
   }
 
   .close-preview {
-    display: block;
-    font-size: 1.5rem;
-    font-style: normal;
-    line-height: 1;
-    margin-left: 1rem;
     cursor: pointer;
+    border: none;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: none;
+    color: rgb(158, 158, 158);
+    height: 29px;
+    width: 30px;
+    transition: border-color 0.12s cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 0.12s cubic-bezier(0.4, 0, 0.2, 1),
+      background-color 0.12s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 2.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      color: #212121;
+    }
   }
 }
 
