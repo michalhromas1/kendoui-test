@@ -181,6 +181,10 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
     white-space: nowrap;
     text-overflow: ellipsis;
 
+    &:first-child {
+      padding-left: 2rem;
+    }
+
     &:last-child {
       border-right: $border;
     }
@@ -255,9 +259,11 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .k-grouping-header {
-    padding-left: 1.6rem;
+    padding-left: 2rem;
     padding-right: 1.6rem;
     height: 5.6rem;
+    font-style: italic;
+    font-weight: 300;
 
     &::before {
       content: none;
@@ -283,6 +289,8 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
   .k-group-indicator {
     @extend %chip;
     border: none;
+    font-style: normal;
+    font-weight: 400;
 
     .k-link .k-icon {
       margin: 0;
