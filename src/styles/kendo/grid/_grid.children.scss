@@ -105,13 +105,8 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
   .k-grouping-header {
     background: $bg;
     border: none;
-    border-top: $border;
-    border-left: $border;
-    border-right: $border;
-    width: fit-content;
+    border-bottom: $border;
     color: rgb(97, 97, 97);
-    border-top-left-radius: $brad;
-    border-top-right-radius: $brad;
     gap: 0;
   }
 
@@ -150,8 +145,6 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   th:last-child {
-    border-top-right-radius: $brad;
-
     .k-column-resizer::after {
       content: none;
     }
@@ -167,16 +160,6 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
 
     &:hover {
       background: rgba(0, 0, 0, 0.04);
-    }
-
-    &:last-child {
-      td:first-child {
-        border-bottom-left-radius: $brad;
-      }
-
-      td:last-child {
-        border-bottom-right-radius: $brad;
-      }
     }
   }
 
@@ -198,20 +181,11 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-
-    &:first-child {
-      border-left: $border;
-    }
-
-    &:last-child {
-      border-right: $border;
-    }
   }
 
   th {
     font-weight: 500;
     color: rgb(33, 33, 33);
-    border-top: $border;
     transition: color $transition-duration $transition-function;
 
     &:hover {

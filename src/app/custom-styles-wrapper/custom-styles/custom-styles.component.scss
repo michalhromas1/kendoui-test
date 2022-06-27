@@ -159,14 +159,6 @@ kendo-splitter-pane.preview-pane {
 }
 
 :host ::ng-deep .grid.preview-open {
-  th:last-child {
-    border-top-right-radius: 0;
-  }
-
-  tbody tr:last-child td:last-child {
-    border-bottom-right-radius: 0;
-  }
-
   th:last-child,
   td:last-child {
     border-right: none;
