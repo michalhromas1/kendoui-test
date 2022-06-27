@@ -181,6 +181,12 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+
+    &:last-child {
+      border-right: $border;
+      position: relative;
+      right: -1px;
+    }
   }
 
   th {
