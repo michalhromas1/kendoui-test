@@ -1,3 +1,5 @@
+@use "/src/styles/kendo/button";
+
 $saturation-light: 47%;
 $lightness-light: 92%;
 
@@ -11,6 +13,24 @@ $selected-disabled-light: hsl(290, $saturation-light, $lightness-light);
 $disabled-dark: hsl(0, $saturation-dark, $lightness-dark);
 $selected-dark: hsl(205, $saturation-dark, $lightness-dark);
 $selected-disabled-dark: hsl(290, $saturation-dark, $lightness-dark);
+
+:host-context([data-theme="light"]) {
+  #{button.$selector-primary} {
+    @include button.setVarsPrefixed((background-color, green));
+  }
+}
+
+:host-context([data-theme="dark"]) {
+  #{button.$selector-primary} {
+    @include button.setVarsPrefixed((background-color, yellow));
+  }
+}
+
+:host-context([data-theme="light"], [data-theme="dark"]) {
+  #{button.$selector-primary} {
+    @include button.setVarsPrefixed((background-color, rgb(128, 49, 0)));
+  }
+}
 
 :host ::ng-deep {
   td.disabled {

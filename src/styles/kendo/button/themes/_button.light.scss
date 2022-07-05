@@ -19,7 +19,6 @@ $_themeName: $themeName-light;
     @include usetVarsLight(
       ("color", var(--c-white)),
       ("opacity", inherit),
-      ("background-color", inherit),
       ("border-color", inherit)
     );
 
@@ -29,10 +28,8 @@ $_themeName: $themeName-light;
   }
 
   #{$selector-primary} {
-    @include setVarsLight(
-      ("background-color", var(--c-blue)),
-      ("border-color", var(--c-blue))
-    );
+    @include setVarsPrefixed(("background-color", var(--c-blue)));
+    @include setVarsLight(("border-color", var(--c-blue)));
 
     &:hover {
       @include setVarsLight(

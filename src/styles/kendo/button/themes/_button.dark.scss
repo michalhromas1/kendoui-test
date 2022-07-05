@@ -19,7 +19,6 @@ $_themeName: $themeName-dark;
     @include usetVarsDark(
       ("color", var(--c-blackish)),
       ("opacity", inherit),
-      ("background-color", inherit),
       ("border-color", inherit)
     );
 
@@ -29,10 +28,8 @@ $_themeName: $themeName-dark;
   }
 
   #{$selector-primary} {
-    @include setVarsDark(
-      ("background-color", var(--c-lightblue)),
-      ("border-color", var(--c-lightblue))
-    );
+    @include setVarsPrefixed(("background-color", var(--c-lightblue)));
+    @include setVarsDark(("border-color", var(--c-lightblue)));
 
     &:hover {
       @include setVarsDark(
