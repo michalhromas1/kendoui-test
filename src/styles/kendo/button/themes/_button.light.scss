@@ -16,49 +16,25 @@ $_themeName: $themeName-light;
 
 @mixin light() {
   #{$selector} {
-    --color: ;
-    --color-hover: ;
-    --outlined-hover-bg: ;
-
-    background-color: var(--color);
-    border-color: var(--color);
-    color: var(--c-white);
-
-    &:hover {
-      background-color: var(--color-hover);
-      border-color: var(--color-hover);
-    }
-
-    &:disabled {
-      opacity: var(--opacity-sm);
-    }
-
-    &#{$selector--outlined} {
-      color: var(--color);
-      background-color: transparent;
-
-      &:hover {
-        border-color: var(--color);
-        background-color: var(--outlined-hover-bg);
-      }
-    }
+    --text: var(--c-white);
+    --disabled-opacity: var(--opacity-sm);
   }
 
   #{$selector-primary} {
-    --color: var(--c-blue);
-    --color-hover: var(--c-blue-dark);
-    --outlined-hover-bg: var(--c-blue-ultra-light);
+    --bg: var(--c-blue);
+    --bg-hover: var(--c-blue-dark);
+    --bg-outlined-hover: var(--c-blue-ultra-light);
   }
 
   #{$selector-warning} {
-    --color: var(--c-orange);
-    --color-hover: var(--c-orange-dark);
-    --outlined-hover-bg: var(--c-orange-ultra-light);
+    --bg: var(--c-orange);
+    --bg-hover: var(--c-orange-dark);
+    --bg-outlined-hover: var(--c-orange-ultra-light);
   }
 
   #{$selector-danger} {
-    --color: var(--c-red);
-    --color-hover: var(--c-red-dark);
-    --outlined-hover-bg: var(--c-red-ultra-light);
+    --bg: var(--c-red);
+    --bg-hover: var(--c-red-dark);
+    --bg-outlined-hover: var(--c-red-ultra-light);
   }
 }
