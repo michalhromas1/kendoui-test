@@ -16,6 +16,18 @@ $_themeName: $themeName-light;
 
 @mixin light() {
   #{$selector} {
+    --color: ;
+    --color-hover: ;
+    --outline-hover-bg: ;
+
+    background-color: var(--color);
+    border-color: var(--color);
+
+    &:hover {
+      background-color: var(--color-hover);
+      border-color: var(--color-hover);
+    }
+
     color: var(--c-white);
 
     &:disabled {
@@ -24,21 +36,17 @@ $_themeName: $themeName-light;
   }
 
   #{$selector-primary} {
-    background-color: var(--c-blue);
-    border-color: var(--c-blue);
-
-    &:hover {
-      background-color: var(--c-blue-dark);
-      border-color: var(--c-blue-dark);
-    }
+    --color: var(--c-blue);
+    --color-hover: var(--c-blue-dark);
+    --outline-hover-bg: var(--c-blue-ultra-light);
 
     &#{$selector--outlined} {
-      color: var(--c-blue);
+      color: var(--color);
       background-color: transparent;
 
       &:hover {
-        border-color: var(--c-blue);
-        background-color: var(--c-blue-ultra-light);
+        border-color: var(--color);
+        background-color: var(--outline-hover-bg);
       }
     }
   }
