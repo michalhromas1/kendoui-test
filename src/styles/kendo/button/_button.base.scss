@@ -1,62 +1,42 @@
 @use "./config" as *;
-@use "./button.children" as *;
 
 @mixin base() {
   #{$selector} {
-    @include children();
-    @include usetVarsPrefixed(
-      ("line-height", normal),
-      ("background-image", none),
-      ("border-radius", var(--border-radius-sm)),
-      ("font-size", var(--font-size-default)),
-      ("padding-left", var(--spacing-sm)),
-      ("padding-right", var(--spacing-sm)),
-      ("padding-top", var(--spacing-xs)),
-      ("padding-bottom", var(--spacing-xs)),
-      ("font-weight", var(--font-weight-strong)),
-      ("font-family", var(--font-family-default)),
-      ("width", auto),
-      ("height", auto),
-      ("filter", none),
-      (
-        "transition",
-        (
-          background-color var(--transition-duration),
-          color var(--transition-duration),
-          border-color var(--transition-duration)
-        )
-      ),
-      ("background-color", inherit)
-    );
+    line-height: normal;
+    background-image: none;
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-default);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-weight: var(--font-weight-strong);
+    font-family: var(--font-family-default);
+    width: auto;
+    height: auto;
+    transition: background-color var(--transition-duration),
+      color var(--transition-duration), border-color var(--transition-duration);
+    background-color: inherit;
 
     &:disabled {
-      @include setVarsPrefixed(("filter", none));
+      filter: none;
     }
 
     &#{$selector--rounded} {
-      @include setVarsPrefixed(("border-radius", var(--border-radius-lg)));
+      border-radius: var(--border-radius-lg);
     }
 
     &#{$selector--icon} {
-      @include setVars(
-        $prefixText,
-        ("display", flex),
-        ("column-gap", var(--spacing-xxs))
-      );
+      #{$selectorText} {
+        display: flex;
+        column-gap: var(--spacing-xxs);
+      }
     }
 
     &#{$selector--icon-only} {
-      @include setVarsPrefixed(
-        ("width", var(--btn-icon-only-size)),
-        ("height", var(--btn-icon-only-size)),
-        ("padding-left", 0),
-        ("padding-right", 0),
-        ("padding-top", 0),
-        ("padding-bottom", 0)
-      );
+      width: var(--btn-icon-only-size);
+      height: var(--btn-icon-only-size);
+      padding: 0;
 
       &#{$selector--rounded} {
-        @include setVarsPrefixed(("border-radius", 100%));
+        border-radius: 100%;
       }
     }
   }
