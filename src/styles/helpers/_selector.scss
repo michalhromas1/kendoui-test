@@ -3,9 +3,9 @@
 }
 
 @function createVariantSelector($namespaceSelector, $variant) {
-  @return "#{$namespaceSelector}--#{$variant}";
+  @return "#{$namespaceSelector}-#{$variant}";
 }
 
 @function createModifierSelector($namespaceSelector, $modifier) {
-  @return "#{$namespaceSelector}-#{$modifier}";
+  @return "#{$namespaceSelector}--#{$modifier}";
 }
