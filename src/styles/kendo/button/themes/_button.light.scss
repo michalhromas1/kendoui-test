@@ -1,112 +1,26 @@
-@use "../config" as *;
-
-$_themeName: $themeName-light;
-
-@mixin usetVarsLight($propKeyValuePairs...) {
-  @include usetVarsThemedPrefixed($_themeName, $propKeyValuePairs...);
-}
-
-@mixin useVarsLight($propKeyValuePairs...) {
-  @include useVarsThemedPrefixed($_themeName, $propKeyValuePairs...);
-}
-
-@mixin setVarsLight($propKeyValuePairs...) {
-  @include setVarsThemedPrefixed($_themeName, $propKeyValuePairs...);
-}
+@use "../button.selectors" as *;
 
 @mixin light() {
   #{$selector} {
-    @include usetVarsLight(
-      ("color", var(--c-white)),
-      ("opacity", inherit),
-      ("background-color", inherit),
-      ("border-color", inherit)
-    );
+    --text: var(--c-white);
+    --disabled-opacity: var(--opacity-sm);
 
-    &:disabled {
-      @include setVarsLight(("opacity", var(--opacity-sm)));
-    }
-  }
-
-  #{$selector-primary} {
-    @include setVarsLight(
-      ("background-color", var(--c-blue)),
-      ("border-color", var(--c-blue))
-    );
-
-    &:hover {
-      @include setVarsLight(
-        ("background-color", var(--c-blue-dark)),
-        ("border-color", var(--c-blue-dark))
-      );
+    &#{$selector--primary} {
+      --bg: var(--c-blue);
+      --bg-hover: var(--c-blue-dark);
+      --bg-outlined-hover: var(--c-blue-ultra-light);
     }
 
-    &#{$selector--outlined} {
-      @include setVarsLight(
-        ("color", var(--c-blue)),
-        ("background-color", transparent)
-      );
-
-      &:hover {
-        @include setVarsLight(("border-color", var(--c-blue)));
-        @include setVarsLight(("background-color", var(--c-blue-ultra-light)));
-      }
-    }
-  }
-
-  #{$selector-warning} {
-    @include setVarsLight(
-      ("background-color", var(--c-orange)),
-      ("border-color", var(--c-orange))
-    );
-
-    &:hover {
-      @include setVarsLight(
-        ("background-color", var(--c-orange-dark)),
-        ("border-color", var(--c-orange-dark))
-      );
+    &#{$selector--warning} {
+      --bg: var(--c-orange);
+      --bg-hover: var(--c-orange-dark);
+      --bg-outlined-hover: var(--c-orange-ultra-light);
     }
 
-    &#{$selector--outlined} {
-      @include setVarsLight(
-        ("color", var(--c-orange)),
-        ("background-color", transparent)
-      );
-
-      &:hover {
-        @include setVarsLight(
-          ("border-color", var(--c-orange)),
-          ("background-color", var(--c-orange-ultra-light))
-        );
-      }
-    }
-  }
-
-  #{$selector-danger} {
-    @include setVarsLight(
-      ("background-color", var(--c-red)),
-      ("border-color", var(--c-red))
-    );
-
-    &:hover {
-      @include setVarsLight(
-        ("background-color", var(--c-red-dark)),
-        ("border-color", var(--c-red-dark))
-      );
-    }
-
-    &#{$selector--outlined} {
-      @include setVarsLight(
-        ("color", var(--c-red)),
-        ("background-color", transparent)
-      );
-
-      &:hover {
-        @include setVarsLight(
-          ("border-color", var(--c-red)),
-          ("background-color", var(--c-red-ultra-light))
-        );
-      }
+    &#{$selector--danger} {
+      --bg: var(--c-red);
+      --bg-hover: var(--c-red-dark);
+      --bg-outlined-hover: var(--c-red-ultra-light);
     }
   }
 }
