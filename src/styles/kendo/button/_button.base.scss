@@ -50,7 +50,7 @@
     }
 
     &#{$selector--icon} {
-      #{$selectorText} {
+      .k-button-text {
         display: flex;
         column-gap: var(--spacing-xxs);
       }

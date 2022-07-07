@@ -1,3 +1,7 @@
+@function createBaseSelector($namespaceSelector, $minimalSelector) {
+  @return "#{$namespaceSelector}#{$minimalSelector}";
+}
+
 @function createVariantSelector($baseSelector, $variantSelectorBase, $variant) {
   @return "#{$baseSelector}#{$variantSelectorBase}-#{$variant}";
 }

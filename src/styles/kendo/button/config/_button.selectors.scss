@@ -1,21 +1,17 @@
 @use "/src/styles/core/selector" as *;
 
-@function _selector($baseSelector) {
-  @return "#{$_variantSelectorBase}#{$baseSelector}";
-}
-
 @function _variantSelector($variant) {
-  @return createVariantSelector($selector, $_variantSelectorBase, $variant);
+  @return createVariantSelector($selector, $_namespaceSelector, $variant);
 }
 
 @function _modifierSelector($modifier) {
-  @return createModifierSelector($_variantSelectorBase, $modifier);
+  @return createModifierSelector($_namespaceSelector, $modifier);
 }
 
-$_variantSelectorBase: ".btn";
+$_namespaceSelector: ".btn";
+$_minimalSelector: ".k-button";
 
-$selector: _selector(".k-button");
-$selectorText: ".k-button-text";
+$selector: createBaseSelector($_namespaceSelector, $_minimalSelector);
 
 $selector-primary: _variantSelector("primary");
 $selector-warning: _variantSelector("warning");
