@@ -1,3 +1,6 @@
+@use "/src/styles/themes";
+@use "/src/styles/kendo/button";
+
 $saturation-light: 47%;
 $lightness-light: 92%;
 
@@ -11,6 +14,30 @@ $selected-disabled-light: hsl(290, $saturation-light, $lightness-light);
 $disabled-dark: hsl(0, $saturation-dark, $lightness-dark);
 $selected-dark: hsl(205, $saturation-dark, $lightness-dark);
 $selected-disabled-dark: hsl(290, $saturation-dark, $lightness-dark);
+
+// :host {
+//   #{button.$selector} {
+//     &#{button.$selector--primary} {
+//       --bg: yellow;
+//     }
+//   }
+// }
+
+// :host-context(#{themes.$light}) {
+//   #{button.$selector} {
+//     &#{button.$selector--primary} {
+//       --bg: green;
+//     }
+//   }
+// }
+
+// :host-context(#{themes.$dark}) {
+//   #{button.$selector} {
+//     &#{button.$selector--primary} {
+//       --bg: brown;
+//     }
+//   }
+// }
 
 ::ng-deep {
   .k-list-container {

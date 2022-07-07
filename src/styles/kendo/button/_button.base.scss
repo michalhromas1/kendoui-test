@@ -1,61 +1,70 @@
-@use "./config" as *;
-@use "./button.children" as *;
+@use "./button.selectors" as *;
 
 @mixin base() {
   #{$selector} {
-    @include children();
-    @include usetVarsPrefixed(
-      ("line-height", normal),
-      ("background-image", none),
-      ("border-radius", var(--border-radius-sm)),
-      ("font-size", var(--font-size-default)),
-      ("padding-left", var(--spacing-sm)),
-      ("padding-right", var(--spacing-sm)),
-      ("padding-top", var(--spacing-xs)),
-      ("padding-bottom", var(--spacing-xs)),
-      ("font-weight", var(--font-weight-strong)),
-      ("font-family", var(--font-family-default)),
-      ("width", auto),
-      ("height", auto),
-      ("filter", none),
-      (
-        "transition",
-        (
-          background-color var(--transition-duration),
-          color var(--transition-duration),
-          border-color var(--transition-duration)
-        )
-      )
-    );
+    --text: ;
+    --bg: ;
+    --bg-hover: ;
+    --bg-outlined-hover: ;
+    --disabled-opacity: ;
+
+    background-color: var(--bg);
+    border-color: var(--bg);
+
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-default);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-weight: var(--font-weight-strong);
+    font-family: var(--font-family-default);
+    transition: background-color var(--transition-duration),
+      color var(--transition-duration), border-color var(--transition-duration);
+    line-height: normal;
+    background-image: none;
+
+    &:hover {
+      background-color: var(--bg-hover);
+      border-color: var(--bg-hover);
+    }
 
     &:disabled {
-      @include setVarsPrefixed(("filter", none));
+      filter: none;
+      opacity: var(--disabled-opacity);
     }
 
-    &#{$selector--rounded} {
-      @include setVarsPrefixed(("border-radius", var(--border-radius-lg)));
+    &:not(#{$selector-outlined}) {
+      color: var(--text);
     }
 
-    &#{$selector--icon} {
-      @include setVars(
-        $prefixText,
-        ("display", flex),
-        ("column-gap", var(--spacing-xxs))
-      );
+    &#{$selector-outlined} {
+      color: var(--bg);
+      background-color: transparent;
+
+      &:hover {
+        border-color: var(--bg);
+        background-color: var(--bg-outlined-hover);
+      }
     }
 
-    &#{$selector--icon-only} {
-      @include setVarsPrefixed(
-        ("width", var(--btn-icon-only-size)),
-        ("height", var(--btn-icon-only-size)),
-        ("padding-left", 0),
-        ("padding-right", 0),
-        ("padding-top", 0),
-        ("padding-bottom", 0)
-      );
+    &#{$selector-rounded} {
+      border-radius: var(--border-radius-lg);
+    }
 
-      &#{$selector--rounded} {
-        @include setVarsPrefixed(("border-radius", 100%));
+    &#{$selector-icon} {
+      .k-button-text {
+        display: flex;
+        column-gap: var(--spacing-xxs);
+      }
+    }
+
+    &#{$selector-icon-only} {
+      --icon-only-size: var(--spacing-md);
+
+      width: var(--icon-only-size);
+      height: var(--icon-only-size);
+      padding: 0;
+
+      &#{$selector-rounded} {
+        border-radius: 100%;
       }
     }
   }

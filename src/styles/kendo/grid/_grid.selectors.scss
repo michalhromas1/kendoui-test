@@ -1,0 +1,14 @@
+@use "/src/styles/helpers/selector" as *;
+
+@function _variantSelector($variant) {
+  @return createVariantSelector($_namespaceSelector, $variant);
+}
+
+@function _modifierSelector($modifier) {
+  @return createModifierSelector($_namespaceSelector, $modifier);
+}
+
+$_namespaceSelector: ".grid";
+$_minimalSelector: ".k-grid";
+
+$selector: createBaseSelector($_namespaceSelector, $_minimalSelector);
