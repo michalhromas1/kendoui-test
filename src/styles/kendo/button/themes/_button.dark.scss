@@ -4,23 +4,23 @@
   #{$selector} {
     --text: var(--c-blackish);
     --disabled-opacity: var(--opacity-md);
-  }
 
-  #{$selector-primary} {
-    --bg: var(--c-lightblue);
-    --bg-hover: var(--c-lightblue-dark);
-    --bg-outlined-hover: var(--c-lightblue-ultra-light);
-  }
+    &#{$selector--primary} {
+      --bg: var(--c-lightblue);
+      --bg-hover: var(--c-lightblue-dark);
+      --bg-outlined-hover: var(--c-lightblue-ultra-light);
+    }
 
-  #{$selector-warning} {
-    --bg: var(--c-lightorange);
-    --bg-hover: var(--c-lightorange-dark);
-    --bg-outlined-hover: var(--c-lightorange-ultra-light);
-  }
+    &#{$selector--warning} {
+      --bg: var(--c-lightorange);
+      --bg-hover: var(--c-lightorange-dark);
+      --bg-outlined-hover: var(--c-lightorange-ultra-light);
+    }
 
-  #{$selector-danger} {
-    --bg: var(--c-lightred);
-    --bg-hover: var(--c-lightred-dark);
-    --bg-outlined-hover: var(--c-lightred-ultra-light);
+    &#{$selector--danger} {
+      --bg: var(--c-lightred);
+      --bg-hover: var(--c-lightred-dark);
+      --bg-outlined-hover: var(--c-lightred-ultra-light);
+    }
   }
 }

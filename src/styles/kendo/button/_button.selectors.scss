@@ -1,7 +1,7 @@
 @use "/src/styles/helpers/selector" as *;
 
 @function _variantSelector($variant) {
-  @return createVariantSelector($selector, $_namespaceSelector, $variant);
+  @return createVariantSelector($_namespaceSelector, $variant);
 }
 
 @function _modifierSelector($modifier) {
@@ -13,11 +13,11 @@ $_minimalSelector: ".k-button";
 
 $selector: createBaseSelector($_namespaceSelector, $_minimalSelector);
 
-$selector-primary: _variantSelector("primary");
-$selector-warning: _variantSelector("warning");
-$selector-danger: _variantSelector("danger");
+$selector-outlined: _variantSelector("outlined");
+$selector-rounded: _variantSelector("rounded");
+$selector-icon: _variantSelector("icon");
+$selector-icon-only: _variantSelector("icon-only");
 
-$selector--outlined: _modifierSelector("outlined");
-$selector--rounded: _modifierSelector("rounded");
-$selector--icon: _modifierSelector("icon");
-$selector--icon-only: _modifierSelector("icon-only");
+$selector--primary: _modifierSelector("primary");
+$selector--warning: _modifierSelector("warning");
+$selector--danger: _modifierSelector("danger");

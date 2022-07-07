@@ -31,11 +31,11 @@
       opacity: var(--disabled-opacity);
     }
 
-    &:not(#{$selector--outlined}) {
+    &:not(#{$selector-outlined}) {
       color: var(--text);
     }
 
-    &#{$selector--outlined} {
+    &#{$selector-outlined} {
       color: var(--bg);
       background-color: transparent;
 
@@ -45,25 +45,25 @@
       }
     }
 
-    &#{$selector--rounded} {
+    &#{$selector-rounded} {
       border-radius: var(--border-radius-lg);
     }
 
-    &#{$selector--icon} {
+    &#{$selector-icon} {
       .k-button-text {
         display: flex;
         column-gap: var(--spacing-xxs);
       }
     }
 
-    &#{$selector--icon-only} {
+    &#{$selector-icon-only} {
       --icon-only-size: var(--spacing-md);
 
       width: var(--icon-only-size);
       height: var(--icon-only-size);
       padding: 0;
 
-      &#{$selector--rounded} {
+      &#{$selector-rounded} {
         border-radius: 100%;
       }
     }
