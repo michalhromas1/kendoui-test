@@ -18,27 +18,20 @@ $_themeName: $themeName-light;
   #{$selector} {
     --color: ;
     --color-hover: ;
-    --outline-hover-bg: ;
+    --outlined-hover-bg: ;
 
     background-color: var(--color);
     border-color: var(--color);
+    color: var(--c-white);
 
     &:hover {
       background-color: var(--color-hover);
       border-color: var(--color-hover);
     }
 
-    color: var(--c-white);
-
     &:disabled {
       opacity: var(--opacity-sm);
     }
-  }
-
-  #{$selector-primary} {
-    --color: var(--c-blue);
-    --color-hover: var(--c-blue-dark);
-    --outline-hover-bg: var(--c-blue-ultra-light);
 
     &#{$selector--outlined} {
       color: var(--color);
@@ -46,48 +39,26 @@ $_themeName: $themeName-light;
 
       &:hover {
         border-color: var(--color);
-        background-color: var(--outline-hover-bg);
+        background-color: var(--outlined-hover-bg);
       }
     }
+  }
+
+  #{$selector-primary} {
+    --color: var(--c-blue);
+    --color-hover: var(--c-blue-dark);
+    --outlined-hover-bg: var(--c-blue-ultra-light);
   }
 
   #{$selector-warning} {
-    background-color: var(--c-orange);
-    border-color: var(--c-orange);
-
-    &:hover {
-      background-color: var(--c-orange-dark);
-      border-color: var(--c-orange-dark);
-    }
-
-    &#{$selector--outlined} {
-      color: var(--c-orange);
-      background-color: transparent;
-
-      &:hover {
-        border-color: var(--c-orange);
-        background-color: var(--c-orange-ultra-light);
-      }
-    }
+    --color: var(--c-orange);
+    --color-hover: var(--c-orange-dark);
+    --outlined-hover-bg: var(--c-orange-ultra-light);
   }
 
   #{$selector-danger} {
-    background-color: var(--c-red);
-    border-color: var(--c-red);
-
-    &:hover {
-      background-color: var(--c-red-dark);
-      border-color: var(--c-red-dark);
-    }
-
-    &#{$selector--outlined} {
-      color: var(--c-red);
-      background-color: transparent;
-
-      &:hover {
-        border-color: var(--c-red);
-        background-color: var(--c-red-ultra-light);
-      }
-    }
+    --color: var(--c-red);
+    --color-hover: var(--c-red-dark);
+    --outlined-hover-bg: var(--c-red-ultra-light);
   }
 }
