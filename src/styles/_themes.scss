@@ -1,0 +1,6 @@
+@function _themeSelector($theme) {
+  @return "[data-theme='#{$theme}']";
+}
+
+$light: _themeSelector("light");
+$dark: _themeSelector("dark");

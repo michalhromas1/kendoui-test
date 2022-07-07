@@ -1,4 +1,5 @@
 @use "/src/styles/vars";
+@use "/src/styles/themes";
 @use "/src/styles/kendo/button";
 @use "/src/styles/kendo/grid";
 
@@ -11,12 +12,12 @@
   padding: 1rem 0.3rem;
   height: 100%;
 
-  &[data-theme="light"] {
+  &#{themes.$light} {
     background: white;
     color: #000000;
   }
 
-  &[data-theme="dark"] {
+  &#{themes.$dark} {
     background: #071426;
     color: #ffffff;
   }
@@ -27,12 +28,12 @@
   @include grid.base();
 }
 
-:host[data-theme="light"] ::ng-deep {
+:host#{themes.$light} ::ng-deep {
   @include button.light();
   @include grid.light();
 }
 
-:host[data-theme="dark"] ::ng-deep {
+:host#{themes.$dark} ::ng-deep {
   @include button.dark();
   @include grid.dark();
 }
