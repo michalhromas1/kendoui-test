@@ -1,8 +1,433 @@
-@use "./config" as *;
-@use "./grid.children" as *;
+@use "./grid.selectors" as *;
+
+$border: 1px solid rgb(238, 238, 238);
+$bg: white;
+$brad: 8px;
+
+$transition-duration: 0.12s;
+$transition-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+%chip-icon {
+  height: 1.5rem;
+  width: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(33, 150, 243);
+  color: rgb(227, 242, 253);
+  border-radius: 100%;
+  margin-right: 0.6rem;
+  transition: background-color $transition-duration $transition-function,
+    color $transition-duration $transition-function;
+}
+
+%chip {
+  color: rgb(33, 150, 243);
+  background: rgb(227, 242, 253);
+  border-radius: 1.6rem;
+  height: 2.4rem;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
+  white-space: nowrap;
+  width: fit-content;
+  transition: background-color $transition-duration $transition-function,
+    color $transition-duration $transition-function;
+
+  & + & {
+    margin-top: 0.6rem;
+  }
+
+  &:hover {
+    color: rgb(227, 242, 253);
+    background: rgb(30, 136, 229);
+    cursor: pointer;
+
+    i {
+      background-color: rgb(227, 242, 253);
+      color: rgb(30, 136, 229);
+
+      &:hover {
+        background: darken(rgb(227, 242, 253), 12%);
+      }
+    }
+  }
+
+  i {
+    @extend %chip-icon;
+  }
+}
 
 @mixin base() {
   #{$selector} {
-    @include children();
+    font-family: Roboto, sans-serif;
+    border: none;
+    font-size: 1.4rem;
+
+    .k-checkbox {
+      width: 1.8rem;
+      height: 1.8rem;
+      border: 2px solid rgb(158 158 158);
+      border-radius: 2px;
+      box-shadow: none;
+      position: relative;
+      top: 2px;
+      transition: background-color $transition-duration $transition-function,
+        box-shadow $transition-duration $transition-function,
+        border-color $transition-duration $transition-function;
+
+      &:hover {
+        border-color: rgb(33, 150, 243);
+      }
+
+      &:checked,
+      &:indeterminate {
+        background-color: rgb(33, 150, 243);
+        border-color: rgb(33, 150, 243);
+      }
+
+      &:checked {
+        background-size: 16px;
+      }
+
+      &:indeterminate {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='square' stroke-linejoin='square' stroke-width='2' d='M4,8 h8'/%3e%3c/svg%3e");
+        background-size: 17px;
+      }
+    }
+
+    .k-grid-container {
+      color: rgb(97, 97, 97);
+    }
+
+    .k-grouping-header {
+      background: $bg;
+      border: none;
+      border-bottom: $border;
+      color: rgb(97, 97, 97);
+      gap: 0;
+    }
+
+    .k-group-cell {
+      background: $bg;
+    }
+
+    .k-grouping-row td {
+      background: $bg;
+    }
+
+    .k-grid-header {
+      background: $bg;
+      border: none;
+    }
+
+    .k-column-resizer {
+      background: white;
+      height: 100%;
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        height: 1em;
+        width: 2px;
+        background-color: rgb(238, 238, 238);
+        transition: background-color $transition-duration $transition-function;
+      }
+
+      &:hover::after {
+        background-color: rgb(33, 150, 243);
+      }
+    }
+
+    th:last-child {
+      .k-column-resizer::after {
+        content: none;
+      }
+    }
+
+    .k-grid-draggable-header {
+      cursor: grab;
+    }
+
+    tbody tr {
+      background: $bg;
+      transition: background-color $transition-duration $transition-function;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.04);
+      }
+    }
+
+    tr.k-state-selected {
+      & > td {
+        background: rgba(33, 150, 243, 0.08);
+      }
+
+      &:hover > td {
+        background: rgba(33, 150, 243, 0.12);
+      }
+    }
+
+    th,
+    td {
+      border: none;
+      padding: 1.6rem;
+      line-height: 2.4rem;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+
+      &:first-child {
+        padding-left: 2rem;
+      }
+
+      &:last-child {
+        border-right: $border;
+      }
+    }
+
+    th {
+      font-weight: 500;
+      color: rgb(33, 33, 33);
+      transition: color $transition-duration $transition-function;
+
+      &:hover {
+        color: rgb(33, 150, 243);
+      }
+    }
+
+    td {
+      border-bottom: $border;
+    }
+
+    tbody tr:first-child td {
+      border-top: $border;
+    }
+
+    .file {
+      @extend %chip;
+
+      background: rgb(237, 231, 246);
+      color: rgb(103, 58, 183);
+
+      i {
+        background: rgb(103, 58, 183);
+        color: rgb(237, 231, 246);
+      }
+
+      &:hover {
+        color: rgb(237, 231, 246);
+        background: rgb(103, 58, 183);
+
+        i {
+          background: rgb(237, 231, 246);
+          color: rgb(103, 58, 183);
+
+          &:hover {
+            background: darken(rgb(237, 231, 246), 12%);
+          }
+        }
+      }
+
+      &.attachment {
+        background: rgb(255, 248, 225);
+        color: rgb(255, 193, 7);
+
+        i {
+          background: rgb(255, 193, 7);
+          color: rgb(255, 248, 225);
+        }
+
+        &:hover {
+          color: rgb(255, 248, 225);
+          background: rgb(255, 193, 7);
+
+          i {
+            background: rgb(255, 248, 225);
+            color: rgb(255, 193, 7);
+
+            &:hover {
+              background: darken(rgb(255, 248, 225), 12%);
+            }
+          }
+        }
+      }
+    }
+
+    .k-grouping-header {
+      padding-left: 2rem;
+      padding-right: 1.6rem;
+      height: 5.6rem;
+      font-style: italic;
+      font-weight: 300;
+
+      &::before {
+        content: none;
+      }
+    }
+
+    .k-indicator-container {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+
+      & + .k-indicator-container:not(:last-of-type) {
+        margin-left: 0.6rem;
+      }
+
+      &:last-of-type {
+        margin-right: -3px;
+      }
+    }
+
+    .k-group-indicator {
+      @extend %chip;
+      border: none;
+      font-style: normal;
+      font-weight: 400;
+
+      .k-link .k-icon {
+        margin: 0;
+        margin-right: 0.3rem;
+      }
+
+      .k-button {
+        @extend %chip-icon;
+        background-color: rgb(33, 150, 243) !important;
+        opacity: 1;
+        margin-right: 0;
+        margin-left: 0.6rem;
+
+        .k-button-icon {
+          font-size: 13px;
+        }
+      }
+
+      &:hover .k-button {
+        background-color: rgb(227, 242, 253) !important;
+        color: rgb(30, 136, 229);
+
+        &:hover {
+          background-color: darken(rgb(227, 242, 253), 12%) !important;
+        }
+      }
+    }
+
+    .k-filter-row {
+      td {
+        border-top: $border;
+        position: relative;
+        overflow: visible;
+
+        .k-filtercell {
+          &::before,
+          &::after {
+            content: "";
+            width: 2px;
+            height: 1em;
+            background-color: #eeeeee;
+            position: absolute;
+            top: 50%;
+          }
+
+          &::after {
+            right: 5px;
+            transform: translate(100%, -50%);
+          }
+
+          &::before {
+            left: -3px;
+            transform: translate(-100%, -50%);
+          }
+        }
+
+        &:first-child .k-filtercell::before {
+          content: none;
+        }
+
+        &:last-child .k-filtercell::after {
+          content: none;
+        }
+      }
+    }
+
+    .k-input-button {
+      padding: 0;
+    }
+
+    .k-input {
+      font-size: 1.4rem;
+      color: rgb(97, 97, 97);
+      background-color: rgb(250, 250, 250);
+      font-family: Roboto, sans-serif;
+      font-weight: 500;
+      border-radius: 4px;
+      border: 1px solid rgb(189, 189, 189);
+      height: 100%;
+      box-shadow: none;
+      transition: border-color $transition-duration $transition-function;
+
+      &:hover {
+        border-color: rgb(33, 150, 243);
+      }
+
+      &:focus {
+        border-color: rgb(33, 150, 243);
+        border-width: 2px;
+      }
+    }
+
+    .k-filtercell-wrapper {
+      align-items: flex-start;
+      box-shadow: none;
+      height: 3.1rem;
+      gap: 0.6rem;
+    }
+
+    .k-filtercell-operator {
+      height: 100%;
+      gap: 0.6rem;
+      display: flex;
+    }
+
+    .k-dropdownlist {
+      &,
+      & + .k-button {
+        border: 1px solid rgb(33, 150, 243);
+        background-color: rgb(33, 150, 243);
+        border-radius: 4px;
+        box-shadow: rgb(0 0 0 / 20%) 0px 3px 1px -2px,
+          rgb(0 0 0 / 14%) 0px 2px 2px 0px, rgb(0 0 0 / 12%) 0px 1px 5px 0px;
+        color: white;
+        height: calc(100% - 1px);
+        transition: border-color $transition-duration $transition-function,
+          box-shadow $transition-duration $transition-function,
+          background-color $transition-duration $transition-function;
+
+        &:hover {
+          background-color: rgb(30, 136, 229);
+          border-color: rgb(30, 136, 229);
+          box-shadow: rgb(0 0 0 / 20%) 0px 2px 4px -1px,
+            rgb(0 0 0 / 14%) 0px 4px 5px 0px, rgb(0 0 0 / 12%) 0px 1px 10px 0px;
+        }
+      }
+
+      & + .k-button {
+        background-color: rgb(244, 67, 54);
+        border-color: rgb(244, 67, 54);
+
+        &:hover {
+          background-color: rgb(198, 40, 40);
+          border-color: rgb(198, 40, 40);
+        }
+      }
+    }
   }
 }

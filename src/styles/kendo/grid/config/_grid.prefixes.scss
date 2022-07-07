@@ -1,7 +1,0 @@
-@use "../../prefix" as *;
-
-@function _child($childPrefix) {
-  @return "#{$prefix}#{$childPrefix}";
-}
-
-$prefix: withKendoPrefix("grid");
