@@ -1,4 +1,4 @@
-@use "/src/styles/core/selector" as *;
+@use "/src/styles/helpers/selector" as *;
 
 @function _variantSelector($variant) {
   @return createVariantSelector($selector, $_namespaceSelector, $variant);
