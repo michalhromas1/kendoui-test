@@ -1,18 +1,4 @@
-@use "../config" as *;
-
-$_themeName: $themeName-dark;
-
-@mixin usetVarsDark($propKeyValuePairs...) {
-  @include usetVarsThemedPrefixed($_themeName, $propKeyValuePairs...);
-}
-
-@mixin useVarsDark($propKeyValuePairs...) {
-  @include useVarsThemedPrefixed($_themeName, $propKeyValuePairs...);
-}
-
-@mixin setVarsDark($propKeyValuePairs...) {
-  @include usetVarsThemedPrefixed($_themeName, $propKeyValuePairs...);
-}
+@use "../grid.selectors" as *;
 
 @mixin dark() {
 }
