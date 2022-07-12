@@ -1,0 +1,6 @@
+@use "../chip.selectors" as *;
+
+@mixin dark() {
+  #{$selector} {
+  }
+}

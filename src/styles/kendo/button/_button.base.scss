@@ -2,15 +2,15 @@
 
 @mixin base() {
   #{$selector} {
-    --text: ;
-    --bg: ;
-    --bg-hover: ;
-    --bg-outlined-hover: ;
-    --disabled-opacity: ;
+    --text: inherit;
+    --bg: inherit;
+    --bg-hover: inherit;
+    --bg-outlined-hover: inherit;
+    --disabled-opacity: inherit;
+    --icon-only-size: var(--spacing-md);
 
     background-color: var(--bg);
     border-color: var(--bg);
-
     border-radius: var(--border-radius-sm);
     font-size: var(--font-size-default);
     padding: var(--spacing-xs) var(--spacing-sm);
@@ -57,8 +57,6 @@
     }
 
     &#{$selector-icon-only} {
-      --icon-only-size: var(--spacing-md);
-
       width: var(--icon-only-size);
       height: var(--icon-only-size);
       padding: 0;
