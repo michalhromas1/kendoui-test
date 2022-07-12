@@ -2,11 +2,11 @@
 
 @mixin base() {
   #{$selector} {
-    --text: inherit;
-    --bg: inherit;
-    --bg-hover: inherit;
-    --bg-outlined-hover: inherit;
-    --disabled-opacity: inherit;
+    --text: ;
+    --bg: ;
+    --bg-hover: ;
+    --bg-outlined-hover: ;
+    --disabled-opacity: ;
     --icon-only-size: var(--spacing-md);
 
     background-color: var(--bg);
