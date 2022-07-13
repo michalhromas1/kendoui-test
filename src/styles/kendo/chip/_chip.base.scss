@@ -1,22 +1,5 @@
 @use "./chip.selectors" as *;
-
-@function transition($props...) {
-  $result: "";
-  $config: var(--transition-duration) var(--transition-function);
-
-  @for $idx from 1 through length($props) {
-    $prop: nth($props, $idx);
-    $rule: #{$prop} #{$config};
-
-    @if $idx == 1 {
-      $result: $rule;
-    } @else {
-      $result: #{$result + ","} $rule;
-    }
-  }
-
-  @return $result;
-}
+@use "/src/styles/helpers/rules" as *;
 
 @mixin base() {
   #{$selector} {
