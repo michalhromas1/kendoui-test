@@ -64,12 +64,6 @@
       margin-right: 0.6rem;
     }
 
-    .fa-sharp {
-      &::before {
-        content: "#";
-      }
-    }
-
     &#{$selector-action} {
       .k-chip-icon {
         @include _actionIcon();
