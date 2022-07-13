@@ -1,6 +1,45 @@
 @use "./chip.selectors" as *;
 
+$transition-duration: 0.12s;
+$transition-function: cubic-bezier(0.4, 0, 0.2, 1);
+
 @mixin base() {
   #{$selector} {
+    color: rgb(33, 150, 243);
+    background: rgb(227, 242, 253);
+    border-radius: 1.6rem;
+    height: 2.4rem;
+    font-size: 1.3rem;
+    display: flex;
+    grid-gap: 0;
+    align-items: center;
+    padding: 0 0.8rem;
+    line-height: 1.2;
+    white-space: nowrap;
+    width: fit-content;
+    transition: background-color $transition-duration $transition-function,
+      color $transition-duration $transition-function;
+    border: none;
+    box-shadow: none;
+
+    &:hover {
+      color: rgb(227, 242, 253);
+      background: rgb(30, 136, 229);
+      cursor: pointer;
+
+      i {
+        background-color: rgb(227, 242, 253);
+        color: rgb(30, 136, 229);
+
+        &:hover {
+          background: darken(rgb(227, 242, 253), 12%);
+        }
+      }
+    }
+
+    .k-chip-content {
+      margin: 0;
+      padding: 0;
+    }
   }
 }
