@@ -12,3 +12,5 @@ $_namespaceSelector: ".chip";
 $_minimalSelector: ".k-chip";
 
 $selector: createBaseSelector($_namespaceSelector, $_minimalSelector);
+
+$selector-action: _variantSelector("action");

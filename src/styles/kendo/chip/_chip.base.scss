@@ -3,6 +3,30 @@
 $transition-duration: 0.12s;
 $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
 
+@mixin _actionIcon() {
+  font-size: 1.3rem;
+  height: 1.5rem;
+  width: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(33, 150, 243);
+  color: rgb(227, 242, 253);
+  border-radius: 100%;
+  font-weight: 700;
+  transition: background-color $transition-duration $transition-function,
+    color $transition-duration $transition-function;
+}
+
+@mixin _actionIconOnHover() {
+  background-color: rgb(227, 242, 253);
+  color: rgb(30, 136, 229);
+
+  &:hover {
+    background: darken(rgb(227, 242, 253), 12%);
+  }
+}
+
 @mixin base() {
   #{$selector} {
     color: rgb(33, 150, 243);
@@ -26,14 +50,8 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
       color: rgb(227, 242, 253);
       background: rgb(30, 136, 229);
 
-      .k-icon,
-      .k-chip-icon {
-        background-color: rgb(227, 242, 253);
-        color: rgb(30, 136, 229);
-
-        &:hover {
-          background: darken(rgb(227, 242, 253), 12%);
-        }
+      .k-icon {
+        @include _actionIconOnHover();
       }
     }
 
@@ -50,24 +68,8 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
       margin-left: 0.6rem;
     }
 
-    .k-chip-icon {
-      margin-right: 0.6rem;
-    }
-
-    .k-icon,
-    .k-chip-icon {
-      font-size: 1.3rem;
-      height: 1.5rem;
-      width: 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgb(33, 150, 243);
-      color: rgb(227, 242, 253);
-      border-radius: 100%;
-      font-weight: 700;
-      transition: background-color $transition-duration $transition-function,
-        color $transition-duration $transition-function;
+    .k-icon {
+      @include _actionIcon();
 
       &.k-i-close-circle {
         &::before {
@@ -76,9 +78,25 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
       }
     }
 
+    .k-chip-icon {
+      margin-right: 0.6rem;
+    }
+
     .fa-sharp {
       &::before {
         content: "#";
+      }
+    }
+
+    &#{$selector-action} {
+      .k-chip-icon {
+        @include _actionIcon();
+      }
+
+      &:hover {
+        .k-chip-icon {
+          @include _actionIconOnHover();
+        }
       }
     }
   }
