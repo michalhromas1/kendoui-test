@@ -65,6 +65,7 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
       background: rgb(33, 150, 243);
       color: rgb(227, 242, 253);
       border-radius: 100%;
+      font-weight: 700;
       transition: background-color $transition-duration $transition-function,
         color $transition-duration $transition-function;
 
@@ -72,6 +73,12 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
         &::before {
           content: "\e11b";
         }
+      }
+    }
+
+    .fa-sharp {
+      &::before {
+        content: "#";
       }
     }
   }
