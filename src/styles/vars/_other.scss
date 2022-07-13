@@ -1,7 +1,8 @@
 @mixin other() {
   --border-radius-sm: 6px;
   --border-radius-lg: 2rem;
-  --transition-duration: 0.2s;
+  --transition-duration: 0.12s;
+  --transition-function: cubic-bezier(0.4, 0, 0.2, 1);
   --opacity-sm: 0.6;
   --opacity-md: 0.4;
 }
