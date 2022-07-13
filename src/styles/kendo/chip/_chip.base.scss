@@ -3,34 +3,11 @@
 $transition-duration: 0.12s;
 $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
 
-@mixin _actionIcon() {
-  --action-icon-size: 1.5rem;
-  font-size: inherit;
-  height: var(--action-icon-size);
-  width: var(--action-icon-size);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--text);
-  color: var(--bg);
-  border-radius: 100%;
-  transition: background-color $transition-duration $transition-function,
-    color $transition-duration $transition-function;
-}
-
-@mixin _actionIconOnHover() {
-  background-color: var(--bg);
-  color: var(--text);
-
-  &:hover {
-    opacity: 0.7;
-  }
-}
-
 @mixin base() {
   #{$selector} {
     --text: rgb(33, 150, 243);
     --bg: rgb(227, 242, 253);
+    --action-icon-size: 1.5rem;
 
     color: var(--text);
     background: var(--bg);
@@ -114,5 +91,28 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
         line-height: 1.6;
       }
     }
+  }
+}
+
+@mixin _actionIcon() {
+  font-size: inherit;
+  height: var(--action-icon-size);
+  width: var(--action-icon-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--text);
+  color: var(--bg);
+  border-radius: 100%;
+  transition: background-color $transition-duration $transition-function,
+    color $transition-duration $transition-function;
+}
+
+@mixin _actionIconOnHover() {
+  background-color: var(--bg);
+  color: var(--text);
+
+  &:hover {
+    opacity: 0.7;
   }
 }
