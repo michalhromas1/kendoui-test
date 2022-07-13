@@ -25,9 +25,8 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
     &:hover {
       color: rgb(227, 242, 253);
       background: rgb(30, 136, 229);
-      cursor: pointer;
 
-      i {
+      .k-icon {
         background-color: rgb(227, 242, 253);
         color: rgb(30, 136, 229);
 
