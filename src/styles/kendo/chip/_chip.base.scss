@@ -41,5 +41,33 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
       margin: 0;
       padding: 0;
     }
+
+    .k-chip-actions {
+      margin: 0;
+    }
+
+    .k-chip-action {
+      margin-left: 0.6rem;
+    }
+
+    .k-icon {
+      font-size: 1.3rem;
+      height: 1.5rem;
+      width: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgb(33, 150, 243);
+      color: rgb(227, 242, 253);
+      border-radius: 100%;
+      transition: background-color $transition-duration $transition-function,
+        color $transition-duration $transition-function;
+
+      &.k-i-close-circle {
+        &::before {
+          content: "\e11b";
+        }
+      }
+    }
   }
 }
