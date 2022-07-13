@@ -26,7 +26,8 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
       color: rgb(227, 242, 253);
       background: rgb(30, 136, 229);
 
-      .k-icon {
+      .k-icon,
+      .k-chip-icon {
         background-color: rgb(227, 242, 253);
         color: rgb(30, 136, 229);
 
@@ -49,7 +50,12 @@ $transition-function: cubic-bezier(0.4, 0, 0.2, 1);
       margin-left: 0.6rem;
     }
 
-    .k-icon {
+    .k-chip-icon {
+      margin-right: 0.6rem;
+    }
+
+    .k-icon,
+    .k-chip-icon {
       font-size: 1.3rem;
       height: 1.5rem;
       width: 1.5rem;
