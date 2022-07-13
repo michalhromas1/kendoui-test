@@ -7,26 +7,9 @@
     --bg: ;
     --action-icon-size: 1.5rem;
 
-    color: var(--text);
-    background: var(--bg);
-    border-radius: 1.6rem;
-    height: 2.4rem;
-    font-size: 1.3rem;
-    display: inline-flex;
-    grid-gap: 0;
-    align-items: center;
-    padding: 0 0.8rem;
-    line-height: 1.2;
-    white-space: nowrap;
-    width: fit-content;
-    border: none;
-    box-shadow: none;
-    transition: transition("color", "background-color");
+    @include chip();
 
     &:hover {
-      color: var(--bg);
-      background: var(--text);
-
       .k-chip-actions .k-icon {
         @include _actionIconOnHover();
       }
@@ -82,6 +65,29 @@
         line-height: 1.6;
       }
     }
+  }
+}
+
+@mixin chip() {
+  color: var(--text);
+  background: var(--bg);
+  border-radius: 1.6rem;
+  height: 2.4rem;
+  font-size: 1.3rem;
+  display: inline-flex;
+  grid-gap: 0;
+  align-items: center;
+  padding: 0 0.8rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  width: fit-content;
+  border: none;
+  box-shadow: none;
+  transition: transition("color", "background-color");
+
+  &:hover {
+    color: var(--bg);
+    background: var(--text);
   }
 }
 

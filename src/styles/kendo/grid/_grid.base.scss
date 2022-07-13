@@ -1,5 +1,6 @@
 @use "./grid.selectors" as *;
 @use "/src/styles/helpers/rules" as *;
+@use "../chip";
 
 $border: 1px solid rgb(238, 238, 238);
 $bg: white;
@@ -282,37 +283,42 @@ $brad: 8px;
     }
 
     .k-group-indicator {
-      @extend %chip;
-      border: none;
-      font-style: normal;
-      font-weight: 400;
-
-      .k-link .k-icon {
-        margin: 0;
-        margin-right: 0.3rem;
-      }
-
-      .k-button {
-        @extend %chip-icon;
-        background-color: rgb(33, 150, 243) !important;
-        opacity: 1;
-        margin-right: 0;
-        margin-left: 0.6rem;
-
-        .k-button-icon {
-          font-size: 13px;
-        }
-      }
-
-      &:hover .k-button {
-        background-color: rgb(227, 242, 253) !important;
-        color: rgb(30, 136, 229);
-
-        &:hover {
-          background-color: darken(rgb(227, 242, 253), 12%) !important;
-        }
-      }
+      @include chip.chip();
+      @include chip.primaryLight();
     }
+
+    // .k-group-indicator {
+    //   @extend %chip;
+    //   border: none;
+    //   font-style: normal;
+    //   font-weight: 400;
+
+    //   .k-link .k-icon {
+    //     margin: 0;
+    //     margin-right: 0.3rem;
+    //   }
+
+    //   .k-button {
+    //     @extend %chip-icon;
+    //     background-color: rgb(33, 150, 243) !important;
+    //     opacity: 1;
+    //     margin-right: 0;
+    //     margin-left: 0.6rem;
+
+    //     .k-button-icon {
+    //       font-size: 13px;
+    //     }
+    //   }
+
+    //   &:hover .k-button {
+    //     background-color: rgb(227, 242, 253) !important;
+    //     color: rgb(30, 136, 229);
+
+    //     &:hover {
+    //       background-color: darken(rgb(227, 242, 253), 12%) !important;
+    //     }
+    //   }
+    // }
 
     .k-filter-row {
       td {
