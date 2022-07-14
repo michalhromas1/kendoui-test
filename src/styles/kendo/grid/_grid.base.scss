@@ -299,8 +299,8 @@ $brad: 8px;
           margin-right: var(--icon-gap);
 
           &::before {
-            content: "#";
-            font-family: var(--font-family-default);
+            margin: 0 -3px;
+            line-height: 1;
           }
         }
       }
@@ -311,7 +311,7 @@ $brad: 8px;
 
       .k-button {
         @include chip.actionIcon();
-        background: var(--text) !important;
+        background-color: var(--text) !important;
         opacity: 1;
         margin: 0;
         margin-left: var(--icon-gap);
@@ -327,47 +327,20 @@ $brad: 8px;
             content: var(--remove-icon);
           }
         }
+
+        &::before,
+        &::after {
+          content: none;
+        }
       }
 
       &:hover {
         .k-button {
           @include chip.actionIconOnHover();
+          background-color: var(--bg) !important;
         }
       }
     }
-
-    // .k-group-indicator {
-    //   @extend %chip;
-    //   border: none;
-    //   font-style: normal;
-    //   font-weight: 400;
-
-    //   .k-link .k-icon {
-    //     margin: 0;
-    //     margin-right: 0.3rem;
-    //   }
-
-    //   .k-button {
-    //     @extend %chip-icon;
-    //     background-color: rgb(33, 150, 243) !important;
-    //     opacity: 1;
-    //     margin-right: 0;
-    //     margin-left: 0.6rem;
-
-    //     .k-button-icon {
-    //       font-size: 13px;
-    //     }
-    //   }
-
-    //   &:hover .k-button {
-    //     background-color: rgb(227, 242, 253) !important;
-    //     color: rgb(30, 136, 229);
-
-    //     &:hover {
-    //       background-color: darken(rgb(227, 242, 253), 12%) !important;
-    //     }
-    //   }
-    // }
 
     .k-filter-row {
       td {

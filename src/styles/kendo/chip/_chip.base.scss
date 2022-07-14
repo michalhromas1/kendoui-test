@@ -112,7 +112,7 @@
   background: var(--text);
   color: var(--bg);
   border-radius: 100%;
-  transition: transition("color", "background-color");
+  transition: transition("color", "background-color", "opacity");
 }
 
 @mixin actionIconOnHover() {
