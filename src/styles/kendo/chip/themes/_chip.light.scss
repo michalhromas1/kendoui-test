@@ -3,12 +3,12 @@
 @mixin light() {
   #{$selector} {
     &#{$selector--primary} {
-      @include primaryLight();
+      @include lightPrimary();
     }
   }
 }
 
-@mixin primaryLight() {
+@mixin lightPrimary() {
   --text: rgb(33, 150, 243);
   --bg: rgb(227, 242, 253);
 }

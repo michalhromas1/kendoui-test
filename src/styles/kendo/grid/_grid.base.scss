@@ -285,7 +285,6 @@ $brad: 8px;
     .k-group-indicator {
       @include chip.vars();
       @include chip.chip();
-      @include chip.primaryLight();
       font-style: normal;
       font-weight: normal;
       line-height: 1;
