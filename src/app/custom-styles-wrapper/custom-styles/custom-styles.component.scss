@@ -39,6 +39,12 @@ $selected-disabled-dark: hsl(290, $saturation-dark, $lightness-dark);
 //   }
 // }
 
+:host ::ng-deep .fa-sharp {
+  &::before {
+    content: "#";
+  }
+}
+
 ::ng-deep {
   .k-list-container {
     margin-top: 0.5rem;

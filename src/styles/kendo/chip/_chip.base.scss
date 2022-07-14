@@ -1,0 +1,125 @@
+@use "./chip.selectors" as *;
+@use "/src/styles/helpers/rules" as *;
+
+@mixin base() {
+  #{$selector} {
+    @include vars();
+    @include chip();
+
+    &:hover {
+      .k-chip-actions .k-icon {
+        @include actionIconOnHover();
+      }
+    }
+
+    .k-chip-content {
+      margin: 0;
+      padding: 0;
+    }
+
+    .k-icon,
+    .k-chip-icon {
+      font-weight: var(--icon-font-weight);
+    }
+
+    .k-chip-actions {
+      margin: 0;
+
+      .k-chip-action {
+        margin-left: var(--icon-gap);
+      }
+
+      .k-icon {
+        @include actionIcon();
+
+        &.k-i-close-circle {
+          &::before {
+            content: var(--remove-icon);
+          }
+        }
+      }
+    }
+
+    .k-chip-icon {
+      margin-right: var(--icon-gap);
+    }
+
+    &#{$selector-action} {
+      .k-chip-icon {
+        @include actionIcon();
+      }
+
+      &:hover {
+        .k-chip-icon {
+          @include actionIconOnHover();
+        }
+      }
+    }
+
+    &:not(#{$selector-action}) {
+      .k-chip-icon {
+        @include regularIcon();
+      }
+    }
+  }
+}
+
+@mixin vars() {
+  --text: ;
+  --bg: ;
+  --action-icon-size: 1.5rem;
+  --font-size: 1.3rem;
+  --remove-icon: "\e11b";
+  --icon-font-weight: 700;
+  --icon-gap: 0.6rem;
+}
+
+@mixin chip() {
+  color: var(--text);
+  background: var(--bg);
+  border-radius: 1.6rem;
+  height: 2.4rem;
+  font-size: var(--font-size);
+  display: inline-flex;
+  grid-gap: 0;
+  align-items: center;
+  padding: 0 0.8rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  width: fit-content;
+  border: none;
+  box-shadow: none;
+  transition: transition("color", "background-color");
+
+  &:hover {
+    color: var(--bg);
+    background: var(--text);
+  }
+}
+
+@mixin regularIcon() {
+  font-size: 1.6rem;
+  line-height: 1.6;
+}
+
+@mixin actionIcon() {
+  font-size: inherit;
+  height: var(--action-icon-size);
+  width: var(--action-icon-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--text);
+  color: var(--bg);
+  border-radius: 100%;
+  transition: transition("color", "background-color", "opacity");
+}
+
+@mixin actionIconOnHover() {
+  background-color: var(--bg);
+  color: var(--text);
+
+  &:hover {
+    opacity: 0.7;
+  }
+}

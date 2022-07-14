@@ -1,0 +1,19 @@
+@use "../chip.selectors" as *;
+
+@mixin dark() {
+  #{$selector} {
+    &#{$selector--primary} {
+      @include darkPrimary();
+    }
+  }
+}
+
+@mixin darkPrimary() {
+  --text: rgb(227, 242, 253);
+  --bg: rgb(33, 150, 243);
+
+  &:hover {
+    --text: rgb(41, 85, 141);
+    --bg: rgb(227, 242, 253);
+  }
+}

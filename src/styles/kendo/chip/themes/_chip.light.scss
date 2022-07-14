@@ -1,0 +1,14 @@
+@use "../chip.selectors" as *;
+
+@mixin light() {
+  #{$selector} {
+    &#{$selector--primary} {
+      @include lightPrimary();
+    }
+  }
+}
+
+@mixin lightPrimary() {
+  --text: rgb(33, 150, 243);
+  --bg: rgb(227, 242, 253);
+}

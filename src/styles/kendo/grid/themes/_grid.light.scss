@@ -1,4 +1,10 @@
 @use "../grid.selectors" as *;
+@use "../../chip";
 
 @mixin light() {
+  #{$selector} {
+    .k-group-indicator {
+      @include chip.lightPrimary();
+    }
+  }
 }

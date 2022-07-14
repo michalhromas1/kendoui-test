@@ -1,0 +1,18 @@
+@use "/src/styles/helpers/selector" as *;
+
+@function _variantSelector($variant) {
+  @return createVariantSelector($_namespaceSelector, $variant);
+}
+
+@function _modifierSelector($modifier) {
+  @return createModifierSelector($_namespaceSelector, $modifier);
+}
+
+$_namespaceSelector: ".chip";
+$_minimalSelector: ".k-chip";
+
+$selector: createBaseSelector($_namespaceSelector, $_minimalSelector);
+
+$selector-action: _variantSelector("action");
+
+$selector--primary: _modifierSelector("primary");

@@ -1,4 +1,5 @@
 @use "./button.selectors" as *;
+@use "/src/styles/helpers/rules" as *;
 
 @mixin base() {
   #{$selector} {
@@ -7,17 +8,16 @@
     --bg-hover: ;
     --bg-outlined-hover: ;
     --disabled-opacity: ;
+    --icon-only-size: var(--spacing-md);
 
     background-color: var(--bg);
     border-color: var(--bg);
-
     border-radius: var(--border-radius-sm);
     font-size: var(--font-size-default);
     padding: var(--spacing-xs) var(--spacing-sm);
     font-weight: var(--font-weight-strong);
     font-family: var(--font-family-default);
-    transition: background-color var(--transition-duration),
-      color var(--transition-duration), border-color var(--transition-duration);
+    transition: transition(color, background-color, border-color);
     line-height: normal;
     background-image: none;
 
@@ -57,8 +57,6 @@
     }
 
     &#{$selector-icon-only} {
-      --icon-only-size: var(--spacing-md);
-
       width: var(--icon-only-size);
       height: var(--icon-only-size);
       padding: 0;
