@@ -283,8 +283,57 @@ $brad: 8px;
     }
 
     .k-group-indicator {
+      @include chip.vars();
       @include chip.chip();
       @include chip.primaryLight();
+      font-style: normal;
+      font-weight: normal;
+      line-height: 1;
+
+      .k-link {
+        .k-icon {
+          @include chip.regularIcon();
+          width: auto;
+          height: auto;
+          margin: 0;
+          margin-right: var(--icon-gap);
+
+          &::before {
+            content: "#";
+            font-family: var(--font-family-default);
+          }
+        }
+      }
+
+      .k-icon {
+        font-weight: var(--icon-font-weight);
+      }
+
+      .k-button {
+        @include chip.actionIcon();
+        background: var(--text) !important;
+        opacity: 1;
+        margin: 0;
+        margin-left: var(--icon-gap);
+
+        .k-icon {
+          min-width: unset;
+          min-height: unset;
+          width: 100%;
+          height: 100%;
+          font-size: var(--font-size);
+
+          &::before {
+            content: var(--remove-icon);
+          }
+        }
+      }
+
+      &:hover {
+        .k-button {
+          @include chip.actionIconOnHover();
+        }
+      }
     }
 
     // .k-group-indicator {

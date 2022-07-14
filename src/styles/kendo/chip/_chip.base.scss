@@ -3,15 +3,12 @@
 
 @mixin base() {
   #{$selector} {
-    --text: ;
-    --bg: ;
-    --action-icon-size: 1.5rem;
-
+    @include vars();
     @include chip();
 
     &:hover {
       .k-chip-actions .k-icon {
-        @include _actionIconOnHover();
+        @include actionIconOnHover();
       }
     }
 
@@ -22,50 +19,59 @@
 
     .k-icon,
     .k-chip-icon {
-      font-weight: 700;
+      font-weight: var(--icon-font-weight);
     }
 
     .k-chip-actions {
       margin: 0;
 
       .k-chip-action {
-        margin-left: 0.6rem;
+        margin-left: var(--icon-gap);
       }
 
       .k-icon {
-        @include _actionIcon();
+        @include actionIcon();
 
         &.k-i-close-circle {
           &::before {
-            content: "\e11b";
+            content: var(--remove-icon);
           }
         }
       }
     }
 
     .k-chip-icon {
-      margin-right: 0.6rem;
+      margin-right: var(--icon-gap);
     }
 
     &#{$selector-action} {
       .k-chip-icon {
-        @include _actionIcon();
+        @include actionIcon();
       }
 
       &:hover {
         .k-chip-icon {
-          @include _actionIconOnHover();
+          @include actionIconOnHover();
         }
       }
     }
 
     &:not(#{$selector-action}) {
       .k-chip-icon {
-        font-size: 1.6rem;
-        line-height: 1.6;
+        @include regularIcon();
       }
     }
   }
+}
+
+@mixin vars() {
+  --text: ;
+  --bg: ;
+  --action-icon-size: 1.5rem;
+  --font-size: 1.3rem;
+  --remove-icon: "\e11b";
+  --icon-font-weight: 700;
+  --icon-gap: 0.6rem;
 }
 
 @mixin chip() {
@@ -73,7 +79,7 @@
   background: var(--bg);
   border-radius: 1.6rem;
   height: 2.4rem;
-  font-size: 1.3rem;
+  font-size: var(--font-size);
   display: inline-flex;
   grid-gap: 0;
   align-items: center;
@@ -91,7 +97,12 @@
   }
 }
 
-@mixin _actionIcon() {
+@mixin regularIcon() {
+  font-size: 1.6rem;
+  line-height: 1.6;
+}
+
+@mixin actionIcon() {
   font-size: inherit;
   height: var(--action-icon-size);
   width: var(--action-icon-size);
@@ -104,7 +115,7 @@
   transition: transition("color", "background-color");
 }
 
-@mixin _actionIconOnHover() {
+@mixin actionIconOnHover() {
   background-color: var(--bg);
   color: var(--text);
 
