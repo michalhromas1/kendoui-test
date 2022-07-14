@@ -36,6 +36,7 @@
     "@progress/kendo-angular-pdf-export": "^3.0.0",
     "@progress/kendo-angular-popup": "^4.0.0",
     "@progress/kendo-angular-progressbar": "^2.0.0",
+    "@progress/kendo-angular-tooltip": "^4.0.1",
     "@progress/kendo-angular-treeview": "^6.0.0",
     "@progress/kendo-data-query": "^1.0.0",
     "@progress/kendo-drawing": "^1.9.3",

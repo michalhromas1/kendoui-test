@@ -1,39 +1,3 @@
-<div style="margin-top: 0.8rem; display: flex">
-  <kendo-chip class="chip chip--primary my mr-1" label="Chip"></kendo-chip>
-
-  <kendo-chip
-    class="chip chip--primary my mr-1"
-    label="Chip 2"
-    [removable]="true"
-  ></kendo-chip>
-
-  <kendo-chip
-    class="chip chip--primary my mr-1"
-    label="Chip 3"
-    iconClass="fa-sharp"
-  ></kendo-chip>
-
-  <kendo-chip
-    class="chip chip--primary my mr-1"
-    label="Chip 4"
-    iconClass="fa-sharp"
-    [removable]="true"
-  ></kendo-chip>
-
-  <kendo-chip
-    class="chip chip-action chip--primary my mr-1"
-    label="Chip action"
-    iconClass="fa-sharp"
-  ></kendo-chip>
-
-  <kendo-chip
-    class="chip chip-action chip--primary my mr-1"
-    label="Chip action 2"
-    iconClass="fa-sharp"
-    [removable]="true"
-  ></kendo-chip>
-</div>
-
 <div style="margin-top: 0.8rem">
   <kendo-switch
     class="mr-1 my"
@@ -69,12 +33,19 @@
             checkboxOnly: true,
             mode: 'multiple'
           }"
-          [groupable]="true"
-          [group]="groups"
+          [(group)]="groups"
           [filterable]="true"
-          [filter]="filter"
+          [(filter)]="filter"
           cdkDropListGroup
         >
+          <kendo-grid-column field="profile" [hidden]="true">
+            <ng-template kendoGridGroupHeaderTemplate let-group="group">
+              <span kendoTooltip [title]="group.items[0].workspace">
+                {{ group.value }}
+              </span>
+            </ng-template>
+          </kendo-grid-column>
+
           <kendo-grid-checkbox-column [width]="58" [showSelectAll]="true">
           </kendo-grid-checkbox-column>
 
@@ -85,19 +56,7 @@
             [filterable]="false"
           ></kendo-grid-column>
 
-          <kendo-grid-column
-            field="workspace"
-            title="Workspace"
-            [width]="150"
-          ></kendo-grid-column>
-
-          <kendo-grid-column
-            field="profile"
-            title="Profil"
-            [width]="150"
-          ></kendo-grid-column>
-
-          <kendo-grid-column field="title" title="Název souboru">
+          <kendo-grid-column field="title" title="Název souboru" [width]="200">
             <ng-template kendoGridCellTemplate let-dataItem>
               <div
                 cdkDropList

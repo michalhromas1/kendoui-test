@@ -58,7 +58,7 @@ export class CustomStylesComponent implements OnInit, AfterViewInit, OnDestroy {
   documents = this.initialDocuments;
   preview: AppDocumentFile | undefined;
   selectedRowsDocumentIds: number[] = [];
-  groups: GroupDescriptor[] = [];
+  groups: GroupDescriptor[] = [{ field: 'profile' }];
   filter: CompositeFilterDescriptor = this.initialFilter;
   czech: boolean = false;
   profilePickerOpened: boolean = false;
@@ -144,7 +144,7 @@ export class CustomStylesComponent implements OnInit, AfterViewInit, OnDestroy {
   reset(): void {
     this.documents = this.initialDocuments;
     this.selectedRowsDocumentIds = [];
-    this.groups = [];
+    this.groups = [{ field: 'profile' }];
     this.filter = this.initialFilter;
     this.preview = undefined;
     this.workspacePickerData = this.initialWorkspacePickerData;
