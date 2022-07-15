@@ -283,6 +283,13 @@ kendo-splitter-pane.preview-pane {
     }
   }
 
+  &:hover {
+    .filename::after {
+      transform: scaleX(1);
+      opacity: 1;
+    }
+  }
+
   i {
     color: var(--color);
     font-size: 1.5rem;
@@ -296,25 +303,13 @@ kendo-splitter-pane.preview-pane {
     justify-content: center;
     border-radius: 100%;
     margin-right: 1rem;
-    transition: transition(
-      "box-shadow",
-      "background-color",
-      "color",
-      "border-color"
-    );
+    transition: transition("box-shadow", "background-color", "color");
 
     &:hover {
       color: rgb(227, 242, 253);
       background-color: var(--color);
       box-shadow: rgb(0 0 0 / 20%) 0px 3px 1px -2px,
         rgb(0 0 0 / 14%) 0px 2px 2px 0px, rgb(0 0 0 / 12%) 0px 1px 5px 0px;
-    }
-  }
-
-  &:hover {
-    .filename::after {
-      transform: scaleX(1);
-      opacity: 1;
     }
   }
   // @extend %chip;
