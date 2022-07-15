@@ -12,6 +12,10 @@ $brad: 8px;
     border: none;
     font-size: 1.4rem;
 
+    .k-grid-content {
+      @include hideScrollbar();
+    }
+
     .k-checkbox {
       width: 1.8rem;
       height: 1.8rem;
