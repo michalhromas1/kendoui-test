@@ -71,6 +71,21 @@ $brad: 8px;
       background: $bg;
       border: none;
       padding: 0 !important;
+
+      thead tr {
+        td,
+        th {
+          border-bottom: $border;
+        }
+
+        &:last-child {
+          td,
+          th {
+            position: relative;
+            top: -1px;
+          }
+        }
+      }
     }
 
     .k-column-resizer {
@@ -153,10 +168,6 @@ $brad: 8px;
 
     td {
       border-bottom: $border;
-    }
-
-    tbody tr:first-child td {
-      border-top: $border;
     }
 
     .k-grouping-header {
@@ -248,7 +259,6 @@ $brad: 8px;
 
     .k-filter-row {
       td {
-        border-top: $border;
         position: relative;
         overflow: visible;
 
