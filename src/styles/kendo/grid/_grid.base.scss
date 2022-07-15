@@ -26,6 +26,7 @@ $brad: 8px;
       position: relative;
       top: 2px;
       transition: transition(color, box-shadow, border-color);
+      background-color: transparent;
 
       &:hover {
         border-color: rgb(33, 150, 243);
