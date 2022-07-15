@@ -222,14 +222,14 @@ kendo-splitter-pane.preview-pane {
     color: rgb(158, 158, 158);
     height: 29px;
     width: 30px;
-    transition: color 0.12s cubic-bezier(0.4, 0, 0.2, 1);
     font-size: 2.4rem;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: transition(color);
 
     &:hover {
-      color: #f44336;
+      color: #212121;
     }
   }
 }
@@ -244,7 +244,6 @@ kendo-splitter-pane.preview-pane {
 .preview-body {
   flex: 1;
   overflow: auto;
-  padding: 0.3rem;
   display: flex;
   align-items: flex-start;
 
@@ -260,7 +259,6 @@ kendo-splitter-pane.preview-pane {
     display: block;
     width: 100%;
     max-height: none;
-    border-bottom-right-radius: 4px;
   }
 }
 
