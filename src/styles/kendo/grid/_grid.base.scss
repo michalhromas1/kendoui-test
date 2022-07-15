@@ -17,6 +17,28 @@ $brad: 8px;
       @include hideScrollbar();
     }
 
+    .k-grouping-row td {
+      font-weight: 500;
+      color: #212121;
+      font-size: 1.4rem;
+
+      .k-icon {
+        color: currentColor;
+        transition: transition(color);
+      }
+
+      a + span {
+        transition: transition(color);
+      }
+
+      a:hover {
+        &,
+        & + span {
+          color: rgb(33, 150, 243);
+        }
+      }
+    }
+
     .k-checkbox {
       width: 1.8rem;
       height: 1.8rem;
