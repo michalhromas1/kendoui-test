@@ -22,6 +22,7 @@ import {
 import {
   CompositeFilterDescriptor,
   GroupDescriptor,
+  SortDescriptor,
 } from '@progress/kendo-data-query';
 import { Subject } from 'rxjs';
 import { deepCopy } from '../../helpers';
@@ -60,6 +61,7 @@ export class CustomStylesComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedRowsDocumentIds: number[] = [];
   groups: GroupDescriptor[] = [{ field: 'profile' }];
   filter: CompositeFilterDescriptor = this.initialFilter;
+  sort: SortDescriptor[] = [];
   czech: boolean = false;
   profilePickerOpened: boolean = false;
   workspacePickerData: WorkspaceProfileRelationship[] =
@@ -146,6 +148,7 @@ export class CustomStylesComponent implements OnInit, AfterViewInit, OnDestroy {
     this.selectedRowsDocumentIds = [];
     this.groups = [{ field: 'profile' }];
     this.filter = this.initialFilter;
+    this.sort = [];
     this.preview = undefined;
     this.workspacePickerData = this.initialWorkspacePickerData;
     this.workspacePickerCheckedKeys = this.initialWorkspacePickerCheckedKeys;
