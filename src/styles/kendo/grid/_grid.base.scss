@@ -12,7 +12,8 @@ $brad: 8px;
     border: none;
     font-size: 1.4rem;
 
-    .k-grid-content {
+    &,
+    * {
       @include hideScrollbar();
     }
 
@@ -69,6 +70,7 @@ $brad: 8px;
     .k-grid-header {
       background: $bg;
       border: none;
+      padding: 0 !important;
     }
 
     .k-column-resizer {
