@@ -153,8 +153,9 @@ $selected-disabled-dark: hsl(290, $saturation-dark, $lightness-dark);
 }
 
 kendo-splitter-pane.preview-pane {
-  overflow: visible;
   margin-left: -1px;
+  display: flex;
+  flex-direction: column;
 }
 
 .preview-header {
@@ -163,7 +164,7 @@ kendo-splitter-pane.preview-pane {
   justify-content: space-between;
   padding-left: 2rem;
   padding-right: 1.1rem;
-  height: 5.6rem;
+  height: 5.7rem;
   border-bottom: 1px solid #eeeeee;
 
   .preview-title {
@@ -205,6 +206,8 @@ kendo-splitter-pane.preview-pane {
 }
 
 .preview-body {
+  flex: 1;
+  overflow: auto;
   padding: 2rem;
   display: flex;
   justify-content: center;
@@ -212,6 +215,7 @@ kendo-splitter-pane.preview-pane {
 
   img {
     border-radius: 4px;
+    max-height: none;
     border: 1px solid rgba(144, 202, 249, 0.46);
   }
 }
