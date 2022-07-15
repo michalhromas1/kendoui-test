@@ -15,3 +15,12 @@
 
   @return $result;
 }
+
+@mixin hideScrollbar() {
+  scrollbar-width: none; /* for Firefox */
+  -ms-overflow-style: none; /* for Internet Explorer, Edge */
+
+  &::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari, and Opera */
+  }
+}

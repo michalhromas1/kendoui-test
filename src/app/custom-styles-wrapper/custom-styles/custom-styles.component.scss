@@ -217,6 +217,7 @@ kendo-splitter-pane.preview-pane {
     overflow: auto;
     flex: 1;
     border-bottom-right-radius: 4px;
+    @include hideScrollbar();
   }
 
   img {
