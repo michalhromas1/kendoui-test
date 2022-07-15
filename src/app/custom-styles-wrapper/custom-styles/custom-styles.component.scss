@@ -264,6 +264,11 @@ kendo-splitter-pane.preview-pane {
   color: var(--color);
   font-weight: 500;
   cursor: pointer;
+  width: fit-content;
+
+  & + & {
+    margin-top: 1rem;
+  }
 
   .filename {
     position: relative;
