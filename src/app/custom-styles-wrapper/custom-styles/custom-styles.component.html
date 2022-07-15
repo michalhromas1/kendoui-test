@@ -123,7 +123,6 @@
       max="80%"
       class="preview-pane"
     >
-      <!-- <div class="preview-pane-inner"> -->
       <div class="preview-header">
         <h3 class="preview-title">{{ preview.title }}</h3>
         <button
@@ -136,11 +135,10 @@
       </div>
 
       <div class="preview-body">
-        <!-- <div class="preview-img-wrapper"> -->
-        <img [src]="preview.url" />
-        <!-- </div> -->
+        <div class="preview-img-wrapper">
+          <img [src]="preview.url" />
+        </div>
       </div>
-      <!-- </div> -->
     </kendo-splitter-pane>
   </kendo-splitter>
 </div>
