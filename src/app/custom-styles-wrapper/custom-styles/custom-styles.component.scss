@@ -1,5 +1,6 @@
 @use "/src/styles/themes";
 @use "/src/styles/kendo/button";
+@use "/src/styles/helpers/rules" as *;
 
 $saturation-light: 47%;
 $lightness-light: 92%;
@@ -253,5 +254,165 @@ kendo-splitter-pane.preview-pane {
   .my {
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
+  }
+}
+
+.file {
+  --color: rgb(33, 150, 243);
+  --icon-size: 2.5rem;
+
+  color: var(--color);
+  font-weight: 500;
+  cursor: pointer;
+
+  .filename {
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 2px;
+      background-color: currentColor;
+      transform-origin: left center;
+      transform: scaleX(0);
+      opacity: 0.75;
+      transition: transition("transform", "opacity");
+    }
+  }
+
+  i {
+    color: var(--color);
+    font-size: 1.5rem;
+    font-weight: 700;
+    background-color: transparent;
+    border: 2px solid var(--color);
+    width: var(--icon-size);
+    height: var(--icon-size);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    margin-right: 1rem;
+    transition: transition(
+      "box-shadow",
+      "background-color",
+      "color",
+      "border-color"
+    );
+
+    &:hover {
+      color: rgb(227, 242, 253);
+      background-color: var(--color);
+      box-shadow: rgb(0 0 0 / 20%) 0px 3px 1px -2px,
+        rgb(0 0 0 / 14%) 0px 2px 2px 0px, rgb(0 0 0 / 12%) 0px 1px 5px 0px;
+    }
+  }
+
+  &:hover {
+    .filename::after {
+      transform: scaleX(1);
+      opacity: 1;
+    }
+  }
+  // @extend %chip;
+
+  // background: rgb(237, 231, 246);
+  // color: rgb(103, 58, 183);
+
+  // i {
+  //   background: rgb(103, 58, 183);
+  //   color: rgb(237, 231, 246);
+  // }
+
+  // &:hover {
+  //   color: rgb(237, 231, 246);
+  //   background: rgb(103, 58, 183);
+
+  //   i {
+  //     background: rgb(237, 231, 246);
+  //     color: rgb(103, 58, 183);
+
+  //     &:hover {
+  //       background: darken(rgb(237, 231, 246), 12%);
+  //     }
+  //   }
+  // }
+
+  // &.attachment {
+  //   background: rgb(255, 248, 225);
+  //   color: rgb(255, 193, 7);
+
+  //   i {
+  //     background: rgb(255, 193, 7);
+  //     color: rgb(255, 248, 225);
+  //   }
+
+  //   &:hover {
+  //     color: rgb(255, 248, 225);
+  //     background: rgb(255, 193, 7);
+
+  //     i {
+  //       background: rgb(255, 248, 225);
+  //       color: rgb(255, 193, 7);
+
+  //       &:hover {
+  //         background: darken(rgb(255, 248, 225), 12%);
+  //       }
+  //     }
+  //   }
+  // }
+}
+
+%chip-icon {
+  height: 1.5rem;
+  width: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(33, 150, 243);
+  color: rgb(227, 242, 253);
+  border-radius: 100%;
+  margin-right: 0.6rem;
+  transition: transition(color, background-color);
+}
+
+%chip {
+  color: rgb(33, 150, 243);
+  background: rgb(227, 242, 253);
+  border-radius: 1.6rem;
+  height: 2.4rem;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
+  white-space: nowrap;
+  width: fit-content;
+  transition: transition(color, background-color);
+
+  & + & {
+    margin-top: 0.6rem;
+  }
+
+  &:hover {
+    color: rgb(227, 242, 253);
+    background: rgb(30, 136, 229);
+    cursor: pointer;
+
+    i {
+      background-color: rgb(227, 242, 253);
+      color: rgb(30, 136, 229);
+
+      &:hover {
+        background: darken(rgb(227, 242, 253), 12%);
+      }
+    }
+  }
+
+  i {
+    @extend %chip-icon;
   }
 }
