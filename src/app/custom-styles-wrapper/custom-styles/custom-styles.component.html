@@ -1,39 +1,3 @@
-<div style="margin-top: 0.8rem; display: flex">
-  <kendo-chip class="chip chip--primary my mr-1" label="Chip"></kendo-chip>
-
-  <kendo-chip
-    class="chip chip--primary my mr-1"
-    label="Chip 2"
-    [removable]="true"
-  ></kendo-chip>
-
-  <kendo-chip
-    class="chip chip--primary my mr-1"
-    label="Chip 3"
-    iconClass="fa-sharp"
-  ></kendo-chip>
-
-  <kendo-chip
-    class="chip chip--primary my mr-1"
-    label="Chip 4"
-    iconClass="fa-sharp"
-    [removable]="true"
-  ></kendo-chip>
-
-  <kendo-chip
-    class="chip chip-action chip--primary my mr-1"
-    label="Chip action"
-    iconClass="fa-sharp"
-  ></kendo-chip>
-
-  <kendo-chip
-    class="chip chip-action chip--primary my mr-1"
-    label="Chip action 2"
-    iconClass="fa-sharp"
-    [removable]="true"
-  ></kendo-chip>
-</div>
-
 <div style="margin-top: 0.8rem">
   <kendo-switch
     class="mr-1 my"
@@ -69,12 +33,21 @@
             checkboxOnly: true,
             mode: 'multiple'
           }"
-          [groupable]="true"
-          [group]="groups"
+          [(group)]="groups"
           [filterable]="true"
-          [filter]="filter"
+          [(filter)]="filter"
+          [sortable]="{ mode: 'multiple' }"
+          [(sort)]="sort"
           cdkDropListGroup
         >
+          <kendo-grid-column field="profile" [hidden]="true">
+            <ng-template kendoGridGroupHeaderTemplate let-group="group">
+              <span kendoTooltip [title]="group.items[0].workspace">
+                {{ group.value }}
+              </span>
+            </ng-template>
+          </kendo-grid-column>
+
           <kendo-grid-checkbox-column [width]="58" [showSelectAll]="true">
           </kendo-grid-checkbox-column>
 
@@ -83,18 +56,6 @@
             title="Id"
             [width]="50"
             [filterable]="false"
-          ></kendo-grid-column>
-
-          <kendo-grid-column
-            field="workspace"
-            title="Workspace"
-            [width]="150"
-          ></kendo-grid-column>
-
-          <kendo-grid-column
-            field="profile"
-            title="Profil"
-            [width]="150"
           ></kendo-grid-column>
 
           <kendo-grid-column field="title" title="Název souboru">
@@ -133,11 +94,14 @@
                 data-droplist="attachments"
               >
                 <ng-container *ngFor="let attachment of dataItem.attachments">
-                  <div *ngIf="attachment.title" cdkDrag class="file attachment">
-                    <i cdkDragHandle>#</i>
-                    <span class="filename" (click)="openPreview(attachment)">{{
-                      attachment.title
-                    }}</span>
+                  <div
+                    cdkDrag
+                    *ngIf="attachment.title"
+                    class="file attachment"
+                    (click)="openPreview(attachment)"
+                  >
+                    <i cdkDragHandle>#</i
+                    ><span class="filename">{{ attachment.title }}</span>
                   </div>
                 </ng-container>
               </div>
@@ -176,7 +140,9 @@
       </div>
 
       <div class="preview-body">
-        <img [src]="preview.url" />
+        <div class="preview-img-wrapper">
+          <img [src]="preview.url" />
+        </div>
       </div>
     </kendo-splitter-pane>
   </kendo-splitter>

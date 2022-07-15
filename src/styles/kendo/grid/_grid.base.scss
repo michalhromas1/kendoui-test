@@ -6,62 +6,38 @@ $border: 1px solid rgb(238, 238, 238);
 $bg: white;
 $brad: 8px;
 
-%chip-icon {
-  height: 1.5rem;
-  width: 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgb(33, 150, 243);
-  color: rgb(227, 242, 253);
-  border-radius: 100%;
-  margin-right: 0.6rem;
-  transition: transition(color, background-color);
-}
-
-%chip {
-  color: rgb(33, 150, 243);
-  background: rgb(227, 242, 253);
-  border-radius: 1.6rem;
-  height: 2.4rem;
-  font-size: 1.3rem;
-  display: flex;
-  align-items: center;
-  padding-left: 0.8rem;
-  padding-right: 0.8rem;
-  white-space: nowrap;
-  width: fit-content;
-  transition: transition(color, background-color);
-
-  & + & {
-    margin-top: 0.6rem;
-  }
-
-  &:hover {
-    color: rgb(227, 242, 253);
-    background: rgb(30, 136, 229);
-    cursor: pointer;
-
-    i {
-      background-color: rgb(227, 242, 253);
-      color: rgb(30, 136, 229);
-
-      &:hover {
-        background: darken(rgb(227, 242, 253), 12%);
-      }
-    }
-  }
-
-  i {
-    @extend %chip-icon;
-  }
-}
-
 @mixin base() {
   #{$selector} {
     font-family: Roboto, sans-serif;
     border: none;
     font-size: 1.4rem;
+
+    &,
+    * {
+      @include hideScrollbar();
+    }
+
+    .k-grouping-row td {
+      font-weight: 500;
+      color: #212121;
+      font-size: 1.4rem;
+
+      .k-icon {
+        color: currentColor;
+        transition: transition(color);
+      }
+
+      a + span {
+        transition: transition(color);
+      }
+
+      a:hover {
+        &,
+        & + span {
+          color: rgb(33, 150, 243);
+        }
+      }
+    }
 
     .k-checkbox {
       width: 1.8rem;
@@ -72,6 +48,7 @@ $brad: 8px;
       position: relative;
       top: 2px;
       transition: transition(color, box-shadow, border-color);
+      background-color: transparent;
 
       &:hover {
         border-color: rgb(33, 150, 243);
@@ -116,6 +93,28 @@ $brad: 8px;
     .k-grid-header {
       background: $bg;
       border: none;
+      padding: 0 !important;
+
+      .k-i-sort-asc-sm,
+      .k-i-sort-desc-sm,
+      .k-sort-order {
+        color: currentColor;
+      }
+
+      thead tr {
+        td,
+        th {
+          border-bottom: $border;
+        }
+
+        &:last-child {
+          td,
+          th {
+            position: relative;
+            top: -1px;
+          }
+        }
+      }
     }
 
     .k-column-resizer {
@@ -198,60 +197,6 @@ $brad: 8px;
 
     td {
       border-bottom: $border;
-    }
-
-    tbody tr:first-child td {
-      border-top: $border;
-    }
-
-    .file {
-      @extend %chip;
-
-      background: rgb(237, 231, 246);
-      color: rgb(103, 58, 183);
-
-      i {
-        background: rgb(103, 58, 183);
-        color: rgb(237, 231, 246);
-      }
-
-      &:hover {
-        color: rgb(237, 231, 246);
-        background: rgb(103, 58, 183);
-
-        i {
-          background: rgb(237, 231, 246);
-          color: rgb(103, 58, 183);
-
-          &:hover {
-            background: darken(rgb(237, 231, 246), 12%);
-          }
-        }
-      }
-
-      &.attachment {
-        background: rgb(255, 248, 225);
-        color: rgb(255, 193, 7);
-
-        i {
-          background: rgb(255, 193, 7);
-          color: rgb(255, 248, 225);
-        }
-
-        &:hover {
-          color: rgb(255, 248, 225);
-          background: rgb(255, 193, 7);
-
-          i {
-            background: rgb(255, 248, 225);
-            color: rgb(255, 193, 7);
-
-            &:hover {
-              background: darken(rgb(255, 248, 225), 12%);
-            }
-          }
-        }
-      }
     }
 
     .k-grouping-header {
@@ -343,7 +288,6 @@ $brad: 8px;
 
     .k-filter-row {
       td {
-        border-top: $border;
         position: relative;
         overflow: visible;
 
@@ -447,6 +391,10 @@ $brad: 8px;
           border-color: rgb(198, 40, 40);
         }
       }
+    }
+
+    .k-group-col {
+      width: 0;
     }
   }
 }
