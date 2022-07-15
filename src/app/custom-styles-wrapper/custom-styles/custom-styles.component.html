@@ -36,6 +36,7 @@
           [(group)]="groups"
           [filterable]="true"
           [(filter)]="filter"
+          [sortable]="{ mode: 'multiple' }"
           cdkDropListGroup
         >
           <kendo-grid-column field="profile" [hidden]="true">

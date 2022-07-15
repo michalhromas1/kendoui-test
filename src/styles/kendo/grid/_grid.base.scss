@@ -73,6 +73,12 @@ $brad: 8px;
       border: none;
       padding: 0 !important;
 
+      .k-i-sort-asc-sm,
+      .k-i-sort-desc-sm,
+      .k-sort-order {
+        color: rgb(33, 150, 243);
+      }
+
       thead tr {
         td,
         th {
