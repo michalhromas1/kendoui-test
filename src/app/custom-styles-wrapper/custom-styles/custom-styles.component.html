@@ -6,11 +6,17 @@
     [(ngModel)]="czech"
   ></kendo-switch>
 
-  <button class="mr-1 my" kendoButton (click)="openProfilePicker()">
+  <button
+    class="mr-1 my btn btn--primary"
+    kendoButton
+    (click)="openProfilePicker()"
+  >
     Profiles
   </button>
-  <button class="mr-1 my" kendoButton (click)="reset()">Reset</button>
-  <button class="my" kendoButton (click)="deleteSelected()">
+  <button class="mr-1 my btn btn--warning" kendoButton (click)="reset()">
+    Reset
+  </button>
+  <button class="my btn btn--error" kendoButton (click)="deleteSelected()">
     Delete selected
   </button>
 </div>
@@ -174,9 +180,19 @@
   </kendo-treeview>
 
   <kendo-dialog-actions>
-    <button kendoButton (click)="cancelProfilePicker()">Cancel</button>
-    <button kendoButton (click)="confirmProfilePicker()" themeColor="primary">
-      Ok
+    <button
+      kendoButton
+      class="btn btn-text btn--error"
+      (click)="cancelProfilePicker()"
+    >
+      Cancel
+    </button>
+    <button
+      kendoButton
+      class="btn btn--primary"
+      (click)="confirmProfilePicker()"
+    >
+      Confirm
     </button>
   </kendo-dialog-actions>
 </kendo-dialog>

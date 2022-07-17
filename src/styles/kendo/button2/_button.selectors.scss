@@ -13,10 +13,11 @@ $_minimalSelector: ".k-button";
 
 $selector: createBaseSelector($_namespaceSelector, $_minimalSelector);
 
-$selector-text: _variantSelector("text");
+$selector-outlined: _variantSelector("outlined");
+$selector-rounded: _variantSelector("rounded");
+$selector-icon: _variantSelector("icon");
+$selector-icon-only: _variantSelector("icon-only");
 
 $selector--primary: _modifierSelector("primary");
-$selector--secondary: _modifierSelector("secondary");
-$selector--success: _modifierSelector("success");
-$selector--error: _modifierSelector("error");
 $selector--warning: _modifierSelector("warning");
+$selector--danger: _modifierSelector("danger");

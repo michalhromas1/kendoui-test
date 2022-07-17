@@ -2,25 +2,26 @@
 
 @mixin dark() {
   #{$selector} {
-    --text: var(--c-blackish);
-    --disabled-opacity: var(--opacity-md);
-
     &#{$selector--primary} {
-      --bg: var(--c-lightblue);
-      --bg-hover: var(--c-lightblue-dark);
-      --bg-outlined-hover: var(--c-lightblue-ultra-light);
+      --bg-text-hover: rgb(33, 150, 243, 0.08);
+    }
+
+    &#{$selector--secondary} {
+      --bg: rgb(124, 77, 255);
+      --bg-hover: rgb(101, 31, 255);
+      --bg-text-hover: rgb(124, 77, 255, 0.08);
+    }
+
+    &#{$selector--success} {
+      --bg-text-hover: rgb(0, 200, 83, 0.08);
+    }
+
+    &#{$selector--error} {
+      --bg-text-hover: rgb(244, 67, 54, 0.08);
     }
 
     &#{$selector--warning} {
-      --bg: var(--c-lightorange);
-      --bg-hover: var(--c-lightorange-dark);
-      --bg-outlined-hover: var(--c-lightorange-ultra-light);
-    }
-
-    &#{$selector--danger} {
-      --bg: var(--c-lightred);
-      --bg-hover: var(--c-lightred-dark);
-      --bg-outlined-hover: var(--c-lightred-ultra-light);
+      --bg-text-hover: rgb(255, 193, 7, 0.08);
     }
   }
 }

@@ -3,67 +3,57 @@
 
 @mixin base() {
   #{$selector} {
-    --text: ;
     --bg: ;
     --bg-hover: ;
-    --bg-outlined-hover: ;
-    --disabled-opacity: ;
-    --icon-only-size: var(--spacing-md);
+    --bg-text-hover: ;
 
     background-color: var(--bg);
-    border-color: var(--bg);
-    border-radius: var(--border-radius-sm);
-    font-size: var(--font-size-default);
-    padding: var(--spacing-xs) var(--spacing-sm);
-    font-weight: var(--font-weight-strong);
-    font-family: var(--font-family-default);
-    transition: transition(color, background-color, border-color);
-    line-height: normal;
+    color: var(--c-white);
+    padding: 0.6rem 1.6rem;
+    font-size: 1.4rem;
+    transition: transition(background-color, box-shadow);
+    border-radius: 4px;
+    font-weight: 500;
+    border: none;
     background-image: none;
+    line-height: 1.75;
+    box-shadow: rgb(0 0 0 / 20%) 0px 3px 1px -2px,
+      rgb(0 0 0 / 14%) 0px 2px 2px 0px, rgb(0 0 0 / 12%) 0px 1px 5px 0px;
 
     &:hover {
       background-color: var(--bg-hover);
-      border-color: var(--bg-hover);
+      box-shadow: rgb(0 0 0 / 20%) 0px 2px 4px -1px,
+        rgb(0 0 0 / 14%) 0px 4px 5px 0px, rgb(0 0 0 / 12%) 0px 1px 10px 0px;
     }
 
-    &:disabled {
-      filter: none;
-      opacity: var(--disabled-opacity);
-    }
-
-    &:not(#{$selector-outlined}) {
-      color: var(--text);
-    }
-
-    &#{$selector-outlined} {
+    &#{$selector-text} {
+      background: transparent;
+      box-shadow: none;
       color: var(--bg);
-      background-color: transparent;
 
       &:hover {
-        border-color: var(--bg);
-        background-color: var(--bg-outlined-hover);
+        background: var(--bg-text-hover);
       }
     }
 
-    &#{$selector-rounded} {
-      border-radius: var(--border-radius-lg);
+    &#{$selector--primary} {
+      --bg: rgb(33, 150, 243);
+      --bg-hover: rgb(30, 136, 229);
     }
 
-    &#{$selector-icon} {
-      .k-button-text {
-        display: flex;
-        column-gap: var(--spacing-xxs);
-      }
+    &#{$selector--success} {
+      --bg: rgb(0, 200, 83);
+      --bg-hover: rgb(0, 230, 118);
     }
 
-    &#{$selector-icon-only} {
-      width: var(--icon-only-size);
-      height: var(--icon-only-size);
-      padding: 0;
+    &#{$selector--error} {
+      --bg: rgb(244, 67, 54);
+      --bg-hover: rgb(198, 40, 40);
+    }
 
-      &#{$selector-rounded} {
-        border-radius: 100%;
-      }
+    &#{$selector--warning} {
+      --bg: rgb(255, 193, 7);
+      --bg-hover: rgb(255, 229, 127);
     }
   }
 }
