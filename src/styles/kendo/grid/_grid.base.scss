@@ -394,7 +394,7 @@ $brad: 8px;
     }
 
     .k-group-col {
-      width: 0;
+      width: 1px; // has to be more than 0 for Safari to work
     }
   }
 }
