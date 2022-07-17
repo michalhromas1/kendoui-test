@@ -1,12 +1,4 @@
 <div style="margin-top: 0.8rem">
-  <button class="mr-1 my btn btn--primary" kendoButton>Primary</button>
-  <button class="mr-1 my btn btn--secondary" kendoButton>Secondary</button>
-  <button class="mr-1 my btn btn--success" kendoButton>Success</button>
-  <button class="mr-1 my btn btn--error" kendoButton>Error</button>
-  <button class="mr-1 my btn btn--warning" kendoButton>Warning</button>
-</div>
-
-<div style="margin-top: 0.8rem">
   <kendo-switch
     class="mr-1 my"
     onLabel="CZE"
@@ -14,11 +6,17 @@
     [(ngModel)]="czech"
   ></kendo-switch>
 
-  <button class="mr-1 my" kendoButton (click)="openProfilePicker()">
+  <button
+    class="mr-1 my btn btn--primary"
+    kendoButton
+    (click)="openProfilePicker()"
+  >
     Profiles
   </button>
-  <button class="mr-1 my" kendoButton (click)="reset()">Reset</button>
-  <button class="my" kendoButton (click)="deleteSelected()">
+  <button class="mr-1 my btn btn--warning" kendoButton (click)="reset()">
+    Reset
+  </button>
+  <button class="my btn btn--error" kendoButton (click)="deleteSelected()">
     Delete selected
   </button>
 </div>
@@ -182,8 +180,19 @@
   </kendo-treeview>
 
   <kendo-dialog-actions>
-    <button kendoButton (click)="cancelProfilePicker()">Cancel</button>
-    <button kendoButton (click)="confirmProfilePicker()" themeColor="primary">
+    <button
+      kendoButton
+      class="btn btn--warning"
+      (click)="cancelProfilePicker()"
+    >
+      Cancel
+    </button>
+    <button
+      kendoButton
+      class="btn btn--primary"
+      (click)="confirmProfilePicker()"
+      themeColor="primary"
+    >
       Ok
     </button>
   </kendo-dialog-actions>
