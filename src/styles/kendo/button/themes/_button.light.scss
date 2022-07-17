@@ -2,9 +2,24 @@
 
 @mixin light() {
   #{$selector} {
+    &#{$selector--primary} {
+      --bg-text-hover: rgb(33, 150, 243, 0.04);
+    }
+
     &#{$selector--secondary} {
-      --bg: rgb(103, 58, 183);
-      --bg-hover: rgb(94, 53, 177);
+      --bg-text-hover: rgb(103, 58, 183, 0.04);
+    }
+
+    &#{$selector--success} {
+      --bg-text-hover: rgb(0, 200, 83, 0.04);
+    }
+
+    &#{$selector--error} {
+      --bg-text-hover: rgb(244, 67, 54, 0.04);
+    }
+
+    &#{$selector--warning} {
+      --bg-text-hover: rgb(255, 193, 7, 0.04);
     }
   }
 }

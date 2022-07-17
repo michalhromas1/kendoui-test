@@ -2,9 +2,26 @@
 
 @mixin dark() {
   #{$selector} {
+    &#{$selector--primary} {
+      --bg-text-hover: rgb(33, 150, 243, 0.08);
+    }
+
     &#{$selector--secondary} {
       --bg: rgb(124, 77, 255);
       --bg-hover: rgb(101, 31, 255);
+      --bg-text-hover: rgb(124, 77, 255, 0.08);
+    }
+
+    &#{$selector--success} {
+      --bg-text-hover: rgb(0, 200, 83, 0.08);
+    }
+
+    &#{$selector--error} {
+      --bg-text-hover: rgb(244, 67, 54, 0.08);
+    }
+
+    &#{$selector--warning} {
+      --bg-text-hover: rgb(255, 193, 7, 0.08);
     }
   }
 }
