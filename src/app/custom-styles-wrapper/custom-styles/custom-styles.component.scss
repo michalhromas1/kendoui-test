@@ -410,4 +410,31 @@ kendo-splitter-pane.preview-pane {
       color: #2196f3;
     }
   }
+
+  .k-checkbox {
+    width: 1.6rem;
+    height: 1.6rem;
+    border: 2px solid rgb(158 158 158);
+    border-radius: 2px;
+    box-shadow: none;
+    position: relative;
+    top: -1px;
+    transition: transition(color, box-shadow, border-color);
+    background-color: transparent;
+
+    &:hover {
+      border-color: rgb(33, 150, 243);
+    }
+
+    &:checked,
+    &:indeterminate {
+      background-color: rgb(33, 150, 243);
+      border-color: rgb(33, 150, 243);
+    }
+
+    &:indeterminate {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='square' stroke-linejoin='square' stroke-width='2' d='M4,8 h8'/%3e%3c/svg%3e");
+      background-size: 15px;
+    }
+  }
 }
