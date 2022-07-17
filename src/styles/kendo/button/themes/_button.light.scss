@@ -1,0 +1,6 @@
+@use "../button.selectors" as *;
+
+@mixin light() {
+  #{$selector} {
+  }
+}

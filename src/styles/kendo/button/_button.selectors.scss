@@ -1,0 +1,20 @@
+@use "/src/styles/helpers/selector" as *;
+
+@function _variantSelector($variant) {
+  @return createVariantSelector($_namespaceSelector, $variant);
+}
+
+@function _modifierSelector($modifier) {
+  @return createModifierSelector($_namespaceSelector, $modifier);
+}
+
+$_namespaceSelector: ".btn";
+$_minimalSelector: ".k-button";
+
+$selector: createBaseSelector($_namespaceSelector, $_minimalSelector);
+
+$selector--primary: _modifierSelector("primary");
+$selector--secondary: _modifierSelector("secondary");
+$selector--success: _modifierSelector("success");
+$selector--error: _modifierSelector("error");
+$selector--warning: _modifierSelector("warning");

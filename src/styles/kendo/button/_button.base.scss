@@ -1,0 +1,7 @@
+@use "./button.selectors" as *;
+@use "/src/styles/helpers/rules" as *;
+
+@mixin base() {
+  #{$selector} {
+  }
+}

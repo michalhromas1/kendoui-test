@@ -1,6 +1,6 @@
 @use "/src/styles/vars";
 @use "/src/styles/themes";
-// @use "/src/styles/kendo/button";
+@use "/src/styles/kendo/button";
 @use "/src/styles/kendo/chip";
 @use "/src/styles/kendo/grid";
 
@@ -25,19 +25,19 @@
 }
 
 :host ::ng-deep {
-  // @include button.base();
+  @include button.base();
   @include chip.base();
   @include grid.base();
 }
 
 :host#{themes.$light} ::ng-deep {
-  // @include button.light();
+  @include button.light();
   @include chip.light();
   @include grid.light();
 }
 
 :host#{themes.$dark} ::ng-deep {
-  // @include button.dark();
+  @include button.dark();
   @include chip.dark();
   @include grid.dark();
 }
