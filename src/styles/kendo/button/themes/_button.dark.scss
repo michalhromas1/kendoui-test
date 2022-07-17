@@ -2,5 +2,9 @@
 
 @mixin dark() {
   #{$selector} {
+    &#{$selector--secondary} {
+      --bg: rgb(124, 77, 255);
+      --bg-hover: rgb(101, 31, 255);
+    }
   }
 }

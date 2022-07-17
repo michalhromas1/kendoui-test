@@ -3,12 +3,11 @@
 
 @mixin base() {
   #{$selector} {
-    --text: ;
     --bg: ;
     --bg-hover: ;
 
     background-color: var(--bg);
-    color: var(--text);
+    color: var(--c-white);
     padding: 0.6rem 1.6rem;
     font-size: 1.4rem;
     transition: transition(background-color, box-shadow);
@@ -24,6 +23,26 @@
       background-color: var(--bg-hover);
       box-shadow: rgb(0 0 0 / 20%) 0px 2px 4px -1px,
         rgb(0 0 0 / 14%) 0px 4px 5px 0px, rgb(0 0 0 / 12%) 0px 1px 10px 0px;
+    }
+
+    &#{$selector--primary} {
+      --bg: rgb(33, 150, 243);
+      --bg-hover: rgb(30, 136, 229);
+    }
+
+    &#{$selector--success} {
+      --bg: rgb(0, 200, 83);
+      --bg-hover: rgb(0, 230, 118);
+    }
+
+    &#{$selector--error} {
+      --bg: rgb(244, 67, 54);
+      --bg-hover: rgb(198, 40, 40);
+    }
+
+    &#{$selector--warning} {
+      --bg: rgb(255, 193, 7);
+      --bg-hover: rgb(255, 229, 127);
     }
   }
 }

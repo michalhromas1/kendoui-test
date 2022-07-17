@@ -2,34 +2,9 @@
 
 @mixin light() {
   #{$selector} {
-    &#{$selector--primary} {
-      --text: var(--c-white);
-      --bg: rgb(33, 150, 243);
-      --bg-hover: rgb(30, 136, 229);
-    }
-
     &#{$selector--secondary} {
-      --text: var(--c-white);
       --bg: rgb(103, 58, 183);
       --bg-hover: rgb(94, 53, 177);
-    }
-
-    &#{$selector--success} {
-      --text: var(--c-white);
-      --bg: rgb(0, 200, 83);
-      --bg-hover: rgb(0, 230, 118);
-    }
-
-    &#{$selector--error} {
-      --text: var(--c-white);
-      --bg: rgb(244, 67, 54);
-      --bg-hover: rgb(198, 40, 40);
-    }
-
-    &#{$selector--warning} {
-      --text: rgb(33, 33, 33);
-      --bg: rgb(255, 193, 7);
-      --bg-hover: rgb(255, 229, 127);
     }
   }
 }
