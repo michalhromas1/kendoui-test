@@ -386,4 +386,28 @@ kendo-splitter-pane.preview-pane {
       }
     }
   }
+
+  .k-treeview-leaf {
+    cursor: pointer;
+    transition: transition(color);
+
+    &:hover {
+      background: transparent;
+      color: #2196f3;
+    }
+
+    &:focus,
+    &:focus-within,
+    &.k-focus {
+      box-shadow: none;
+    }
+  }
+
+  .k-icon {
+    transition: transition(color);
+
+    &:hover {
+      color: #2196f3;
+    }
+  }
 }
