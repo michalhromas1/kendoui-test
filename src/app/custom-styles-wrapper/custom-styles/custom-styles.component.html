@@ -16,13 +16,6 @@
   <button class="mr-1 my btn btn--warning" kendoButton (click)="reset()">
     Reset
   </button>
-  <button
-    class="mr-1 my btn btn-text btn--primary"
-    kendoButton
-    (click)="reset()"
-  >
-    Reset
-  </button>
   <button class="my btn btn--error" kendoButton (click)="deleteSelected()">
     Delete selected
   </button>
@@ -189,7 +182,7 @@
   <kendo-dialog-actions>
     <button
       kendoButton
-      class="btn btn--warning"
+      class="btn btn-text btn--error"
       (click)="cancelProfilePicker()"
     >
       Cancel
@@ -198,9 +191,8 @@
       kendoButton
       class="btn btn--primary"
       (click)="confirmProfilePicker()"
-      themeColor="primary"
     >
-      Ok
+      Confirm
     </button>
   </kendo-dialog-actions>
 </kendo-dialog>
