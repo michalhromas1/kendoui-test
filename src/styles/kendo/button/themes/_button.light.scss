@@ -7,6 +7,8 @@
     }
 
     &#{$selector--secondary} {
+      --bg: rgb(103, 58, 183);
+      --bg-hover: rgb(94, 53, 177);
       --bg-text-hover: rgb(103, 58, 183, 0.04);
     }
 
