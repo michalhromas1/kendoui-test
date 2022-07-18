@@ -34,6 +34,10 @@
       &:hover {
         background: var(--bg-text-hover);
       }
+
+      &#{$selector--error} {
+        --bg: rgb(198, 40, 40);
+      }
     }
 
     &#{$selector--primary} {
